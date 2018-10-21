@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
+import 'package:my_car/functions/login_fun.dart';
+import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/login.dart';
+import 'package:my_car/pages/my_profile.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/posts_content.dart';
 import 'package:my_car/views/welcome_card.dart';
 
 const tag = 'HomePage:';
 final functions = Functions();
+final loginFunctions = LoginFunctions();
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,63 +19,65 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _isLoggedIn = false;
-  var _inputSection = Container();
 
   @override
   Widget build(BuildContext context) {
-    functions.getCurrentUser().then((user) {
+    loginFunctions.isLoggedIn().then((isLoggedIn) {
       setState(() {
-        user != null ? _isLoggedIn = true : _isLoggedIn = false;
+        _isLoggedIn = isLoggedIn;
       });
     });
 
-    return new Scaffold(
-      appBar: AppBar(
-        title: Text(APP_NAME),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.account_circle,
-              size: 30.0,
-            ),
-          )
-        ],
-      ),
-      body: ListView(
-        children: <Widget>[
-          WelcomeCardView(),
-          PostsPageView(),
-          _inputSection,
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.edit),
-          onPressed: _isLoggedIn
-              ? () => _createNewThread(context)
-              : () => _goToLoginPage(context)),
-    );
-  }
+    _goToProfilePage() {
+      _isLoggedIn
+          ? Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => UserProfilePage(), fullscreenDialog: true))
+          : Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => LoginPage(), fullscreenDialog: true));
+    }
 
-  _goToLoginPage(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => LoginPage(), fullscreenDialog: true));
-  }
+    _goToLoginPage() {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => LoginPage(), fullscreenDialog: true));
+    }
 
-  _createNewThread(BuildContext context) {
-    setState(() {
-      _inputSection = Container(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-                child: TextField(
-              decoration: InputDecoration(labelText: replyLabelText),
-            ))
+    _createNewThread() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => AskPage(), fullscreenDialog: true));
+    }
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(APP_NAME),
+          leading: FlatButton(
+              child: Icon(Icons.add),
+              onPressed: _isLoggedIn
+                  ? () => _createNewThread()
+                  : () => _goToLoginPage()),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                onPressed: () => _goToProfilePage(),
+                icon: Icon(
+                  Icons.account_circle,
+                  size: 30.0,
+                ),
+              ),
+            )
           ],
         ),
-      );
-    });
+        body: ListView(
+          children: <Widget>[
+            WelcomeCardView(),
+            PostsPageView(),
+          ],
+        ));
   }
 }
