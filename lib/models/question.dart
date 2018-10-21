@@ -37,4 +37,10 @@ class Question {
     DocumentSnapshot document = snapshots.data.documents[index];
     return Question.fromSnapshot(document);
   }
+
+  followQuestion(Question question) {
+    //todo handle follow question bu current user
+    /// this assumes that the use is already logged in
+    /// hence will use current user
+  }
 }

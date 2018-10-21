@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/answe_question.dart';
@@ -7,6 +8,7 @@ import 'package:my_car/pages/view_question.dart';
 import 'package:my_car/values/strings.dart';
 
 final userFun = User();
+final qnFun = Question();
 
 class QuestionItemView extends StatefulWidget {
   final Question question;
@@ -19,20 +21,14 @@ class QuestionItemView extends StatefulWidget {
 }
 
 class _QuestionItemViewState extends State<QuestionItemView> {
-  User user;
+  User _user;
   @override
   Widget build(BuildContext context) {
-    void getUserDetails() async {
-      User _user = await userFun.getUserFromUserId(widget.question.userId);
+    userFun.getUserFromUserId(widget.question.userId).then((user) {
       setState(() {
-        user = _user;
+        _user = user;
       });
-    }
-
-    getUserDetails();
-
-    void _likeQuestion() {}
-
+    });
     _answerQuestion() {
       Navigator.push(
           context,
@@ -41,7 +37,13 @@ class _QuestionItemViewState extends State<QuestionItemView> {
               fullscreenDialog: true));
     }
 
-    void _shareQuestion() {}
+    _shareQuestion() {
+      //todo handle share question
+    }
+    _followQuestion() async {
+      //todo handle follow question
+      StatusCode statusCode = await qnFun.followQuestion(widget.question);
+    }
 
     _openQuestion() {
       Navigator.push(
@@ -72,24 +74,24 @@ class _QuestionItemViewState extends State<QuestionItemView> {
 
     _openUserProfile() {
       Navigator.push(context,
-          MaterialPageRoute(builder: (_) => UserProfilePage(user: user)));
+          MaterialPageRoute(builder: (_) => UserProfilePage(user: _user)));
     }
 
     var _userSection = InkWell(
       onTap: () => _openUserProfile(),
       child: Row(
         children: <Widget>[
-          user != null
+          _user != null
               ? Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0),
             child: CircleAvatar(
-              backgroundImage: NetworkImage(user.imageUrl),
+              backgroundImage: NetworkImage(_user.imageUrl),
               radius: 12.0,
             ),
           )
               : Icon(Icons.account_circle, size: 45.0),
-          user != null
-              ? Text(user.name)
+          _user != null
+              ? Text(_user.name)
               : Container(
             width: 4.0,
             color: Colors.black12,
@@ -112,7 +114,7 @@ class _QuestionItemViewState extends State<QuestionItemView> {
           alignment: MainAxisAlignment.center,
           children: <Widget>[
             _buildButton(Icons.share, shareText, _shareQuestion),
-            _buildButton(Icons.thumb_up, upVoteText, _likeQuestion),
+            _buildButton(Icons.rss_feed, followText, _followQuestion),
             _buildButton(Icons.edit, answerText, _answerQuestion),
           ],
         )

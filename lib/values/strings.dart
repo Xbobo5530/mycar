@@ -11,6 +11,7 @@ ili kuboresha hali ya usalama barabarani ya kuweza kuweka magari yetu kwenye hal
 
 const commentsText = 'Comments';
 const shareText = 'Share';
+const followText = 'Follow';
 const replyLabelText = 'Enter your response';
 const loginText = 'Login';
 const signInWithGoogleText = 'Sign in with Google';

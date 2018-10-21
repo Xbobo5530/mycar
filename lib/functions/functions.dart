@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_car/functions/login_fun.dart';
+import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/values/strings.dart';
@@ -73,4 +74,4 @@ class Functions {
   }
 }
 
-enum StatusCode { failed, waiting, success }
+//enum StatusCode { failed, waiting, success }
