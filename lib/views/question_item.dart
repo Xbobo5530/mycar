@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/answe_question.dart';
+import 'package:my_car/pages/my_profile.dart';
 import 'package:my_car/pages/view_question.dart';
 import 'package:my_car/values/strings.dart';
 
@@ -69,6 +70,34 @@ class _QuestionItemViewState extends State<QuestionItemView> {
           ));
     }
 
+    _openUserProfile() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => UserProfilePage(user: user)));
+    }
+
+    var _userSection = InkWell(
+      onTap: () => _openUserProfile(),
+      child: Row(
+        children: <Widget>[
+          user != null
+              ? Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(user.imageUrl),
+              radius: 12.0,
+            ),
+          )
+              : Icon(Icons.account_circle, size: 45.0),
+          user != null
+              ? Text(user.name)
+              : Container(
+            width: 4.0,
+            color: Colors.black12,
+          ),
+        ],
+      ),
+    );
+
     return Column(
       children: <Widget>[
         ListTile(
@@ -78,25 +107,7 @@ class _QuestionItemViewState extends State<QuestionItemView> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
           ),
         ),
-        Row(
-          children: <Widget>[
-            user != null
-                ? Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(user.imageUrl),
-                radius: 12.0,
-              ),
-            )
-                : Icon(Icons.account_circle, size: 45.0),
-            user != null
-                ? Text(user.name)
-                : Container(
-              width: 4.0,
-              color: Colors.black12,
-            ),
-          ],
-        ),
+        _userSection,
         ButtonBar(
           alignment: MainAxisAlignment.center,
           children: <Widget>[

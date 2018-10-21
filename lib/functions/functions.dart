@@ -23,9 +23,7 @@ class Functions {
     Map<String, dynamic> questionMap = {
       USER_ID_FIELD: _userId,
       QUESTION_FIELD: question,
-      CREATED_AT_FIELD: DateTime
-          .now()
-          .millisecondsSinceEpoch
+      CREATED_AT_FIELD: DateTime.now().millisecondsSinceEpoch
     };
 
     /// add question to database
@@ -54,9 +52,7 @@ class Functions {
       USER_ID_FIELD: _userId,
       ANSWER_FIELD: answer,
       QUESTION_ID: question.id,
-      CREATED_AT_FIELD: DateTime
-          .now()
-          .millisecondsSinceEpoch
+      CREATED_AT_FIELD: DateTime.now().millisecondsSinceEpoch
     };
 
     /// add answer to question on database

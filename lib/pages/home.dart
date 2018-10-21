@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/models/question.dart';
+import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/my_profile.dart';
@@ -13,6 +14,8 @@ final fun = Functions();
 final loginFunctions = LoginFunctions();
 final qnFun = Question();
 
+final userFun = User();
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,6 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _isLoggedIn = false;
+  var _user;
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +33,23 @@ class _HomePageState extends State<HomePage> {
       });
     });
 
+    userFun.getCurrentUser().then((user) {
+      setState(() {
+        _user = user;
+      });
+    });
+
     _goToProfilePage() {
       _isLoggedIn
           ? Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (_) => UserProfilePage(), fullscreenDialog: true))
+              builder: (_) =>
+                  UserProfilePage(
+                    user: _user,
+                  )))
           : Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => LoginPage(), fullscreenDialog: true));
+          context, MaterialPageRoute(builder: (_) => LoginPage()));
     }
 
     _goToLoginPage() {
