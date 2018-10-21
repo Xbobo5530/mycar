@@ -1,6 +1,7 @@
 const APP_NAME = 'MyCar';
 const USERS_COLLECTION = 'Users';
 const QUESTIONS_COLLECTION = 'Questions';
+const ANSWERS_COLLECTION = 'Answers';
 const welcomeText = 'Karibu';
 const introductionText = '''
 Karibu kwenye app ya my car, kwenye app hii, ni kwaajili ya wamiliki na watumiaji wamagari hususan Tanzania. \n
@@ -19,3 +20,26 @@ const askHint = 'Ask your question here';
 
 const myProfileText = 'My profile';
 const profileText = 'profile';
+
+const upVoteText = 'Upvote';
+const answerText = 'Answer';
+
+const CREATED_AT_FIELD = 'created_at';
+const USER_ID_FIELD = 'user_id';
+const QUESTION_FIELD = 'question';
+const ANSWER_FIELD = 'answer';
+const QUESTION_ID = 'question_id';
+const NAME_FIELD = 'name';
+const BIO_FIELD = 'bio';
+const IMAGE_URL_FIELD = 'image_url';
+const ID_FIELD = 'image_url';
+const QUESTION_ID_FIELD = 'quesion_id';
+const VOTES_FIELD = 'votes';
+
+//view question page
+const questionText = 'Question';
+
+//answer page
+const answerHint = 'Write your answer here';
+
+const errorMessage = 'Something went wrong';

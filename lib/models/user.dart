@@ -16,10 +16,10 @@ class User {
   User({this.name, this.bio, this.imageUrl, this.createdAt});
 
   User.fromSnapshot(var value) {
-    this.name = value['name'];
-    this.bio = value['bio'];
-    this.createdAt = value['created_at'];
-    this.imageUrl = value['image_url'];
+    this.name = value[NAME_FIELD];
+    this.bio = value[BIO_FIELD];
+    this.createdAt = value[CREATED_AT_FIELD];
+    this.imageUrl = value[IMAGE_URL_FIELD];
   }
 
   Future<User> getUserFromUserId(String userId) async {

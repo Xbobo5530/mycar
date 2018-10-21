@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
+import 'package:my_car/models/question.dart';
 import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/my_profile.dart';
 import 'package:my_car/values/strings.dart';
-import 'package:my_car/views/posts_content.dart';
-import 'package:my_car/views/welcome_card.dart';
+import 'package:my_car/views/question_item.dart';
 
 const tag = 'HomePage:';
-final functions = Functions();
+final fun = Functions();
 final loginFunctions = LoginFunctions();
+final qnFun = Question();
 
 class HomePage extends StatefulWidget {
   @override
@@ -73,11 +74,23 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-        body: ListView(
-          children: <Widget>[
-            WelcomeCardView(),
-            PostsPageView(),
-          ],
-        ));
+        body: StreamBuilder(
+            stream: fun.database
+                .collection(QUESTIONS_COLLECTION)
+                .orderBy(CREATED_AT_FIELD, descending: true)
+                .snapshots(),
+            builder: (_, snapshot) {
+              if (!snapshot.hasData)
+                return Center(child: CircularProgressIndicator());
+              return ListView.builder(
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (_, index) {
+                    var question = qnFun.getQnFromSnapshots(snapshot, index);
+                    return QuestionItemView(
+                      question: question,
+                      source: 'HomePage',
+                    );
+                  });
+            }));
   }
 }
