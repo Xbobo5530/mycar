@@ -20,7 +20,7 @@ class Functions {
     var _hasError = false;
 
     /// get user details
-    var _userId = await usersFun.getUserId();
+    var _userId = await usersFun.getCurrentUserId();
 
     /// create question map
     Map<String, dynamic> questionMap = {
@@ -49,7 +49,7 @@ class Functions {
     var _hasError = false;
 
     /// get user details
-    var _userId = await usersFun.getUserId();
+    var _userId = await usersFun.getCurrentUserId();
 
     /// create answer map
     Map<String, dynamic> answerMap = {
@@ -81,7 +81,7 @@ class Functions {
     var _hasError = false;
 
     /// get current user details
-    var _userId = await usersFun.getUserId();
+    var _userId = await usersFun.getCurrentUserId();
 
     DocumentReference upvoteDocRef = await getUpvoteDocumentRef(answer);
 
@@ -121,7 +121,7 @@ class Functions {
 
   Future<DocumentReference> getUpvoteDocumentRef(Answer answer) async {
     /// get current user details
-    var _userId = await usersFun.getUserId();
+    var _userId = await usersFun.getCurrentUserId();
 
     return database
         .collection(QUESTIONS_COLLECTION)
@@ -151,7 +151,7 @@ class Functions {
 
   Future<DocumentReference> getFollowingDocumentRef(Question question) async {
     /// get current user details
-    var _userId = await usersFun.getUserId();
+    var _userId = await usersFun.getCurrentUserId();
 
     return database
         .collection(QUESTIONS_COLLECTION)
@@ -165,7 +165,7 @@ class Functions {
     var _hasError = false;
 
     /// get current user details
-    var _userId = await usersFun.getUserId();
+    var _userId = await usersFun.getCurrentUserId();
 
     DocumentReference followerDocRef = await getFollowingDocumentRef(question);
 

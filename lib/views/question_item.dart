@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
+import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
-import 'package:my_car/pages/answe_question.dart';
-import 'package:my_car/pages/my_profile.dart';
+import 'package:my_car/pages/answer_question.dart';
+import 'package:my_car/pages/login.dart';
+import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/pages/view_question.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/labeled_flat_button.dart';
@@ -12,6 +14,7 @@ import 'package:my_car/views/labeled_flat_button.dart';
 final userFun = User();
 final qnFun = Question();
 final fun = Functions();
+final loginFun = LoginFunctions();
 
 class QuestionItemView extends StatefulWidget {
   final Question question;
@@ -26,26 +29,39 @@ class QuestionItemView extends StatefulWidget {
 class _QuestionItemViewState extends State<QuestionItemView> {
   User _user;
   bool _hasFollowed = false;
+  bool _isLoggedIn = false;
   @override
   Widget build(BuildContext context) {
+    loginFun.isLoggedIn().then((isLoggedIn) {
+      setState(() {
+        _isLoggedIn = isLoggedIn;
+      });
+    });
+
     userFun.getUserFromUserId(widget.question.userId).then((user) {
       setState(() {
         _user = user;
       });
     });
 
-    fun.userHasFollowed(widget.question).then((hasFollowed) {
+    _isLoggedIn
+        ? fun.userHasFollowed(widget.question).then((hasFollowed) {
       setState(() {
         _hasFollowed = hasFollowed;
       });
-    });
+    })
+        : _hasFollowed = false;
 
-    _answerQuestion() {
-      Navigator.push(
+    _answerQuestion() async {
+      bool _isLoggedIn = await loginFun.isLoggedIn();
+      _isLoggedIn
+          ? Navigator.push(
           context,
           MaterialPageRoute(
               builder: (_) => AnswerQuestionPage(question: widget.question),
-              fullscreenDialog: true));
+              fullscreenDialog: true))
+          : Navigator.push(
+          context, MaterialPageRoute(builder: (_) => LoginPage()));
     }
 
     _shareQuestion() {
@@ -57,10 +73,13 @@ class _QuestionItemViewState extends State<QuestionItemView> {
     );
 
     _followQuestion() async {
-      //todo handle follow question
-      StatusCode statusCode = await fun.followQuestion(widget.question);
-      if (statusCode == StatusCode.failed)
-        Scaffold.of(context).showSnackBar(snackBar);
+      if (_isLoggedIn) {
+        StatusCode statusCode = await fun.followQuestion(widget.question);
+        if (statusCode == StatusCode.failed)
+          Scaffold.of(context).showSnackBar(snackBar);
+      } else {
+        Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
+      }
     }
 
     _openQuestion() {

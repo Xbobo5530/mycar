@@ -75,15 +75,14 @@ class _AnswerQuestionPageState extends State<AnswerQuestionPage> {
             children: <Widget>[
               RaisedButton(
                 color: Colors.cyan,
-                onPressed: () =>
-                _submitStatus == StatusCode.waiting
+                onPressed: () => _submitStatus == StatusCode.waiting
                     ? null
                     : _submitAnswer(context),
                 child: _submitStatus == StatusCode.waiting
                     ? MyProgressIndicator(
-                  size: 15.0,
-                  color: Colors.white,
-                )
+                        size: 15.0,
+                        color: Colors.white,
+                      )
                     : Text(submitText),
               )
             ],

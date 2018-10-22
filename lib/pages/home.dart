@@ -5,7 +5,7 @@ import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/login.dart';
-import 'package:my_car/pages/my_profile.dart';
+import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/question_item.dart';
 
@@ -53,10 +53,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     _goToLoginPage() {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => LoginPage(), fullscreenDialog: true));
+      Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
     }
 
     _createNewThread() {

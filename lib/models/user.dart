@@ -40,7 +40,7 @@ class User {
 
   Future<User> getCurrentUser() async {
     var _hasError = false;
-    var userId = await getUserId();
+    var userId = await getCurrentUserId();
     var userDoc = await functions.database
         .collection(USERS_COLLECTION)
         .document(userId)
@@ -55,8 +55,12 @@ class User {
       return null;
   }
 
-  Future<String> getUserId() async {
-    var user = await loginFun.auth.currentUser();
-    return user.uid;
+  Future<String> getCurrentUserId() async {
+    if (await loginFun.isLoggedIn()) {
+      var user = await loginFun.auth.currentUser();
+      return user.uid;
+    } else {
+      return null;
+    }
   }
 }

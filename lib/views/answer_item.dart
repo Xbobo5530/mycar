@@ -3,8 +3,9 @@ import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/answer.dart';
 import 'package:my_car/models/user.dart';
-import 'package:my_car/pages/my_profile.dart';
+import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/values/strings.dart';
+import 'package:my_car/views/labeled_flat_button.dart';
 
 final userFun = User();
 final ansFun = Answer();
@@ -74,31 +75,27 @@ class _AnswerItemViewState extends State<AnswerItemView> {
         Scaffold.of(context).showSnackBar(snackBar);
     }
 
-    var _voteSection = InkWell(
-      onTap: () => _upVoteAnswer(),
-      child: Row(children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-          child: Icon(
-            Icons.thumb_up,
-            size: 18.0,
-            color: _hasUpvoted ? Colors.blue : Colors.grey,
-          ),
-        ),
-        Text(
-          upvoteText,
-          style: TextStyle(color: _hasUpvoted ? Colors.blue : Colors.grey),
-        ),
-      ]),
-    );
-
     return ListTile(
       title: Text(
         widget.answer.answer,
       ),
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[_userSection, _voteSection],
+        children: <Widget>[
+          _userSection,
+          LabeledFlatButton(
+            icon: Icon(
+              Icons.thumb_up,
+              size: 18.0,
+              color: _hasUpvoted ? Colors.blue : Colors.grey,
+            ),
+            label: Text(
+              upvoteText,
+              style: TextStyle(color: _hasUpvoted ? Colors.blue : Colors.grey),
+            ),
+            onTap: () => _upVoteAnswer(),
+          ) /*_voteSection*/
+        ],
       ),
     );
   }
