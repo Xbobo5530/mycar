@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/values/strings.dart';
+import 'package:my_car/views/my_progress_indicator.dart';
 
 final fun = Functions();
 
-class AskPage extends StatelessWidget {
+class AskPage extends StatefulWidget {
+  @override
+  _AskPageState createState() => _AskPageState();
+}
+
+class _AskPageState extends State<AskPage> {
+  StatusCode _submitStatus;
   @override
   Widget build(BuildContext context) {
     var _mController = TextEditingController();
 
     final snackBar = SnackBar(
-      content: Text('Yay! A SnackBar!'),
+      content: Text(errorMessage),
     );
 
     _submitQuestion(BuildContext context) async {
@@ -19,7 +26,13 @@ class AskPage extends StatelessWidget {
       //todo receive the error message then status code is 'failed'
       var question = _mController.text.trim();
       if (question.isNotEmpty) {
+        setState(() {
+          _submitStatus = StatusCode.waiting;
+        });
         StatusCode statusCode = await fun.submitQuestion(question);
+        setState(() {
+          _submitStatus = statusCode;
+        });
         statusCode == StatusCode.success
             ? Navigator.pop(context)
             : Scaffold.of(context).showSnackBar(snackBar);
@@ -50,8 +63,16 @@ class AskPage extends StatelessWidget {
               children: <Widget>[
                 RaisedButton(
                   color: Colors.cyan,
-                  onPressed: () => _submitQuestion(context),
-                  child: Text(submitText),
+                  onPressed: () =>
+                  _submitStatus == StatusCode.waiting
+                      ? null
+                      : _submitQuestion(context),
+                  child: _submitStatus == StatusCode.waiting
+                      ? MyProgressIndicator(
+                    size: 15.0,
+                    color: Colors.white,
+                  )
+                      : Text(submitText),
                 )
               ],
             )

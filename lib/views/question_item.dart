@@ -7,6 +7,7 @@ import 'package:my_car/pages/answe_question.dart';
 import 'package:my_car/pages/my_profile.dart';
 import 'package:my_car/pages/view_question.dart';
 import 'package:my_car/values/strings.dart';
+import 'package:my_car/views/labeled_flat_button.dart';
 
 final userFun = User();
 final qnFun = Question();
@@ -70,21 +71,6 @@ class _QuestionItemViewState extends State<QuestionItemView> {
               fullscreenDialog: true));
     }
 
-    Widget _buildButton(Widget icon, Widget label, void onTap()) {
-      return InkWell(
-          onTap: () => onTap(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: icon,
-              ),
-              label,
-            ],
-          ));
-    }
-
     _openUserProfile() {
       Navigator.push(context,
           MaterialPageRoute(builder: (_) => UserProfilePage(user: _user)));
@@ -129,18 +115,22 @@ class _QuestionItemViewState extends State<QuestionItemView> {
         ButtonBar(
           alignment: MainAxisAlignment.center,
           children: <Widget>[
-            _buildButton(Icon(Icons.share, size: 18.0, color: Colors.grey),
-                Text(shareText), _shareQuestion),
-            _buildButton(
-                Icon(Icons.rss_feed,
+            LabeledFlatButton(
+                icon: Icon(Icons.share, size: 18.0, color: Colors.grey),
+                label: Text(shareText),
+                onTap: () => _shareQuestion()),
+            LabeledFlatButton(
+                icon: Icon(Icons.rss_feed,
                     size: 18.0,
                     color: _hasFollowed ? Colors.blue : Colors.grey),
-                Text(followText,
+                label: Text(followText,
                     style: TextStyle(
                         color: _hasFollowed ? Colors.blue : Colors.grey)),
-                _followQuestion),
-            _buildButton(Icon(Icons.edit, size: 18.0, color: Colors.grey),
-                Text(answerText), _answerQuestion),
+                onTap: () => _followQuestion()),
+            LabeledFlatButton(
+                icon: Icon(Icons.edit, size: 18.0, color: Colors.grey),
+                label: Text(answerText),
+                onTap: () => _answerQuestion()),
           ],
         )
       ],

@@ -57,7 +57,7 @@ class _ViewQuestionPageState extends State<ViewQuestionPage> {
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (_, index) {
                           var answer =
-                          ansFun.getAnsFromSnapshots(snapshot, index);
+                              ansFun.getAnsFromSnapshots(snapshot, index);
                           return AnswerItemView(
                             answer: answer,
                           );
