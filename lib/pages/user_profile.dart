@@ -16,8 +16,28 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+  bool _isLoggedIn;
+  bool _isCurrentUser;
+
   @override
   Widget build(BuildContext context) {
+    loginFunctions.isLoggedIn().then((isLoggedIn) {
+      setState(() {
+        _isLoggedIn = isLoggedIn;
+      });
+    });
+
+    if (_isLoggedIn)
+      userFun.getCurrentUserId().then((userId) {
+        userId == widget.user.id
+            ? setState(() {
+          _isCurrentUser = true;
+        })
+            : setState(() {
+          _isCurrentUser = false;
+        });
+      });
+
     _logout() {
       loginFunctions.logout();
       Navigator.pop(context);
@@ -26,6 +46,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     var basicInfoSection = ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(widget.user.imageUrl),
+        backgroundColor: Colors.black12,
       ),
       title: Text(widget.user.name),
       subtitle: widget.user.bio != null ? Text(widget.user.bio) : null,
@@ -36,7 +57,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
         title: Text(myProfileText),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.exit_to_app),
+            icon: _isLoggedIn && _isCurrentUser
+                ? Icon(Icons.exit_to_app)
+                : Container(),
             onPressed: () => _logout(),
           )
         ],

@@ -8,11 +8,11 @@ class MyCar extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var primaryColor = Colors.white;
+
     return MaterialApp(
       title: APP_NAME,
-      theme: ThemeData(
-        primarySwatch: Colors.cyan,
-      ),
+      theme: ThemeData(primaryColor: primaryColor),
       home: HomePage(),
     );
   }

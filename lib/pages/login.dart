@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
-import 'package:my_car/pages/home.dart';
+import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/values/strings.dart';
+import 'package:my_car/views/my_progress_indicator.dart';
 
 const tag = 'LoginPage:';
 final functions = Functions();
@@ -14,34 +15,46 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var progressSection;
+  StatusCode _loginStatus;
 
   @override
   Widget build(BuildContext context) {
-    _goToHomePage() {
-      print('$tag at _goToHomePage');
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
-    }
+    final snackBar = SnackBar(
+      content: Text(errorMessage),
+    );
 
-    _signInWithGoogle() async {
-      bool signInCompleted = await loginFunctions.singInWithGoogle();
-      signInCompleted ? _goToHomePage() : CircularProgressIndicator();
+    _signInWithGoogle(BuildContext context) async {
+      setState(() {
+        _loginStatus = StatusCode.waiting;
+      });
+      StatusCode loginStatusCode = await loginFunctions.singInWithGoogle();
+      setState(() {
+        _loginStatus = loginStatusCode;
+      });
+      loginStatusCode == StatusCode.success
+          ? Navigator.pop(context)
+          : Scaffold.of(context).showSnackBar(snackBar);
     }
-
-//    _showProgress() {}
 
     return Scaffold(
       appBar: AppBar(
         title: Text(loginText),
       ),
       body: Center(
-        child: RaisedButton(
-            child: Text(signInWithGoogleText),
-            onPressed: () {
-//              CircularProgressIndicator();
-              _signInWithGoogle();
-            }),
+        child: Builder(
+          builder: (context) {
+            return RaisedButton(
+                child: _loginStatus == StatusCode.waiting
+                    ? MyProgressIndicator(
+                  size: 15.0,
+                  color: Colors.cyan,
+                )
+                    : Text(signInWithGoogleText),
+                onPressed: _loginStatus == StatusCode.waiting
+                    ? null
+                    : () => _signInWithGoogle(context));
+          },
+        ),
       ),
     );
   }

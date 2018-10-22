@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_car/functions/functions.dart';
+import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/values/strings.dart';
 
 const tag = 'LoginFunctions';
@@ -25,7 +26,7 @@ class LoginFunctions {
     return user;
   }
 
-  Future<bool> _createUserDoc(FirebaseUser user) async {
+  Future<StatusCode> _createUserDoc(FirebaseUser user) async {
     print('$tag at _createUserDoc');
     var _hasError = false;
     var username = user.displayName;
@@ -48,13 +49,14 @@ class LoginFunctions {
       _hasError = true;
     });
     if (_hasError)
-      return false;
+      return StatusCode.failed;
     else
-      return true;
+      return StatusCode.success;
   }
 
-  Future<bool> _checkIfUserExists(FirebaseUser user) async {
+  Future<StatusCode> _checkIfUserExists(FirebaseUser user) async {
     print('$tag at _checkIfUserExists');
+    bool _hasError = false;
 
     var userId = user.uid;
     var userDoc = await functions.database
@@ -63,23 +65,35 @@ class LoginFunctions {
         .get()
         .catchError((error) {
       print('$tag error on checking if user exists: $error');
+      _hasError = true;
     });
 
-    if (userDoc.exists) {
-      return true;
-    } else {
-      return await _createUserDoc(user);
+    if (_hasError)
+      return StatusCode.failed;
+    else {
+      if (userDoc.exists) {
+        return StatusCode.success;
+      } else {
+        return await _createUserDoc(user);
+      }
     }
   }
 
-  Future<bool> singInWithGoogle() async {
+  Future<StatusCode> singInWithGoogle() async {
     print('$tag at singInWithGoogle');
-    var user = await _handleGoogleSignIn()
-        .catchError((error) => print('$tag error: $error'));
-    if (user != null)
-      return await _checkIfUserExists(user);
-    else
-      return false;
+    bool _hasError = false;
+    var user = await _handleGoogleSignIn().catchError((error) {
+      print('$tag error: $error');
+      _hasError = true;
+    });
+    if (_hasError)
+      return StatusCode.failed;
+    else {
+      if (user != null)
+        return await _checkIfUserExists(user);
+      else
+        return StatusCode.failed;
+    }
   }
 
   logout() {

@@ -105,6 +105,7 @@ class _QuestionItemViewState extends State<QuestionItemView> {
             child: CircleAvatar(
               backgroundImage: NetworkImage(_user.imageUrl),
               radius: 12.0,
+              backgroundColor: Colors.black12,
             ),
           )
               : Padding(

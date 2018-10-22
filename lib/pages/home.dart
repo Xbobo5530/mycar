@@ -33,11 +33,13 @@ class _HomePageState extends State<HomePage> {
       });
     });
 
-    userFun.getCurrentUser().then((user) {
-      setState(() {
-        _user = user;
+    if (_isLoggedIn) {
+      userFun.getCurrentUser().then((user) {
+        setState(() {
+          _user = user;
+        });
       });
-    });
+    }
 
     _goToProfilePage() {
       _isLoggedIn
@@ -66,7 +68,7 @@ class _HomePageState extends State<HomePage> {
           title: Text(APP_NAME),
           leading: IconButton(
               icon: Icon(Icons.add),
-              onPressed: _isLoggedIn
+              onPressed: _user != null
                   ? () => _createNewThread()
                   : () => _goToLoginPage()),
           actions: <Widget>[
@@ -74,7 +76,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
                 onPressed: () => _goToProfilePage(),
-                icon: _isLoggedIn
+                icon: _user != null
                     ? CircleAvatar(
                   radius: 12.0,
                   backgroundImage: NetworkImage(_user.imageUrl),
