@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
+import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/answer.dart';
 import 'package:my_car/models/user.dart';
+import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/labeled_flat_button.dart';
@@ -10,6 +12,7 @@ import 'package:my_car/views/labeled_flat_button.dart';
 final userFun = User();
 final ansFun = Answer();
 final fun = Functions();
+final loginFun = LoginFunctions();
 
 class AnswerItemView extends StatefulWidget {
   final Answer answer;
@@ -23,6 +26,7 @@ class AnswerItemView extends StatefulWidget {
 class _AnswerItemViewState extends State<AnswerItemView> {
   User _user;
   bool _hasUpvoted = false;
+  bool _isLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +37,29 @@ class _AnswerItemViewState extends State<AnswerItemView> {
       });
     });
 
-    fun.userHasUpvoted(widget.answer).then((hasUpvoted) {
+    loginFun.isLoggedIn().then((isLoggedIn) {
       setState(() {
-        _hasUpvoted = hasUpvoted;
+        _isLoggedIn = isLoggedIn;
       });
     });
 
+    if (_isLoggedIn)
+      fun.userHasUpvoted(widget.answer).then((hasUpvoted) {
+        setState(() {
+          _hasUpvoted = hasUpvoted;
+        });
+      });
+    else
+      setState(() {
+        _hasUpvoted = false;
+      });
+
     _openUserProfile() {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (_) => UserProfilePage(user: _user)));
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return UserProfilePage(user: _user);
+          });
     }
 
     var _userSection = _user != null
@@ -75,6 +93,14 @@ class _AnswerItemViewState extends State<AnswerItemView> {
         Scaffold.of(context).showSnackBar(snackBar);
     }
 
+    _goToLoginPage() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return LoginPage();
+          });
+    }
+
     return ListTile(
       title: Text(
         widget.answer.answer,
@@ -93,8 +119,8 @@ class _AnswerItemViewState extends State<AnswerItemView> {
               upvoteText,
               style: TextStyle(color: _hasUpvoted ? Colors.blue : Colors.grey),
             ),
-            onTap: () => _upVoteAnswer(),
-          ) /*_voteSection*/
+            onTap: _isLoggedIn ? () => _upVoteAnswer() : _goToLoginPage(),
+          )
         ],
       ),
     );

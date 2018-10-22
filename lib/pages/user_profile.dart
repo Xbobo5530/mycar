@@ -16,8 +16,8 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  bool _isLoggedIn;
-  bool _isCurrentUser;
+  bool _isLoggedIn = false;
+  bool _isCurrentUser = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +53,17 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(myProfileText),
-        actions: <Widget>[
-          IconButton(
-            icon: _isLoggedIn && _isCurrentUser
-                ? Icon(Icons.exit_to_app)
-                : Container(),
-            onPressed: () => _logout(),
-          )
-        ],
-      ),
+//      appBar: AppBar(
+//        title: Text(myProfileText),
+//        actions: <Widget>[
+//          IconButton(
+//            icon: _isLoggedIn && _isCurrentUser
+//                ? Icon(Icons.exit_to_app)
+//                : Container(),
+//            onPressed: () => _logout(),
+//          )
+//        ],
+//      ),
       body: ListView(
         children: <Widget>[
           basicInfoSection,

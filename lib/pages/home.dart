@@ -42,20 +42,32 @@ class _HomePageState extends State<HomePage> {
     }
 
     _goToProfilePage() {
-      _isLoggedIn
-          ? Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) =>
-                  UserProfilePage(
-                    user: _user,
-                  )))
-          : Navigator.push(
-          context, MaterialPageRoute(builder: (_) => LoginPage()));
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            if (_isLoggedIn)
+              return UserProfilePage(user: _user);
+            else
+              return LoginPage();
+          });
+
+//      _isLoggedIn
+//          ? Navigator.push(
+//              context,
+//              MaterialPageRoute(
+//                  builder: (_) => UserProfilePage(
+//                        user: _user,
+//                      )))
+//          : Navigator.push(
+//              context, MaterialPageRoute(builder: (_) => LoginPage()));
     }
 
     _goToLoginPage() {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return LoginPage();
+          });
     }
 
     _createNewThread() {
@@ -68,7 +80,7 @@ class _HomePageState extends State<HomePage> {
           title: Text(APP_NAME),
           leading: IconButton(
               icon: Icon(Icons.add),
-              onPressed: _user != null
+              onPressed: _isLoggedIn
                   ? () => _createNewThread()
                   : () => _goToLoginPage()),
           actions: <Widget>[

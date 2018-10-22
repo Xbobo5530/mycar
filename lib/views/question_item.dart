@@ -52,6 +52,14 @@ class _QuestionItemViewState extends State<QuestionItemView> {
     })
         : _hasFollowed = false;
 
+    _goToLoginPage() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return LoginPage();
+          });
+    }
+
     _answerQuestion() async {
       bool _isLoggedIn = await loginFun.isLoggedIn();
       _isLoggedIn
@@ -60,8 +68,7 @@ class _QuestionItemViewState extends State<QuestionItemView> {
           MaterialPageRoute(
               builder: (_) => AnswerQuestionPage(question: widget.question),
               fullscreenDialog: true))
-          : Navigator.push(
-          context, MaterialPageRoute(builder: (_) => LoginPage()));
+          : _goToLoginPage();
     }
 
     _shareQuestion() {
@@ -78,7 +85,7 @@ class _QuestionItemViewState extends State<QuestionItemView> {
         if (statusCode == StatusCode.failed)
           Scaffold.of(context).showSnackBar(snackBar);
       } else {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
+        _goToLoginPage();
       }
     }
 
@@ -91,8 +98,11 @@ class _QuestionItemViewState extends State<QuestionItemView> {
     }
 
     _openUserProfile() {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (_) => UserProfilePage(user: _user)));
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return UserProfilePage(user: _user);
+          });
     }
 
     var _userSection = InkWell(
@@ -132,27 +142,37 @@ class _QuestionItemViewState extends State<QuestionItemView> {
           ),
           subtitle: _userSection,
         ),
-        ButtonBar(
-          alignment: MainAxisAlignment.center,
-          children: <Widget>[
-            LabeledFlatButton(
-                icon: Icon(Icons.share, size: 18.0, color: Colors.grey),
-                label: Text(shareText),
-                onTap: () => _shareQuestion()),
-            LabeledFlatButton(
-                icon: Icon(Icons.rss_feed,
-                    size: 18.0,
-                    color: _hasFollowed ? Colors.blue : Colors.grey),
-                label: Text(followText,
-                    style: TextStyle(
-                        color: _hasFollowed ? Colors.blue : Colors.grey)),
-                onTap: () => _followQuestion()),
-            LabeledFlatButton(
-                icon: Icon(Icons.edit, size: 18.0, color: Colors.grey),
-                label: Text(answerText),
-                onTap: () => _answerQuestion()),
-          ],
-        )
+        Material(
+          elevation: 4.0,
+          child: ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              LabeledFlatButton(
+                  icon: Icon(Icons.share, size: 18.0, color: Colors.grey),
+                  label: Text(shareText),
+                  onTap: () => _shareQuestion()),
+              LabeledFlatButton(
+                  icon: Icon(Icons.rss_feed,
+                      size: 18.0,
+                      color: _hasFollowed ? Colors.blue : Colors.grey),
+                  label: Text(followText,
+                      style: TextStyle(
+                          color: _hasFollowed ? Colors.blue : Colors.grey)),
+                  onTap: () => _followQuestion()),
+              LabeledFlatButton(
+                  icon: Icon(Icons.edit, size: 18.0, color: Colors.grey),
+                  label: Text(answerText),
+                  onTap: () => _answerQuestion()),
+            ],
+          ),
+        ),
+//        Material(
+//          elevation: 4.0,
+//          child: Container(
+//            height: 5.0,
+//            color: Colors.white,
+//          ),
+//        )
       ],
     );
   }

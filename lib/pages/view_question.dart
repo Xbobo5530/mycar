@@ -46,11 +46,9 @@ class _ViewQuestionPageState extends State<ViewQuestionPage> {
 
               return Column(
                 children: <Widget>[
-                  Card(
-                    child: QuestionItemView(
-                      question: widget.question,
-                      source: 'ViewQuestionPage',
-                    ),
+                  QuestionItemView(
+                    question: widget.question,
+                    source: 'ViewQuestionPage',
                   ),
                   Expanded(
                     child: ListView.builder(

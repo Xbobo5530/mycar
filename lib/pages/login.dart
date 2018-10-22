@@ -38,12 +38,15 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
+        leading: Container(),
         title: Text(loginText),
       ),
       body: Center(
         child: Builder(
           builder: (context) {
-            return RaisedButton(
+            return FlatButton(
+                textColor: Colors.blue,
                 child: _loginStatus == StatusCode.waiting
                     ? MyProgressIndicator(
                   size: 15.0,
