@@ -105,9 +105,7 @@ class Functions {
         USER_ID_FIELD: _userId,
         ANSWER_ID_FIELD: answer.id,
         QUESTION_ID_FIELD: answer.questionId,
-        CREATED_AT_FIELD: DateTime
-            .now()
-            .millisecondsSinceEpoch
+        CREATED_AT_FIELD: DateTime.now().millisecondsSinceEpoch
       };
       upvoteDocRef.setData(upvoteMap).catchError((error) {
         print('$tag error on adding upvote: $error');
@@ -190,9 +188,7 @@ class Functions {
       Map<String, dynamic> followMap = {
         USER_ID_FIELD: _userId,
         ANSWER_ID_FIELD: question.id,
-        CREATED_AT_FIELD: DateTime
-            .now()
-            .millisecondsSinceEpoch
+        CREATED_AT_FIELD: DateTime.now().millisecondsSinceEpoch
       };
       followerDocRef.setData(followMap).catchError((error) {
         print('$tag error on adding follow: $error');

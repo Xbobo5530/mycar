@@ -45,22 +45,22 @@ class _AnswerItemViewState extends State<AnswerItemView> {
 
     var _userSection = _user != null
         ? InkWell(
-      onTap: () => _openUserProfile(),
-      child: Row(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: CircleAvatar(
-              radius: 12.0,
-              backgroundImage: NetworkImage(
-                _user.imageUrl,
-              ),
+            onTap: () => _openUserProfile(),
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: CircleAvatar(
+                    radius: 12.0,
+                    backgroundImage: NetworkImage(
+                      _user.imageUrl,
+                    ),
+                  ),
+                ),
+                Text(_user.name)
+              ],
             ),
-          ),
-          Text(_user.name)
-        ],
-      ),
-    )
+          )
         : Container();
 
     final snackBar = SnackBar(

@@ -102,7 +102,10 @@ class _QuestionItemViewState extends State<QuestionItemView> {
               radius: 12.0,
             ),
           )
-              : Icon(Icons.account_circle, size: 45.0),
+              : Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0),
+            child: Icon(Icons.account_circle, size: 24.0),
+          ),
           _user != null
               ? Text(_user.name)
               : Container(

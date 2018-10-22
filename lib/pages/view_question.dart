@@ -43,29 +43,28 @@ class _ViewQuestionPageState extends State<ViewQuestionPage> {
             builder: (_, snapshot) {
               if (!snapshot.hasData)
                 return Center(child: CircularProgressIndicator());
-              return ListView.builder(
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (_, index) {
-                    var answer = ansFun.getAnsFromSnapshots(snapshot, index);
 
-                    if (index == 0)
-                      return Column(
-                        children: <Widget>[
-                          QuestionItemView(
-                            question: widget.question,
-                            source: 'ViewQuestionPage',
-                          ),
-                          Divider(),
-                          AnswerItemView(
+              return Column(
+                children: <Widget>[
+                  Card(
+                    child: QuestionItemView(
+                      question: widget.question,
+                      source: 'ViewQuestionPage',
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (_, index) {
+                          var answer =
+                          ansFun.getAnsFromSnapshots(snapshot, index);
+                          return AnswerItemView(
                             answer: answer,
-                          )
-                        ],
-                      );
-                    else
-                      return AnswerItemView(
-                        answer: answer,
-                      );
-                  });
+                          );
+                        }),
+                  )
+                ],
+              );
             }));
   }
 }

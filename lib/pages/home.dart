@@ -67,8 +67,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(APP_NAME),
-          leading: FlatButton(
-              child: Icon(Icons.add),
+          leading: IconButton(
+              icon: Icon(Icons.add),
               onPressed: _isLoggedIn
                   ? () => _createNewThread()
                   : () => _goToLoginPage()),
@@ -77,7 +77,12 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
                 onPressed: () => _goToProfilePage(),
-                icon: Icon(
+                icon: _isLoggedIn
+                    ? CircleAvatar(
+                  radius: 12.0,
+                  backgroundImage: NetworkImage(_user.imageUrl),
+                )
+                    : Icon(
                   Icons.account_circle,
                   size: 30.0,
                 ),
