@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
@@ -9,6 +10,7 @@ import 'package:my_car/values/strings.dart';
 
 final userFun = User();
 final qnFun = Question();
+final fun = Functions();
 
 class QuestionItemView extends StatefulWidget {
   final Question question;
@@ -22,6 +24,7 @@ class QuestionItemView extends StatefulWidget {
 
 class _QuestionItemViewState extends State<QuestionItemView> {
   User _user;
+  bool _hasFollowed = false;
   @override
   Widget build(BuildContext context) {
     userFun.getUserFromUserId(widget.question.userId).then((user) {
@@ -29,6 +32,13 @@ class _QuestionItemViewState extends State<QuestionItemView> {
         _user = user;
       });
     });
+
+    fun.userHasFollowed(widget.question).then((hasFollowed) {
+      setState(() {
+        _hasFollowed = hasFollowed;
+      });
+    });
+
     _answerQuestion() {
       Navigator.push(
           context,
@@ -40,9 +50,16 @@ class _QuestionItemViewState extends State<QuestionItemView> {
     _shareQuestion() {
       //todo handle share question
     }
+
+    final snackBar = SnackBar(
+      content: Text(errorMessage),
+    );
+
     _followQuestion() async {
       //todo handle follow question
-      StatusCode statusCode = await qnFun.followQuestion(widget.question);
+      StatusCode statusCode = await fun.followQuestion(widget.question);
+      if (statusCode == StatusCode.failed)
+        Scaffold.of(context).showSnackBar(snackBar);
     }
 
     _openQuestion() {
@@ -53,21 +70,17 @@ class _QuestionItemViewState extends State<QuestionItemView> {
               fullscreenDialog: true));
     }
 
-    Widget _buildButton(IconData icon, String label, void onTap()) {
+    Widget _buildButton(Widget icon, Widget label, void onTap()) {
       return InkWell(
           onTap: () => onTap(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(
-                  icon,
-                  size: 18.0,
-                  color: Colors.grey,
-                ),
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                child: icon,
               ),
-              Text(label)
+              label,
             ],
           ));
     }
@@ -108,14 +121,23 @@ class _QuestionItemViewState extends State<QuestionItemView> {
             widget.question.question,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
           ),
+          subtitle: _userSection,
         ),
-        _userSection,
         ButtonBar(
           alignment: MainAxisAlignment.center,
           children: <Widget>[
-            _buildButton(Icons.share, shareText, _shareQuestion),
-            _buildButton(Icons.rss_feed, followText, _followQuestion),
-            _buildButton(Icons.edit, answerText, _answerQuestion),
+            _buildButton(Icon(Icons.share, size: 18.0, color: Colors.grey),
+                Text(shareText), _shareQuestion),
+            _buildButton(
+                Icon(Icons.rss_feed,
+                    size: 18.0,
+                    color: _hasFollowed ? Colors.blue : Colors.grey),
+                Text(followText,
+                    style: TextStyle(
+                        color: _hasFollowed ? Colors.blue : Colors.grey)),
+                _followQuestion),
+            _buildButton(Icon(Icons.edit, size: 18.0, color: Colors.grey),
+                Text(answerText), _answerQuestion),
           ],
         )
       ],

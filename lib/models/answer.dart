@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/async.dart';
+import 'package:my_car/models/user.dart';
 import 'package:my_car/values/strings.dart';
+
+final usersFun = User();
 
 class Answer {
   String id, answer, userId, questionId;
@@ -23,7 +26,7 @@ class Answer {
     this.votes = document[VOTES_FIELD];
   }
 
-  Answer getQnFromSnapshots(AsyncSnapshot snapshots, int index) {
+  Answer getAnsFromSnapshots(AsyncSnapshot snapshots, int index) {
     DocumentSnapshot document = snapshots.data.documents[index];
     return Answer.fromSnapshot(document);
   }

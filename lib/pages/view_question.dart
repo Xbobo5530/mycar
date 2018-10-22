@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:my_car/functions/functions.dart';
 import 'package:my_car/models/answer.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/answer_item.dart';
 import 'package:my_car/views/question_item.dart';
 
+const tag = 'ViewQuestionPage';
 final ansFun = Answer();
+final fun = Functions();
 
 class ViewQuestionPage extends StatefulWidget {
   final Question question;
@@ -43,7 +46,7 @@ class _ViewQuestionPageState extends State<ViewQuestionPage> {
               return ListView.builder(
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (_, index) {
-                    var answer = ansFun.getQnFromSnapshots(snapshot, index);
+                    var answer = ansFun.getAnsFromSnapshots(snapshot, index);
 
                     if (index == 0)
                       return Column(
