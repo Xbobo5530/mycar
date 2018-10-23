@@ -3,84 +3,54 @@ import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/answer.dart';
+import 'package:my_car/models/login_scopped_model.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/values/strings.dart';
-import 'package:my_car/views/labeled_flat_button.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 final userFun = User();
 final ansFun = Answer();
 final fun = Functions();
 final loginFun = LoginFunctions();
 
-class AnswerItemView extends StatefulWidget {
+class AnswerItemView extends StatelessWidget {
   final Answer answer;
 
   AnswerItemView({this.answer});
 
   @override
-  _AnswerItemViewState createState() => _AnswerItemViewState();
-}
-
-class _AnswerItemViewState extends State<AnswerItemView> {
-  User _user;
-  bool _hasUpvoted = false;
-  bool _isLoggedIn = false;
-
-  @override
   Widget build(BuildContext context) {
-    userFun.getUserFromUserId(widget.answer.userId).then((user) {
-      //todo check error on closing the answer page
-      setState(() {
-        _user = user;
-      });
-    });
-
-    loginFun.isLoggedIn().then((isLoggedIn) {
-      setState(() {
-        _isLoggedIn = isLoggedIn;
-      });
-    });
-
-    if (_isLoggedIn)
-      fun.userHasUpvoted(widget.answer).then((hasUpvoted) {
-        setState(() {
-          _hasUpvoted = hasUpvoted;
-        });
-      });
-    else
-      setState(() {
-        _hasUpvoted = false;
-      });
-
-    _openUserProfile() {
+    _openUserProfile(User user) {
       showModalBottomSheet(
           context: context,
           builder: (context) {
-            return UserProfilePage(user: _user);
+            return UserProfilePage(user: user);
           });
     }
 
-    var _userSection = _user != null
-        ? InkWell(
-            onTap: () => _openUserProfile(),
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: CircleAvatar(
-                    radius: 12.0,
-                    backgroundImage: NetworkImage(
-                      _user.imageUrl,
-                    ),
-                  ),
-                ),
-                Text(_user.name)
-              ],
-            ),
-          )
-        : Container();
+    var _userSection = ScopedModelDescendant<MyCarModel>(
+      builder: (BuildContext context, Widget child, MyCarModel model) {
+        model.getUserFromId(answer.userId);
+
+        return GestureDetector(
+          onTap: model.userFromId != null
+              ? () => _openUserProfile(model.userFromId)
+              : null,
+          child: Chip(
+              avatar: model.userFromId != null
+                  ? CircleAvatar(
+                backgroundImage: NetworkImage(model.userFromId.imageUrl),
+                backgroundColor: Colors.black12,
+              )
+                  : Icon(Icons.account_circle),
+              label: model.userFromId != null
+                  ? Text(model.userFromId.name)
+                  : LinearProgressIndicator()),
+        );
+      },
+    );
 
     final snackBar = SnackBar(
       content: Text(errorMessage),
@@ -88,7 +58,7 @@ class _AnswerItemViewState extends State<AnswerItemView> {
 
     _upVoteAnswer() async {
       //todo handle up vote answer
-      StatusCode statusCode = await fun.upvoteAnswer(widget.answer);
+      StatusCode statusCode = await fun.upvoteAnswer(answer);
       if (statusCode == StatusCode.failed)
         Scaffold.of(context).showSnackBar(snackBar);
     }
@@ -103,23 +73,31 @@ class _AnswerItemViewState extends State<AnswerItemView> {
 
     return ListTile(
       title: Text(
-        widget.answer.answer,
+        answer.answer,
       ),
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           _userSection,
-          LabeledFlatButton(
-            icon: Icon(
-              Icons.thumb_up,
-              size: 18.0,
-              color: _hasUpvoted ? Colors.blue : Colors.grey,
-            ),
-            label: Text(
-              upvoteText,
-              style: TextStyle(color: _hasUpvoted ? Colors.blue : Colors.grey),
-            ),
-            onTap: _isLoggedIn ? () => _upVoteAnswer() : _goToLoginPage(),
+          ScopedModelDescendant<MyCarModel>(
+            builder: (BuildContext context, Widget child, MyCarModel model) {
+              model.hasUserUpvoted(answer);
+              return GestureDetector(
+                onTap: model.isLoggedIn
+                    ? () => _upVoteAnswer()
+                    : () => _goToLoginPage(),
+                child: Chip(
+                    avatar: Icon(
+                      Icons.thumb_up,
+                      color: model.hasUpvoted ? Colors.blue : Colors.grey,
+                    ),
+                    label: Text(
+                      upvoteText,
+                      style: TextStyle(
+                          color: model.hasUpvoted ? Colors.blue : Colors.grey),
+                    )),
+              );
+            },
           )
         ],
       ),

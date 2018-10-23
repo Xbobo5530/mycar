@@ -1,5 +1,6 @@
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
+import 'package:my_car/models/answer.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -22,15 +23,19 @@ class MyCarModel extends Model {
 
   bool get hasFollowed => _hasFollowed;
 
+  bool _hasUpvoted = false;
+
+  bool get hasUpvoted => _hasUpvoted;
+
   User _userFromId;
 
   User get userFromId => _userFromId;
 
-//  MyCarModel() {
-//    print('$tag at LoginModel()');
-//    getLoginStatus();
-//    getCurrentUser();
-//  }
+  MyCarModel() {
+    print('$tag at LoginModel()');
+    getLoginStatus();
+    getCurrentUser();
+  }
 
   void getLoginStatus() {
     // get login status
@@ -56,6 +61,13 @@ class MyCarModel extends Model {
       _hasFollowed = false;
 
     notifyListeners();
+  }
+
+  void hasUserUpvoted(Answer answer) async {
+    if (await loginFun.isLoggedIn())
+      _hasUpvoted = await fun.userHasUpvoted(answer);
+    else
+      _hasUpvoted = false;
   }
 
   void getUserFromId(String userId) async {
