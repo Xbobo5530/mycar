@@ -46,7 +46,7 @@ class UserProfilePage extends StatelessWidget {
       builder: (BuildContext context, Widget child, MyCarModel model) {
         model.checkIsCurrentUser(user.id);
 
-        if (isCurrentUser)
+        if (isCurrentUser != null && isCurrentUser)
           return ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text(logoutText),

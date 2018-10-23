@@ -75,14 +75,14 @@ class HomePage extends StatelessWidget {
                 : () => _goToLoginPage(),
             icon: model.isLoggedIn
                 ? CircleAvatar(
-              radius: 12.0,
-              backgroundImage: NetworkImage(model.currentUser.imageUrl),
-            )
+                    radius: 12.0,
+                    backgroundImage: NetworkImage(model.currentUser.imageUrl),
+                  )
                 : Icon(
-              Icons.account_circle,
-              size: 30.0,
-              color: Colors.grey,
-            ),
+                    Icons.account_circle,
+                    size: 30.0,
+                    color: Colors.grey,
+                  ),
           );
         },
       ),
