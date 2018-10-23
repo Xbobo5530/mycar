@@ -49,9 +49,9 @@ class _LoginPageState extends State<LoginPage> {
                 textColor: Colors.blue,
                 child: _loginStatus == StatusCode.waiting
                     ? MyProgressIndicator(
-                  size: 15.0,
-                  color: Colors.cyan,
-                )
+                        size: 15.0,
+                        color: Colors.cyan,
+                      )
                     : Text(signInWithGoogleText),
                 onPressed: _loginStatus == StatusCode.waiting
                     ? null

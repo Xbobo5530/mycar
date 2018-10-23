@@ -1,6 +1,10 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
+import 'package:my_car/models/login_scopped_model.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/ask.dart';
@@ -8,58 +12,34 @@ import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/question_item.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 const tag = 'HomePage:';
 final fun = Functions();
-final loginFunctions = LoginFunctions();
+final loginFun = LoginFunctions();
 final qnFun = Question();
 
 final userFun = User();
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  var _isLoggedIn = false;
-  var _user;
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    loginFunctions.isLoggedIn().then((isLoggedIn) {
-      setState(() {
-        _isLoggedIn = isLoggedIn;
-      });
-    });
-
-    if (_isLoggedIn) {
-      userFun.getCurrentUser().then((user) {
-        setState(() {
-          _user = user;
-        });
-      });
-    }
+    Stream<QuerySnapshot> _data = fun.database
+        .collection(QUESTIONS_COLLECTION)
+        .orderBy(CREATED_AT_FIELD, descending: true)
+        .snapshots();
 
     _goToProfilePage() {
       showModalBottomSheet(
           context: context,
           builder: (context) {
-            if (_isLoggedIn)
-              return UserProfilePage(user: _user);
-            else
-              return LoginPage();
+            return ScopedModelDescendant<MyCarModel>(
+              builder: (BuildContext context, Widget child, MyCarModel model) {
+//                model.getLoginStatus();
+                return UserProfilePage(user: model.currentUser);
+              },
+            );
           });
-
-//      _isLoggedIn
-//          ? Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                  builder: (_) => UserProfilePage(
-//                        user: _user,
-//                      )))
-//          : Navigator.push(
-//              context, MaterialPageRoute(builder: (_) => LoginPage()));
     }
 
     _goToLoginPage() {
@@ -70,54 +50,67 @@ class _HomePageState extends State<HomePage> {
           });
     }
 
-    _createNewThread() {
+    _goToAskQuestionPage() {
       Navigator.push(context,
           MaterialPageRoute(builder: (_) => AskPage(), fullscreenDialog: true));
     }
 
+    var _askQuestionSection = ScopedModelDescendant<MyCarModel>(
+      builder: (BuildContext context, Widget child, MyCarModel model) {
+        return IconButton(
+            icon: Icon(Icons.add),
+            onPressed: model.isLoggedIn
+                ? () => _goToAskQuestionPage()
+                : () => _goToLoginPage());
+      },
+    );
+
+    var _currentUserProfileSection = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ScopedModelDescendant<MyCarModel>(
+        builder: (BuildContext context, Widget child, MyCarModel model) {
+          return IconButton(
+            onPressed: model.isLoggedIn
+                ? () => _goToProfilePage()
+                : () => _goToLoginPage(),
+            icon: model.isLoggedIn
+                ? CircleAvatar(
+              radius: 12.0,
+              backgroundImage: NetworkImage(model.currentUser.imageUrl),
+            )
+                : Icon(
+              Icons.account_circle,
+              size: 30.0,
+            ),
+          );
+        },
+      ),
+    );
+
+    var _bodySection = StreamBuilder(
+        stream: _data,
+        builder: (_, snapshot) {
+          if (!snapshot.hasData)
+            return Center(child: CircularProgressIndicator());
+          return ListView.builder(
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (_, index) {
+                var question = qnFun.getQnFromSnapshots(snapshot, index);
+                return QuestionItemView(
+                  question: question,
+                  source: 'HomePage',
+                );
+              });
+        });
+
     return Scaffold(
         appBar: AppBar(
           title: Text(APP_NAME),
-          leading: IconButton(
-              icon: Icon(Icons.add),
-              onPressed: _isLoggedIn
-                  ? () => _createNewThread()
-                  : () => _goToLoginPage()),
+          leading: _askQuestionSection,
           actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                onPressed: () => _goToProfilePage(),
-                icon: _user != null
-                    ? CircleAvatar(
-                  radius: 12.0,
-                  backgroundImage: NetworkImage(_user.imageUrl),
-                )
-                    : Icon(
-                  Icons.account_circle,
-                  size: 30.0,
-                ),
-              ),
-            )
+            _currentUserProfileSection,
           ],
         ),
-        body: StreamBuilder(
-            stream: fun.database
-                .collection(QUESTIONS_COLLECTION)
-                .orderBy(CREATED_AT_FIELD, descending: true)
-                .snapshots(),
-            builder: (_, snapshot) {
-              if (!snapshot.hasData)
-                return Center(child: CircularProgressIndicator());
-              return ListView.builder(
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (_, index) {
-                    var question = qnFun.getQnFromSnapshots(snapshot, index);
-                    return QuestionItemView(
-                      question: question,
-                      source: 'HomePage',
-                    );
-                  });
-            }));
+        body: _bodySection);
   }
 }

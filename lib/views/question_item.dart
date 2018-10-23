@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/functions/status_code.dart';
+import 'package:my_car/models/login_scopped_model.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/answer_question.dart';
@@ -10,48 +11,20 @@ import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/pages/view_question.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/labeled_flat_button.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 final userFun = User();
 final qnFun = Question();
 final fun = Functions();
 final loginFun = LoginFunctions();
 
-class QuestionItemView extends StatefulWidget {
+class QuestionItemView extends StatelessWidget {
   final Question question;
   final String source;
 
   QuestionItemView({this.question, this.source});
-
-  @override
-  _QuestionItemViewState createState() => _QuestionItemViewState();
-}
-
-class _QuestionItemViewState extends State<QuestionItemView> {
-  User _user;
-  bool _hasFollowed = false;
-  bool _isLoggedIn = false;
   @override
   Widget build(BuildContext context) {
-    loginFun.isLoggedIn().then((isLoggedIn) {
-      setState(() {
-        _isLoggedIn = isLoggedIn;
-      });
-    });
-
-    userFun.getUserFromUserId(widget.question.userId).then((user) {
-      setState(() {
-        _user = user;
-      });
-    });
-
-    _isLoggedIn
-        ? fun.userHasFollowed(widget.question).then((hasFollowed) {
-      setState(() {
-        _hasFollowed = hasFollowed;
-      });
-    })
-        : _hasFollowed = false;
-
     _goToLoginPage() {
       showModalBottomSheet(
           context: context,
@@ -60,15 +33,12 @@ class _QuestionItemViewState extends State<QuestionItemView> {
           });
     }
 
-    _answerQuestion() async {
-      bool _isLoggedIn = await loginFun.isLoggedIn();
-      _isLoggedIn
-          ? Navigator.push(
+    _goToAnswerQuestionPage() {
+      Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (_) => AnswerQuestionPage(question: widget.question),
-              fullscreenDialog: true))
-          : _goToLoginPage();
+              builder: (_) => AnswerQuestionPage(question: question),
+              fullscreenDialog: true));
     }
 
     _shareQuestion() {
@@ -80,100 +50,115 @@ class _QuestionItemViewState extends State<QuestionItemView> {
     );
 
     _followQuestion() async {
-      if (_isLoggedIn) {
-        StatusCode statusCode = await fun.followQuestion(widget.question);
-        if (statusCode == StatusCode.failed)
-          Scaffold.of(context).showSnackBar(snackBar);
-      } else {
-        _goToLoginPage();
-      }
+      StatusCode statusCode = await fun.followQuestion(question);
+      if (statusCode == StatusCode.failed)
+        Scaffold.of(context).showSnackBar(snackBar);
     }
 
     _openQuestion() {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (_) => ViewQuestionPage(question: widget.question),
+              builder: (_) => ViewQuestionPage(question: question),
               fullscreenDialog: true));
     }
 
-    _openUserProfile() {
+    _openUserProfile(User user) {
       showModalBottomSheet(
           context: context,
           builder: (context) {
-            return UserProfilePage(user: _user);
+            return UserProfilePage(user: user);
           });
     }
 
-    var _userSection = InkWell(
-      onTap: () => _openUserProfile(),
+    var _userSection = Container(
       child: Row(
         children: <Widget>[
-          _user != null
-              ? Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(_user.imageUrl),
-              radius: 12.0,
-              backgroundColor: Colors.black12,
-            ),
+          ScopedModelDescendant<MyCarModel>(
+            builder: (BuildContext context, Widget child, MyCarModel model) {
+              model.getUserFromId(question.userId);
+              var _user = model.userFromId;
+              return GestureDetector(
+                onTap: _user != null ? () => _openUserProfile(_user) : null,
+                child: Chip(
+                  label: _user != null
+                      ? Text(_user.name)
+                      : LinearProgressIndicator(),
+                  avatar: _user != null
+                      ? CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    backgroundImage: NetworkImage(_user.imageUrl),
+                  )
+                      : Icon(Icons.account_circle),
+                ),
+              );
+            },
           )
-              : Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 4.0),
-            child: Icon(Icons.account_circle, size: 24.0),
-          ),
-          _user != null
-              ? Text(_user.name)
-              : Container(
-            width: 4.0,
-            color: Colors.black12,
-          ),
         ],
       ),
     );
 
-    return Column(
-      children: <Widget>[
-        ListTile(
-          onTap: widget.source == 'HomePage' ? () => _openQuestion() : null,
-          title: Text(
-            widget.question.question,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+    var _followButton = ScopedModelDescendant<MyCarModel>(
+      builder: (BuildContext context, Widget child, MyCarModel model) {
+        model.hasUserFollowed(question);
+
+        return LabeledFlatButton(
+            icon: Icon(Icons.rss_feed,
+                size: 18.0,
+                color: model.hasFollowed ? Colors.blue : Colors.grey),
+            label: Text(followText,
+                style: TextStyle(
+                    color: model.hasFollowed ? Colors.blue : Colors.grey)),
+            onTap: model.hasFollowed
+                ? () => _followQuestion()
+                : () => _goToLoginPage());
+      },
+    );
+
+    var _shareButton = LabeledFlatButton(
+        icon: Icon(Icons.share, size: 18.0, color: Colors.grey),
+        label: Text(shareText),
+        onTap: () => _shareQuestion());
+
+    var _answerButton = ScopedModelDescendant<MyCarModel>(
+      builder: (BuildContext context, Widget child, MyCarModel model) {
+        return LabeledFlatButton(
+            icon: Icon(Icons.edit, size: 18.0, color: Colors.grey),
+            label: Text(answerText),
+            onTap: model.isLoggedIn
+                ? () => _goToAnswerQuestionPage()
+                : () => _goToLoginPage());
+      },
+    );
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            onTap: source == 'HomePage' ? () => _openQuestion() : null,
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                question.question,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+              ),
+            ),
+            subtitle: _userSection,
           ),
-          subtitle: _userSection,
-        ),
-        Material(
-          elevation: 4.0,
-          child: ButtonBar(
-            alignment: MainAxisAlignment.center,
-            children: <Widget>[
-              LabeledFlatButton(
-                  icon: Icon(Icons.share, size: 18.0, color: Colors.grey),
-                  label: Text(shareText),
-                  onTap: () => _shareQuestion()),
-              LabeledFlatButton(
-                  icon: Icon(Icons.rss_feed,
-                      size: 18.0,
-                      color: _hasFollowed ? Colors.blue : Colors.grey),
-                  label: Text(followText,
-                      style: TextStyle(
-                          color: _hasFollowed ? Colors.blue : Colors.grey)),
-                  onTap: () => _followQuestion()),
-              LabeledFlatButton(
-                  icon: Icon(Icons.edit, size: 18.0, color: Colors.grey),
-                  label: Text(answerText),
-                  onTap: () => _answerQuestion()),
-            ],
+          Material(
+            elevation: 4.0,
+            child: ButtonBar(
+              alignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _shareButton,
+                _followButton,
+                _answerButton,
+              ],
+            ),
           ),
-        ),
-//        Material(
-//          elevation: 4.0,
-//          child: Container(
-//            height: 5.0,
-//            color: Colors.white,
-//          ),
-//        )
-      ],
+        ],
+      ),
     );
   }
 }

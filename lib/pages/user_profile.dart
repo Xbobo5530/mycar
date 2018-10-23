@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/models/user.dart';
-import 'package:my_car/values/strings.dart';
 
 final loginFunctions = LoginFunctions();
 final userFun = User();
