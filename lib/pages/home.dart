@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
-import 'package:my_car/models/login_scopped_model.dart';
+import 'package:my_car/models/main_scopped_model.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/ask.dart';
@@ -35,8 +35,8 @@ class HomePage extends StatelessWidget {
           builder: (context) {
             return ScopedModelDescendant<MyCarModel>(
               builder: (BuildContext context, Widget child, MyCarModel model) {
-//                model.getLoginStatus();
-                return UserProfilePage(user: model.currentUser);
+                return UserProfilePage(
+                    user: model.currentUser, isCurrentUser: true);
               },
             );
           });
@@ -81,6 +81,7 @@ class HomePage extends StatelessWidget {
                 : Icon(
               Icons.account_circle,
               size: 30.0,
+              color: Colors.grey,
             ),
           );
         },

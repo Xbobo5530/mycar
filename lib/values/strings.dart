@@ -48,3 +48,7 @@ const questionText = 'Question';
 const answerHint = 'Write your answer here';
 
 const errorMessage = 'Something went wrong';
+const logoutText = 'Logout';
+
+const devByText = 'Developed by NyayoZangu Labs';
+const emailUrl = 'mailto:dev@nyayozangu.com?subject=MyCarApp';

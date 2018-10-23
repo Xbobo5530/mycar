@@ -10,48 +10,37 @@ const tag = 'ViewQuestionPage';
 final ansFun = Answer();
 final fun = Functions();
 
-class ViewQuestionPage extends StatefulWidget {
+class ViewQuestionPage extends StatelessWidget {
   final Question question;
 
   ViewQuestionPage({this.question});
 
   @override
-  _ViewQuestionPageState createState() => _ViewQuestionPageState();
-}
-
-class _ViewQuestionPageState extends State<ViewQuestionPage> {
-  var _data;
-
-  @override
-  void initState() {
-    _data = fun.database
+  Widget build(BuildContext context) {
+    var _data = fun.database
         .collection(QUESTIONS_COLLECTION)
-        .document(widget.question.id)
+        .document(question.id)
         .collection(ANSWERS_COLLECTION)
         .snapshots();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(questionText),
         ),
-        body: StreamBuilder(
-            stream: _data,
-            builder: (_, snapshot) {
-              if (!snapshot.hasData)
-                return Center(child: CircularProgressIndicator());
+        body: Column(
+          children: <Widget>[
+            QuestionItemView(
+              question: question,
+              source: 'ViewQuestionPage',
+            ),
+            Expanded(
+              child: StreamBuilder(
+                  stream: _data,
+                  builder: (_, snapshot) {
+                    if (!snapshot.hasData)
+                      return Center(
+                          child: Center(child: CircularProgressIndicator()));
 
-              return Column(
-                children: <Widget>[
-                  QuestionItemView(
-                    question: widget.question,
-                    source: 'ViewQuestionPage',
-                  ),
-                  Expanded(
-                    child: ListView.builder(
+                    return ListView.builder(
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (_, index) {
                           var answer =
@@ -59,10 +48,10 @@ class _ViewQuestionPageState extends State<ViewQuestionPage> {
                           return AnswerItemView(
                             answer: answer,
                           );
-                        }),
-                  )
-                ],
-              );
-            }));
+                        });
+                  }),
+            ),
+          ],
+        ));
   }
 }

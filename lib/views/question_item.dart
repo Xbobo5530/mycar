@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/functions/status_code.dart';
-import 'package:my_car/models/login_scopped_model.dart';
+import 'package:my_car/models/main_scopped_model.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/answer_question.dart';
@@ -73,6 +73,7 @@ class QuestionItemView extends StatelessWidget {
 
     var _userSection = Container(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           ScopedModelDescendant<MyCarModel>(
             builder: (BuildContext context, Widget child, MyCarModel model) {
@@ -93,6 +94,9 @@ class QuestionItemView extends StatelessWidget {
                 ),
               );
             },
+          ),
+          Chip(
+            label: Text('10'),
           )
         ],
       ),
@@ -131,32 +135,36 @@ class QuestionItemView extends StatelessWidget {
       },
     );
 
+    var _actionsSection = Material(
+      elevation: 4.0,
+      child: ButtonBar(
+        alignment: MainAxisAlignment.center,
+        children: <Widget>[
+          _shareButton,
+          _followButton,
+          _answerButton,
+        ],
+      ),
+    );
+
+    var _questionDetailsSection = ListTile(
+      onTap: source == 'HomePage' ? () => _openQuestion() : null,
+      title: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Text(
+          question.question,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+        ),
+      ),
+      subtitle: _userSection,
+    );
+
     return Padding(
       padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
       child: Column(
         children: <Widget>[
-          ListTile(
-            onTap: source == 'HomePage' ? () => _openQuestion() : null,
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                question.question,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-              ),
-            ),
-            subtitle: _userSection,
-          ),
-          Material(
-            elevation: 4.0,
-            child: ButtonBar(
-              alignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _shareButton,
-                _followButton,
-                _answerButton,
-              ],
-            ),
-          ),
+          _questionDetailsSection,
+          _actionsSection,
         ],
       ),
     );

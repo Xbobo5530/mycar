@@ -3,7 +3,7 @@ import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/answer.dart';
-import 'package:my_car/models/login_scopped_model.dart';
+import 'package:my_car/models/main_scopped_model.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/user_profile.dart';
@@ -57,7 +57,6 @@ class AnswerItemView extends StatelessWidget {
     );
 
     _upVoteAnswer() async {
-      //todo handle up vote answer
       StatusCode statusCode = await fun.upvoteAnswer(answer);
       if (statusCode == StatusCode.failed)
         Scaffold.of(context).showSnackBar(snackBar);
@@ -71,35 +70,45 @@ class AnswerItemView extends StatelessWidget {
           });
     }
 
-    return ListTile(
-      title: Text(
-        answer.answer,
-      ),
-      subtitle: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          _userSection,
-          ScopedModelDescendant<MyCarModel>(
-            builder: (BuildContext context, Widget child, MyCarModel model) {
-              model.hasUserUpvoted(answer);
-              return GestureDetector(
-                onTap: model.isLoggedIn
-                    ? () => _upVoteAnswer()
-                    : () => _goToLoginPage(),
-                child: Chip(
-                    avatar: Icon(
-                      Icons.thumb_up,
-                      color: model.hasUpvoted ? Colors.blue : Colors.grey,
-                    ),
-                    label: Text(
-                      upvoteText,
-                      style: TextStyle(
-                          color: model.hasUpvoted ? Colors.blue : Colors.grey),
-                    )),
-              );
-            },
-          )
-        ],
+    var _upvoteSection = ScopedModelDescendant<MyCarModel>(
+      builder: (BuildContext context, Widget child, MyCarModel model) {
+        model.hasUserUpvoted(answer);
+        return GestureDetector(
+          onTap:
+          model.isLoggedIn ? () => _upVoteAnswer() : () => _goToLoginPage(),
+          child: Chip(
+              avatar: Icon(
+                Icons.thumb_up,
+                size: 20.0,
+                color: model.hasUpvoted ? Colors.blue : Colors.grey,
+              ),
+              label: Text(
+                upvoteText,
+                style: TextStyle(
+                    color: model.hasUpvoted ? Colors.blue : Colors.grey),
+              )),
+        );
+      },
+    );
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+      child: ListTile(
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Text(
+            answer.answer,
+          ),
+        ),
+        subtitle: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _userSection,
+              _upvoteSection,
+            ],
+          ),
+        ),
       ),
     );
   }

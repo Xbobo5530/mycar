@@ -1,71 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/login_fun.dart';
+import 'package:my_car/models/main_scopped_model.dart';
 import 'package:my_car/models/user.dart';
+import 'package:my_car/values/strings.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-final loginFunctions = LoginFunctions();
-final userFun = User();
+const tag = 'UserProfilePage:';
+final _loginFun = LoginFunctions();
 
-class UserProfilePage extends StatefulWidget {
+class UserProfilePage extends StatelessWidget {
   final User user;
+  final bool isCurrentUser;
 
-  UserProfilePage({this.user});
-
-  @override
-  _UserProfilePageState createState() => _UserProfilePageState();
-}
-
-class _UserProfilePageState extends State<UserProfilePage> {
-  bool _isLoggedIn = false;
-  bool _isCurrentUser = false;
-
+  UserProfilePage({this.user, this.isCurrentUser});
   @override
   Widget build(BuildContext context) {
-    loginFunctions.isLoggedIn().then((isLoggedIn) {
-      setState(() {
-        _isLoggedIn = isLoggedIn;
-      });
-    });
-
-    if (_isLoggedIn)
-      userFun.getCurrentUserId().then((userId) {
-        userId == widget.user.id
-            ? setState(() {
-          _isCurrentUser = true;
-        })
-            : setState(() {
-          _isCurrentUser = false;
-        });
-      });
-
-    _logout() {
-      loginFunctions.logout();
+    _logout(MyCarModel model) {
+      _loginFun.logout();
+      model.getLoginStatus();
+      model.getCurrentUser();
       Navigator.pop(context);
     }
 
-    var basicInfoSection = ListTile(
+    var _basicInfoSection = ListTile(
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(widget.user.imageUrl),
+        backgroundImage: NetworkImage(user.imageUrl),
         backgroundColor: Colors.black12,
       ),
-      title: Text(widget.user.name),
-      subtitle: widget.user.bio != null ? Text(widget.user.bio) : null,
+      title: Text(user.name),
+      subtitle: user.bio != null ? Text(user.bio) : null,
+    );
+
+    _sendEmail() async {
+      print('$tag at send email');
+      const url = emailUrl;
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+
+    var _logoutSection = ScopedModelDescendant<MyCarModel>(
+      builder: (BuildContext context, Widget child, MyCarModel model) {
+        model.checkIsCurrentUser(user.id);
+
+        if (isCurrentUser)
+          return ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text(logoutText),
+            onTap: () => _logout(model),
+          );
+        else
+          return Container();
+      },
+    );
+
+    var _appInfoSection = ListTile(
+      leading: Icon(Icons.info),
+      title: Text(APP_NAME),
+      subtitle: Text(devByText),
+      trailing: Icon(Icons.email),
+      onTap: () => _sendEmail(),
     );
 
     return Scaffold(
-//      appBar: AppBar(
-//        title: Text(myProfileText),
-//        actions: <Widget>[
-//          IconButton(
-//            icon: _isLoggedIn && _isCurrentUser
-//                ? Icon(Icons.exit_to_app)
-//                : Container(),
-//            onPressed: () => _logout(),
-//          )
-//        ],
-//      ),
       body: ListView(
         children: <Widget>[
-          basicInfoSection,
+          _basicInfoSection,
+          Divider(),
+          _logoutSection,
+          _appInfoSection,
         ],
       ),
     );

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/functions/status_code.dart';
+import 'package:my_car/models/main_scopped_model.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 const tag = 'LoginPage:';
 final functions = Functions();
@@ -23,11 +25,14 @@ class _LoginPageState extends State<LoginPage> {
       content: Text(errorMessage),
     );
 
-    _signInWithGoogle(BuildContext context) async {
+    _signInWithGoogle(BuildContext context, MyCarModel model) async {
       setState(() {
         _loginStatus = StatusCode.waiting;
       });
       StatusCode loginStatusCode = await loginFunctions.singInWithGoogle();
+      model.getLoginStatus();
+      model.getCurrentUser();
+
       setState(() {
         _loginStatus = loginStatusCode;
       });
@@ -45,17 +50,21 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: Builder(
           builder: (context) {
-            return FlatButton(
-                textColor: Colors.blue,
-                child: _loginStatus == StatusCode.waiting
-                    ? MyProgressIndicator(
-                        size: 15.0,
-                        color: Colors.cyan,
-                      )
-                    : Text(signInWithGoogleText),
-                onPressed: _loginStatus == StatusCode.waiting
-                    ? null
-                    : () => _signInWithGoogle(context));
+            return ScopedModelDescendant<MyCarModel>(
+              builder: (BuildContext context, Widget child, model) {
+                return FlatButton(
+                    textColor: Colors.blue,
+                    child: _loginStatus == StatusCode.waiting
+                        ? MyProgressIndicator(
+                            size: 15.0,
+                            color: Colors.cyan,
+                          )
+                        : Text(signInWithGoogleText),
+                    onPressed: _loginStatus == StatusCode.waiting
+                        ? null
+                        : () => _signInWithGoogle(context, model));
+              },
+            );
           },
         ),
       ),
