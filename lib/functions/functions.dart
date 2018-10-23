@@ -202,20 +202,25 @@ class Functions {
       return StatusCode.success;
   }
 
-  Future<bool> userHasFollowed(Question question) async {
+  Future<bool> isUserFollowing(Question question) async {
     bool _hasError = false;
 
-    ///get document reference for follow
-    DocumentReference followDocRef = await getFollowingDocumentRef(question);
+    bool _isLoggedIn = await loginFun.isLoggedIn();
+    if (_isLoggedIn) {
+      ///get document reference for follow
+      DocumentReference followDocRef = await getFollowingDocumentRef(question);
 
-    /// get document and check if it exists
-    DocumentSnapshot document = await followDocRef.get().catchError((error) {
-      print('$tag error on getting document for checking following status');
-      _hasError = true;
-    });
-    if (document.exists && !_hasError)
-      return true;
-    else
+      /// get document and check if it exists
+      DocumentSnapshot document = await followDocRef.get().catchError((error) {
+        print('$tag error on getting document for checking following status');
+        _hasError = true;
+      });
+      if (document.exists && !_hasError)
+        return true;
+      else
+        return false;
+    } else {
       return false;
+    }
   }
 }

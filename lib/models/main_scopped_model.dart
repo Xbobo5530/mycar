@@ -76,7 +76,7 @@ abstract class QuestionModel extends Model {
 
   void hasUserFollowed(Question question) async {
     if (await loginFun.isLoggedIn())
-      _hasFollowed = await fun.userHasFollowed(question);
+      _hasFollowed = await fun.isUserFollowing(question);
     else
       _hasFollowed = false;
 

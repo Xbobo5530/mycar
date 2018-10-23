@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
-import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/main_scopped_model.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
@@ -10,6 +9,7 @@ import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/pages/view_question.dart';
 import 'package:my_car/values/strings.dart';
+import 'package:my_car/views/follow_button.dart';
 import 'package:my_car/views/labeled_flat_button.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -43,16 +43,6 @@ class QuestionItemView extends StatelessWidget {
 
     _shareQuestion() {
       //todo handle share question
-    }
-
-    final snackBar = SnackBar(
-      content: Text(errorMessage),
-    );
-
-    _followQuestion() async {
-      StatusCode statusCode = await fun.followQuestion(question);
-      if (statusCode == StatusCode.failed)
-        Scaffold.of(context).showSnackBar(snackBar);
     }
 
     _openQuestion() {
@@ -102,23 +92,6 @@ class QuestionItemView extends StatelessWidget {
       ),
     );
 
-    var _followButton = ScopedModelDescendant<MyCarModel>(
-      builder: (BuildContext context, Widget child, MyCarModel model) {
-        model.hasUserFollowed(question);
-
-        return LabeledFlatButton(
-            icon: Icon(Icons.rss_feed,
-                size: 18.0,
-                color: model.hasFollowed ? Colors.blue : Colors.grey),
-            label: Text(followText,
-                style: TextStyle(
-                    color: model.hasFollowed ? Colors.blue : Colors.grey)),
-            onTap: model.hasFollowed
-                ? () => _followQuestion()
-                : () => _goToLoginPage());
-      },
-    );
-
     var _shareButton = LabeledFlatButton(
         icon: Icon(Icons.share, size: 18.0, color: Colors.grey),
         label: Text(shareText),
@@ -141,7 +114,9 @@ class QuestionItemView extends StatelessWidget {
         alignment: MainAxisAlignment.center,
         children: <Widget>[
           _shareButton,
-          _followButton,
+          FollowButtonView(
+            question: question,
+          ),
           _answerButton,
         ],
       ),
