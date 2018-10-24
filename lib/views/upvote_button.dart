@@ -5,6 +5,7 @@ import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/answer.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/values/strings.dart';
+import 'package:my_car/views/my_progress_indicator.dart';
 
 const tag = 'UpvoteButtonView:';
 final fun = Functions();
@@ -22,6 +23,7 @@ class UpvoteButtonView extends StatefulWidget {
 class _UpvoteButtonViewState extends State<UpvoteButtonView> {
   bool _hasUpvoted = false;
   bool _isLoggedIn = false;
+  StatusCode _isUpvoting;
 
   @override
   void initState() {
@@ -43,9 +45,24 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
     );
 
     _upVoteAnswer() async {
+      setState(() {
+        _isUpvoting = StatusCode.waiting;
+      });
+
+      bool hasUpvoted = await fun.userHasUpvoted(widget.answer);
       StatusCode statusCode = await fun.upvoteAnswer(widget.answer);
-      if (statusCode == StatusCode.failed)
+
+      if (statusCode == StatusCode.failed) {
         Scaffold.of(context).showSnackBar(snackBar);
+      } else {
+        setState(() {
+          _hasUpvoted = hasUpvoted;
+        });
+      }
+
+      setState(() {
+        _isUpvoting = statusCode;
+      });
     }
 
     _goToLoginPage() {
@@ -56,7 +73,18 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
           });
     }
 
-    return GestureDetector(
+    return _isUpvoting == StatusCode.waiting
+        ? Chip(
+      avatar: MyProgressIndicator(
+        size: 15.0,
+        color: Colors.blue,
+      ),
+      label: Text(
+        _hasUpvoted ? upvotedText : upvoteText,
+        style: TextStyle(color: _hasUpvoted ? Colors.blue : Colors.grey),
+      ),
+    )
+        : GestureDetector(
       onTap: _isLoggedIn ? () => _upVoteAnswer() : () => _goToLoginPage(),
       child: Chip(
           avatar: _hasUpvoted
@@ -68,7 +96,8 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
               : Icon(Icons.thumb_up, color: Colors.grey),
           label: Text(
             _hasUpvoted ? upvotedText : upvoteText,
-            style: TextStyle(color: _hasUpvoted ? Colors.blue : Colors.grey),
+            style:
+            TextStyle(color: _hasUpvoted ? Colors.blue : Colors.grey),
           )),
     );
   }

@@ -39,9 +39,9 @@ class AnswerItemView extends StatelessWidget {
           child: Chip(
               avatar: model.userFromId != null
                   ? CircleAvatar(
-                backgroundImage: NetworkImage(model.userFromId.imageUrl),
-                backgroundColor: Colors.black12,
-              )
+                      backgroundImage: NetworkImage(model.userFromId.imageUrl),
+                      backgroundColor: Colors.black12,
+                    )
                   : Icon(Icons.account_circle),
               label: model.userFromId != null
                   ? Text(model.userFromId.name)
