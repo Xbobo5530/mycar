@@ -24,7 +24,7 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
   bool _isLoggedIn = false;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     (() async {
       bool hasUpvoted = await fun.userHasUpvoted(widget.answer);
       bool isLoggedIn = await loginFun.isLoggedIn();
@@ -33,7 +33,11 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
         _isLoggedIn = isLoggedIn;
       });
     })();
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     final snackBar = SnackBar(
       content: Text(errorMessage),
     );
@@ -55,11 +59,13 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
     return GestureDetector(
       onTap: _isLoggedIn ? () => _upVoteAnswer() : () => _goToLoginPage(),
       child: Chip(
-          avatar: Icon(
-            Icons.thumb_up,
+          avatar: _hasUpvoted
+              ? Icon(
+            Icons.done,
             size: 20.0,
-            color: _hasUpvoted ? Colors.blue : Colors.grey,
-          ),
+            color: Colors.blue,
+          )
+              : Icon(Icons.thumb_up, color: Colors.grey),
           label: Text(
             _hasUpvoted ? upvotedText : upvoteText,
             style: TextStyle(color: _hasUpvoted ? Colors.blue : Colors.grey),

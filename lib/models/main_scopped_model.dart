@@ -6,7 +6,7 @@ import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-const tag = 'LoginModel';
+const tag = 'MyCarModel';
 final loginFun = LoginFunctions();
 final userFun = User();
 final fun = Functions();
@@ -100,7 +100,7 @@ abstract class AnswerModel extends Model {
 class MyCarModel extends Model
     with LoginModel, UserModel, QuestionModel, AnswerModel {
   MyCarModel() {
-    print('$tag at LoginModel()');
+    print('$tag at MyCarModel()');
     getLoginStatus();
     getCurrentUser();
   }

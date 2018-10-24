@@ -25,7 +25,7 @@ class _FollowButtonViewState extends State<FollowButtonView> {
   bool _isLoggedIn = false;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     (() async {
       bool isFollowing = await fun.isUserFollowing(widget.question);
       bool isLoggedIn = await loginFun.isLoggedIn();
@@ -34,7 +34,11 @@ class _FollowButtonViewState extends State<FollowButtonView> {
         _isLoggedIn = isLoggedIn;
       });
     })();
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     final snackBar = SnackBar(
       content: Text(errorMessage),
     );

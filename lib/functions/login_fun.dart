@@ -17,6 +17,7 @@ class LoginFunctions {
   Future<FirebaseUser> _handleGoogleSignIn() async {
     print('$tag at _handleGoogleSignIn');
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    print('$tag googleUser is : $googleUser');
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
     FirebaseUser user = await auth.signInWithGoogle(
       accessToken: googleAuth.accessToken,

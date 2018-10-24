@@ -77,9 +77,9 @@ class QuestionItemView extends StatelessWidget {
                       : LinearProgressIndicator(),
                   avatar: _user != null
                       ? CircleAvatar(
-                    backgroundColor: Colors.black12,
-                    backgroundImage: NetworkImage(_user.imageUrl),
-                  )
+                          backgroundColor: Colors.black12,
+                          backgroundImage: NetworkImage(_user.imageUrl),
+                        )
                       : Icon(Icons.account_circle),
                 ),
               );
