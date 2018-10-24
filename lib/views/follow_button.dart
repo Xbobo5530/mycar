@@ -79,7 +79,7 @@ class _FollowButtonViewState extends State<FollowButtonView> {
         icon: _followStatus == StatusCode.waiting
             ? MyProgressIndicator(
           size: 15.0,
-          color: Colors.blue,
+          color: _isFollowing ? Colors.blue : Colors.grey,
         )
             : Icon(Icons.rss_feed,
             size: 18.0, color: _isFollowing ? Colors.blue : Colors.grey),

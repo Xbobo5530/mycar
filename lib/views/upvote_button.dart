@@ -77,7 +77,7 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
         ? Chip(
       avatar: MyProgressIndicator(
         size: 15.0,
-        color: Colors.blue,
+        color: _hasUpvoted ? Colors.blue : Colors.grey,
       ),
       label: Text(
         _hasUpvoted ? upvotedText : upvoteText,
