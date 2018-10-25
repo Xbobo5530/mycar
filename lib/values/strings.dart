@@ -55,4 +55,4 @@ const logoutText = 'Logout';
 const devByText = 'Developed by NyayoZangu Labs';
 const emailUrl = 'mailto:dev@nyayozangu.com?subject=MyCarApp';
 
-const loadingText = 'Loaing...'
+const loadingText = 'Loading...';

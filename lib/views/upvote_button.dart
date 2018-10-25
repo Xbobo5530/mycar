@@ -22,17 +22,15 @@ class UpvoteButtonView extends StatefulWidget {
 
 class _UpvoteButtonViewState extends State<UpvoteButtonView> {
   bool _hasUpvoted = false;
-  bool _isLoggedIn = false;
   StatusCode _upvoteStatus;
 
   @override
   void initState() {
     (() async {
       bool hasUpvoted = await fun.userHasUpvoted(widget.answer);
-      bool isLoggedIn = await loginFun.isLoggedIn();
       setState(() {
         _hasUpvoted = hasUpvoted;
-        _isLoggedIn = isLoggedIn;
+        print('$tag _hasUpcoted is $hasUpvoted');
       });
     })();
     super.initState();
@@ -55,7 +53,7 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
     _upVoteAnswer() async {
       bool isLoggedIn = await loginFun.isLoggedIn();
       setState(() {
-        _isLoggedIn = isLoggedIn;
+        isLoggedIn = isLoggedIn;
       });
 
       if (isLoggedIn) {
@@ -63,8 +61,8 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
           _upvoteStatus = StatusCode.waiting;
         });
 
-        bool hasUpvoted = await fun.userHasUpvoted(widget.answer);
         StatusCode statusCode = await fun.upvoteAnswer(widget.answer);
+        bool hasUpvoted = await fun.userHasUpvoted(widget.answer);
 
         if (statusCode == StatusCode.failed) {
           Scaffold.of(context).showSnackBar(snackBar);

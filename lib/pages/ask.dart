@@ -47,7 +47,7 @@ class _AskPageState extends State<AskPage> {
             controller: _mController,
             maxLines: 20,
             decoration:
-            InputDecoration(border: InputBorder.none, hintText: askHint),
+                InputDecoration(border: InputBorder.none, hintText: askHint),
           ),
         ),
       ),
@@ -57,14 +57,13 @@ class _AskPageState extends State<AskPage> {
       children: <Widget>[
         RaisedButton(
           color: Color(0xFF1A1A1A),
-          onPressed: () =>
-          _submitStatus == StatusCode.waiting
+          onPressed: () => _submitStatus == StatusCode.waiting
               ? null
               : _submitQuestion(context),
           child: _submitStatus == StatusCode.waiting
               ? MyProgressIndicator(
-            size: 15.0,
-            color: Colors.blue,
+                  size: 15.0,
+                  color: Colors.blue,
                 )
               : Text(submitText, style: TextStyle(color: Colors.white)),
         )

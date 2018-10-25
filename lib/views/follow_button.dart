@@ -23,17 +23,15 @@ class FollowButtonView extends StatefulWidget {
 
 class _FollowButtonViewState extends State<FollowButtonView> {
   bool _isFollowing = false;
-  bool _isLoggedIn = false;
   StatusCode _followStatus;
 
   @override
   void initState() {
     (() async {
       bool isFollowing = await fun.isUserFollowing(widget.question);
-      bool isLoggedIn = await loginFun.isLoggedIn();
       setState(() {
         _isFollowing = isFollowing;
-        _isLoggedIn = isLoggedIn;
+        print('$tag _isFollowing is $_isFollowing');
       });
     })();
     super.initState();
@@ -55,9 +53,7 @@ class _FollowButtonViewState extends State<FollowButtonView> {
 
     _followQuestion() async {
       bool isLoggedIn = await loginFun.isLoggedIn();
-      setState(() {
-        _isLoggedIn = isLoggedIn;
-      });
+
       if (isLoggedIn) {
         setState(() {
           _followStatus = StatusCode.waiting;
