@@ -6,6 +6,7 @@ import 'package:my_car/models/answer.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
+import 'package:my_car/views/upvote_count.dart';
 
 const tag = 'UpvoteButtonView:';
 final fun = Functions();
@@ -30,7 +31,6 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
       bool hasUpvoted = await fun.userHasUpvoted(widget.answer);
       setState(() {
         _hasUpvoted = hasUpvoted;
-        print('$tag _hasUpcoted is $hasUpvoted');
       });
     })();
     super.initState();
@@ -100,10 +100,15 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
             color: Colors.blue,
           )
               : Icon(Icons.thumb_up, color: Colors.grey),
-          label: Text(
-            _hasUpvoted ? upvotedText : upvoteText,
-            style:
-            TextStyle(color: _hasUpvoted ? Colors.blue : Colors.grey),
+          label: Row(
+            children: <Widget>[
+              Text(
+                _hasUpvoted ? upvotedText : upvoteText,
+                style: TextStyle(
+                    color: _hasUpvoted ? Colors.blue : Colors.grey),
+              ),
+              UpvoteCountView(answer: widget.answer),
+            ],
           )),
     );
   }

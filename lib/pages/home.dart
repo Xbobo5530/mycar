@@ -74,10 +74,10 @@ class HomePage extends StatelessWidget {
                 ? () => _goToProfilePage()
                 : () => _goToLoginPage(),
             icon: model.currentUser != null &&
-                model.currentUser.imageUrl != null
+                    model.currentUser.imageUrl != null
                 ? CircleAvatar(
                     radius: 12.0,
-                backgroundImage: NetworkImage(model.currentUser.imageUrl))
+                    backgroundImage: NetworkImage(model.currentUser.imageUrl))
                 : Icon(
                     Icons.account_circle,
                     size: 30.0,

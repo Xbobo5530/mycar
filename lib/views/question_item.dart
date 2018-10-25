@@ -9,6 +9,7 @@ import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/pages/view_question.dart';
 import 'package:my_car/values/strings.dart';
+import 'package:my_car/views/answers_count.dart';
 import 'package:my_car/views/follow_button.dart';
 import 'package:my_car/views/labeled_flat_button.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -62,7 +63,7 @@ class QuestionItemView extends StatelessWidget {
           });
     }
 
-    var _userSection = Container(
+    var _midSection = Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -84,10 +85,7 @@ class QuestionItemView extends StatelessWidget {
               );
             },
           ),
-          //todo add answers count
-//          Chip(
-//            label: Text('10'),
-//          )
+          AnswersCountView(question: question)
         ],
       ),
     );
@@ -131,7 +129,7 @@ class QuestionItemView extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
         ),
       ),
-      subtitle: _userSection,
+      subtitle: _midSection,
     );
 
     return Padding(

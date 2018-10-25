@@ -31,7 +31,6 @@ class _FollowButtonViewState extends State<FollowButtonView> {
       bool isFollowing = await fun.isUserFollowing(widget.question);
       setState(() {
         _isFollowing = isFollowing;
-        print('$tag _isFollowing is $_isFollowing');
       });
     })();
     super.initState();

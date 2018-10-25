@@ -52,22 +52,27 @@ class AnswerItemView extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
-      child: ListTile(
-        title: Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Text(
-            answer.answer,
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                answer.answer,
+              ),
+            ),
+            subtitle: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  _userSection,
+                  UpvoteButtonView(answer: answer),
+                ],
+              ),
+            ),
           ),
-        ),
-        subtitle: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              _userSection,
-              UpvoteButtonView(answer: answer) //_upvoteSection,
-            ],
-          ),
-        ),
+          Divider(),
+        ],
       ),
     );
   }
