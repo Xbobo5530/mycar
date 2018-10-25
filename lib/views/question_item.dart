@@ -15,16 +15,46 @@ import 'package:my_car/views/labeled_flat_button.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:share/share.dart';
 
+const tag = 'QuestionItemView';
+
 final userFun = User();
 final qnFun = Question();
 final fun = Functions();
 final loginFun = LoginFunctions();
 
-class QuestionItemView extends StatelessWidget {
+class QuestionItemView extends StatefulWidget {
   final Question question;
   final String source;
 
-  QuestionItemView({this.question, this.source});
+  QuestionItemView({Key key, this.question, this.source}) : super(key: key);
+
+  @override
+  _QuestionItemViewState createState() => _QuestionItemViewState();
+}
+
+class _QuestionItemViewState extends State<QuestionItemView> {
+  User _user;
+  bool _isDisposed = false;
+
+  @override
+  void initState() {
+    (() async {
+      var questionUserId = widget.question.userId;
+      User questionUser = await userFun.getUserFromUserId(questionUserId);
+      if (!_isDisposed)
+        setState(() {
+          _user = questionUser;
+        });
+    })();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     _goToLoginPage() {
@@ -39,19 +69,19 @@ class QuestionItemView extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (_) => AnswerQuestionPage(question: question),
+              builder: (_) => AnswerQuestionPage(question: widget.question),
               fullscreenDialog: true));
     }
 
     _shareQuestion() {
-      Share.share('${question.question}\nshared from the MyCar App');
+      Share.share('${widget.question.question}\nshared from the MyCar App');
     }
 
     _openQuestion() {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (_) => ViewQuestionPage(question: question),
+              builder: (_) => ViewQuestionPage(question: widget.question),
               fullscreenDialog: true));
     }
 
@@ -63,29 +93,25 @@ class QuestionItemView extends StatelessWidget {
           });
     }
 
+    var _userSection = GestureDetector(
+      onTap: _user != null ? () => _openUserProfile(_user) : null,
+      child: Chip(
+        label: _user != null ? Text(_user.name) : Text(loadingText),
+        avatar: _user != null
+            ? CircleAvatar(
+          backgroundColor: Colors.black12,
+          backgroundImage: NetworkImage(_user.imageUrl),
+        )
+            : Icon(Icons.account_circle),
+      ),
+    );
+
     var _midSection = Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          ScopedModelDescendant<MyCarModel>(
-            builder: (BuildContext context, Widget child, MyCarModel model) {
-              model.getUserFromId(question.userId);
-              var _user = model.userFromId;
-              return GestureDetector(
-                onTap: _user != null ? () => _openUserProfile(_user) : null,
-                child: Chip(
-                  label: _user != null ? Text(_user.name) : Text(loadingText),
-                  avatar: _user != null
-                      ? CircleAvatar(
-                          backgroundColor: Colors.black12,
-                          backgroundImage: NetworkImage(_user.imageUrl),
-                        )
-                      : Icon(Icons.account_circle),
-                ),
-              );
-            },
-          ),
-          AnswersCountView(question: question)
+          _userSection,
+          AnswersCountView(question: widget.question)
         ],
       ),
     );
@@ -113,7 +139,7 @@ class QuestionItemView extends StatelessWidget {
         children: <Widget>[
           _shareButton,
           FollowButtonView(
-            question: question,
+            question: widget.question,
           ),
           _answerButton,
         ],
@@ -121,11 +147,11 @@ class QuestionItemView extends StatelessWidget {
     );
 
     var _questionDetailsSection = ListTile(
-      onTap: source == 'HomePage' ? () => _openQuestion() : null,
+      onTap: widget.source == 'HomePage' ? () => _openQuestion() : null,
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Text(
-          question.question,
+          widget.question.question,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
         ),
       ),

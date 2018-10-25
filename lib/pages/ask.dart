@@ -63,7 +63,7 @@ class _AskPageState extends State<AskPage> {
           child: _submitStatus == StatusCode.waiting
               ? MyProgressIndicator(
                   size: 15.0,
-                  color: Colors.blue,
+            color: Colors.white,
                 )
               : Text(submitText, style: TextStyle(color: Colors.white)),
         )

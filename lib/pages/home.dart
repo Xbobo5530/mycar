@@ -15,15 +15,17 @@ import 'package:my_car/views/question_item.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 const tag = 'HomePage:';
+
 final fun = Functions();
 final loginFun = LoginFunctions();
 final qnFun = Question();
-
 final userFun = User();
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var _scrollViewController = ScrollController();
+
     Stream<QuerySnapshot> _data = fun.database
         .collection(QUESTIONS_COLLECTION)
         .orderBy(CREATED_AT_FIELD, descending: true)
@@ -74,15 +76,16 @@ class HomePage extends StatelessWidget {
                 ? () => _goToProfilePage()
                 : () => _goToLoginPage(),
             icon: model.currentUser != null &&
-                    model.currentUser.imageUrl != null
+                model.currentUser.imageUrl != null
                 ? CircleAvatar(
-                    radius: 12.0,
-                    backgroundImage: NetworkImage(model.currentUser.imageUrl))
+                radius: 12.0,
+                backgroundColor: Colors.black12,
+                backgroundImage: NetworkImage(model.currentUser.imageUrl))
                 : Icon(
-                    Icons.account_circle,
-                    size: 30.0,
-                    color: Colors.grey,
-                  ),
+              Icons.account_circle,
+              size: 30.0,
+              color: Colors.grey,
+            ),
           );
         },
       ),
@@ -105,13 +108,23 @@ class HomePage extends StatelessWidget {
         });
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(APP_NAME),
-          leading: _askQuestionSection,
-          actions: <Widget>[
-            _currentUserProfileSection,
-          ],
-        ),
-        body: _bodySection);
+        body: NestedScrollView(
+            controller: _scrollViewController,
+            headerSliverBuilder: (_, innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  forceElevated: innerBoxIsScrolled,
+//                  pinned: true,
+                  snap: true,
+                  floating: true,
+                  leading: _askQuestionSection,
+                  title: Text(APP_NAME),
+                  actions: <Widget>[
+                    _currentUserProfileSection,
+                  ],
+                )
+              ];
+            },
+            body: _bodySection));
   }
 }

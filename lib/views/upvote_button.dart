@@ -107,7 +107,10 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
                 style: TextStyle(
                     color: _hasUpvoted ? Colors.blue : Colors.grey),
               ),
-              UpvoteCountView(answer: widget.answer),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: UpvoteCountView(answer: widget.answer),
+              ),
             ],
           )),
     );

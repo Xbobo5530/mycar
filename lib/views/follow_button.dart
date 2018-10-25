@@ -24,16 +24,24 @@ class FollowButtonView extends StatefulWidget {
 class _FollowButtonViewState extends State<FollowButtonView> {
   bool _isFollowing = false;
   StatusCode _followStatus;
+  bool _isDisposed = false;
 
   @override
   void initState() {
     (() async {
       bool isFollowing = await fun.isUserFollowing(widget.question);
-      setState(() {
-        _isFollowing = isFollowing;
-      });
+      if (!_isDisposed)
+        setState(() {
+          _isFollowing = isFollowing;
+        });
     })();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
   }
 
   @override

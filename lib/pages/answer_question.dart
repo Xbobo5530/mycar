@@ -46,10 +46,13 @@ class _AnswerQuestionPageState extends State<AnswerQuestionPage> {
       }
     }
 
-    var _questionSection = ListTile(
-      title: Text(
-        widget.question.question,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+    var _questionSection = Material(
+      elevation: 4.0,
+      child: ListTile(
+        title: Text(
+          widget.question.question,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+        ),
       ),
     );
 
@@ -77,7 +80,7 @@ class _AnswerQuestionPageState extends State<AnswerQuestionPage> {
           child: _submitStatus == StatusCode.waiting
               ? MyProgressIndicator(
                   size: 15.0,
-                  color: Colors.blue,
+            color: Colors.white,
                 )
               : Text(
                   submitText,
@@ -90,6 +93,7 @@ class _AnswerQuestionPageState extends State<AnswerQuestionPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(answerText),
+        elevation: 0.0,
       ),
       body: Column(
         children: <Widget>[
