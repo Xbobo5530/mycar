@@ -46,47 +46,56 @@ class _AnswerQuestionPageState extends State<AnswerQuestionPage> {
       }
     }
 
+    var _questionSection = ListTile(
+      title: Text(
+        widget.question.question,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+      ),
+    );
+
+    var _answerField = Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          child: TextField(
+            controller: _answerController,
+            maxLines: 20,
+            decoration:
+                InputDecoration(border: InputBorder.none, hintText: answerHint),
+          ),
+        ),
+      ),
+    );
+
+    var _actions = ButtonBar(
+      children: <Widget>[
+        RaisedButton(
+          color: Color(0xFF1A1A1A),
+          onPressed: () => _submitStatus == StatusCode.waiting
+              ? null
+              : _submitAnswer(context),
+          child: _submitStatus == StatusCode.waiting
+              ? MyProgressIndicator(
+                  size: 15.0,
+                  color: Colors.blue,
+                )
+              : Text(
+                  submitText,
+                  style: TextStyle(color: Colors.white),
+                ),
+        )
+      ],
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(answerText),
       ),
       body: Column(
         children: <Widget>[
-          ListTile(
-            title: Text(
-              widget.question.question,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                child: TextField(
-                  controller: _answerController,
-                  maxLines: 20,
-                  decoration: InputDecoration(
-                      border: InputBorder.none, hintText: answerHint),
-                ),
-              ),
-            ),
-          ),
-          ButtonBar(
-            children: <Widget>[
-              RaisedButton(
-                color: Colors.cyan,
-                onPressed: () => _submitStatus == StatusCode.waiting
-                    ? null
-                    : _submitAnswer(context),
-                child: _submitStatus == StatusCode.waiting
-                    ? MyProgressIndicator(
-                        size: 15.0,
-                        color: Colors.white,
-                      )
-                    : Text(submitText),
-              )
-            ],
-          )
+          _questionSection,
+          _answerField,
+          _actions,
         ],
       ),
     );

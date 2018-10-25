@@ -25,6 +25,17 @@ dependencies:
   cloud_firestore: ^0.8.1
   scoped_model: ^0.3.0
   url_launcher: ^4.0.1
+  flutter_launcher_icons: ^0.6.1
+  share: ^0.5.3
+
+flutter_icons:
+    android: true
+    ios: true
+    image_path: "assets/icon/mycar_launcher_icon.png"
+    image_path_android: "assets/icon/mycar_launcher_ic_android.png"
+    image_path_ios: "assets/icon/blue_n_white_ios.png"
+    adaptive_icon_background: "#2196F3"
+    adaptive_icon_foreground: "assets/icon/foreground_white.png"
 
 dev_dependencies:
   flutter_test:
@@ -72,3 +83,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+
+

@@ -12,6 +12,7 @@ import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/follow_button.dart';
 import 'package:my_car/views/labeled_flat_button.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:share/share.dart';
 
 final userFun = User();
 final qnFun = Question();
@@ -42,7 +43,7 @@ class QuestionItemView extends StatelessWidget {
     }
 
     _shareQuestion() {
-      //todo handle share question
+      Share.share('${question.question}\nshared from the MyCar App');
     }
 
     _openQuestion() {
@@ -72,9 +73,7 @@ class QuestionItemView extends StatelessWidget {
               return GestureDetector(
                 onTap: _user != null ? () => _openUserProfile(_user) : null,
                 child: Chip(
-                  label: _user != null
-                      ? Text(_user.name)
-                      : LinearProgressIndicator(),
+                  label: _user != null ? Text(_user.name) : Text(loadingText),
                   avatar: _user != null
                       ? CircleAvatar(
                           backgroundColor: Colors.black12,
@@ -85,9 +84,10 @@ class QuestionItemView extends StatelessWidget {
               );
             },
           ),
-          Chip(
-            label: Text('10'),
-          )
+          //todo add answers count
+//          Chip(
+//            label: Text('10'),
+//          )
         ],
       ),
     );

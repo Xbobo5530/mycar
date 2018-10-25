@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
             onPressed: model.isLoggedIn
                 ? () => _goToProfilePage()
                 : () => _goToLoginPage(),
-            icon: model.isLoggedIn
+            icon: model.isLoggedIn || model.currentUser != null
                 ? CircleAvatar(
                     radius: 12.0,
                     backgroundImage: NetworkImage(model.currentUser.imageUrl),

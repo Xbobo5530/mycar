@@ -23,7 +23,7 @@ class UpvoteButtonView extends StatefulWidget {
 class _UpvoteButtonViewState extends State<UpvoteButtonView> {
   bool _hasUpvoted = false;
   bool _isLoggedIn = false;
-  StatusCode _isUpvoting;
+  StatusCode _upvoteStatus;
 
   @override
   void initState() {
@@ -44,27 +44,6 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
       content: Text(errorMessage),
     );
 
-    _upVoteAnswer() async {
-      setState(() {
-        _isUpvoting = StatusCode.waiting;
-      });
-
-      bool hasUpvoted = await fun.userHasUpvoted(widget.answer);
-      StatusCode statusCode = await fun.upvoteAnswer(widget.answer);
-
-      if (statusCode == StatusCode.failed) {
-        Scaffold.of(context).showSnackBar(snackBar);
-      } else {
-        setState(() {
-          _hasUpvoted = hasUpvoted;
-        });
-      }
-
-      setState(() {
-        _isUpvoting = statusCode;
-      });
-    }
-
     _goToLoginPage() {
       showModalBottomSheet(
           context: context,
@@ -73,7 +52,36 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
           });
     }
 
-    return _isUpvoting == StatusCode.waiting
+    _upVoteAnswer() async {
+      bool isLoggedIn = await loginFun.isLoggedIn();
+      setState(() {
+        _isLoggedIn = isLoggedIn;
+      });
+
+      if (isLoggedIn) {
+        setState(() {
+          _upvoteStatus = StatusCode.waiting;
+        });
+
+        bool hasUpvoted = await fun.userHasUpvoted(widget.answer);
+        StatusCode statusCode = await fun.upvoteAnswer(widget.answer);
+
+        if (statusCode == StatusCode.failed) {
+          Scaffold.of(context).showSnackBar(snackBar);
+        } else {
+          setState(() {
+            _hasUpvoted = hasUpvoted;
+          });
+        }
+
+        setState(() {
+          _upvoteStatus = statusCode;
+        });
+      } else
+        _goToLoginPage();
+    }
+
+    return _upvoteStatus == StatusCode.waiting
         ? Chip(
       avatar: MyProgressIndicator(
         size: 15.0,
@@ -85,7 +93,7 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
       ),
     )
         : GestureDetector(
-      onTap: _isLoggedIn ? () => _upVoteAnswer() : () => _goToLoginPage(),
+      onTap: () => _upVoteAnswer(),
       child: Chip(
           avatar: _hasUpvoted
               ? Icon(

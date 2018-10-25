@@ -21,6 +21,7 @@ class ViewQuestionPage extends StatelessWidget {
         .collection(QUESTIONS_COLLECTION)
         .document(question.id)
         .collection(ANSWERS_COLLECTION)
+        .orderBy(CREATED_AT_FIELD, descending: true)
         .snapshots();
     return Scaffold(
         appBar: AppBar(

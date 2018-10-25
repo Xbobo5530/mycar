@@ -39,43 +39,45 @@ class _AskPageState extends State<AskPage> {
       }
     }
 
+    var _questionField = Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          child: TextField(
+            controller: _mController,
+            maxLines: 20,
+            decoration:
+            InputDecoration(border: InputBorder.none, hintText: askHint),
+          ),
+        ),
+      ),
+    );
+
+    var _actions = ButtonBar(
+      children: <Widget>[
+        RaisedButton(
+          color: Color(0xFF1A1A1A),
+          onPressed: () =>
+          _submitStatus == StatusCode.waiting
+              ? null
+              : _submitQuestion(context),
+          child: _submitStatus == StatusCode.waiting
+              ? MyProgressIndicator(
+            size: 15.0,
+            color: Colors.blue,
+                )
+              : Text(submitText, style: TextStyle(color: Colors.white)),
+        )
+      ],
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(askText),
       ),
       body: Builder(builder: (context) {
         return Column(
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  child: TextField(
-                    controller: _mController,
-                    maxLines: 20,
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: askHint),
-                  ),
-                ),
-              ),
-            ),
-            ButtonBar(
-              children: <Widget>[
-                RaisedButton(
-                  color: Colors.cyan,
-                  onPressed: () => _submitStatus == StatusCode.waiting
-                      ? null
-                      : _submitQuestion(context),
-                  child: _submitStatus == StatusCode.waiting
-                      ? MyProgressIndicator(
-                          size: 15.0,
-                          color: Colors.white,
-                        )
-                      : Text(submitText),
-                )
-              ],
-            )
-          ],
+          children: <Widget>[_questionField, _actions],
         );
       }),
     );

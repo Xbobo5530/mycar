@@ -41,8 +41,6 @@ class _FollowButtonViewState extends State<FollowButtonView> {
 
   @override
   Widget build(BuildContext context) {
-    //todo fix when user logs in, the isLoggedIn var doesn't change
-
     final snackBar = SnackBar(
       content: Text(errorMessage),
     );
@@ -56,23 +54,30 @@ class _FollowButtonViewState extends State<FollowButtonView> {
     }
 
     _followQuestion() async {
+      bool isLoggedIn = await loginFun.isLoggedIn();
       setState(() {
-        _followStatus = StatusCode.waiting;
+        _isLoggedIn = isLoggedIn;
       });
-
-      StatusCode statusCode = await fun.followQuestion(widget.question);
-      bool isFollowing = await fun.isUserFollowing(widget.question);
-      if (statusCode == StatusCode.failed) {
-        Scaffold.of(context).showSnackBar(snackBar);
-      } else {
+      if (isLoggedIn) {
         setState(() {
-          _isFollowing = isFollowing;
+          _followStatus = StatusCode.waiting;
         });
-      }
 
-      setState(() {
-        _followStatus = statusCode;
-      });
+        StatusCode statusCode = await fun.followQuestion(widget.question);
+        bool isFollowing = await fun.isUserFollowing(widget.question);
+        if (statusCode == StatusCode.failed) {
+          Scaffold.of(context).showSnackBar(snackBar);
+        } else {
+          setState(() {
+            _isFollowing = isFollowing;
+          });
+        }
+
+        setState(() {
+          _followStatus = statusCode;
+        });
+      } else
+        _goToLoginPage();
     }
 
     return LabeledFlatButton(
@@ -85,6 +90,6 @@ class _FollowButtonViewState extends State<FollowButtonView> {
             size: 18.0, color: _isFollowing ? Colors.blue : Colors.grey),
         label: Text(_isFollowing ? followingText : followText,
             style: TextStyle(color: _isFollowing ? Colors.blue : Colors.grey)),
-        onTap: _isLoggedIn ? () => _followQuestion() : () => _goToLoginPage());
+        onTap: () => _followQuestion());
   }
 }
