@@ -23,15 +23,24 @@ class AnswerItemView extends StatefulWidget {
 
 class _AnswerItemViewState extends State<AnswerItemView> {
   User _user;
+  bool _isDisposed = false;
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+
+    super.dispose();
+  }
 
   @override
   void initState() {
     (() async {
       var answerUserId = widget.answer.userId;
       User answerUser = await userFun.getUserFromUserId(answerUserId);
-      setState(() {
-        _user = answerUser;
-      });
+      if (!_isDisposed)
+        setState(() {
+          _user = answerUser;
+        });
     })();
     super.initState();
   }

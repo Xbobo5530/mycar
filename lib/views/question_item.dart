@@ -7,7 +7,6 @@ import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/answer_question.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/user_profile.dart';
-import 'package:my_car/pages/view_question.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/answers_count.dart';
 import 'package:my_car/views/follow_button.dart';
@@ -26,7 +25,12 @@ class QuestionItemView extends StatefulWidget {
   final Question question;
   final String source;
 
-  QuestionItemView({Key key, this.question, this.source}) : super(key: key);
+  /// method to call when the question is tapped
+  /// null when when the question should now respond to a tap
+  final GestureTapCallback onTap;
+
+  QuestionItemView({Key key, @required this.question, this.source, this.onTap})
+      : super(key: key);
 
   @override
   _QuestionItemViewState createState() => _QuestionItemViewState();
@@ -57,6 +61,8 @@ class _QuestionItemViewState extends State<QuestionItemView> {
 
   @override
   Widget build(BuildContext context) {
+    bool enabled = widget.onTap != null;
+
     _goToLoginPage() {
       showModalBottomSheet(
           context: context,
@@ -75,14 +81,6 @@ class _QuestionItemViewState extends State<QuestionItemView> {
 
     _shareQuestion() {
       Share.share('${widget.question.question}\nshared from the MyCar App');
-    }
-
-    _openQuestion() {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => ViewQuestionPage(question: widget.question),
-              fullscreenDialog: true));
     }
 
     _openUserProfile(User user) {
@@ -147,7 +145,7 @@ class _QuestionItemViewState extends State<QuestionItemView> {
     );
 
     var _questionDetailsSection = ListTile(
-      onTap: widget.source == 'HomePage' ? () => _openQuestion() : null,
+      onTap: enabled ? widget.onTap : null,
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Text(

@@ -10,6 +10,7 @@ import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/user_profile.dart';
+import 'package:my_car/pages/view_question.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/question_item.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -102,7 +103,12 @@ class HomePage extends StatelessWidget {
                 var question = qnFun.getQnFromSnapshots(snapshot, index);
                 return QuestionItemView(
                   question: question,
-                  source: 'HomePage',
+                  onTap: () =>
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  ViewQuestionPage(question: question))),
                 );
               });
         });

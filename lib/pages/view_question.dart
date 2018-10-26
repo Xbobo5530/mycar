@@ -13,7 +13,7 @@ final fun = Functions();
 class ViewQuestionPage extends StatelessWidget {
   final Question question;
 
-  ViewQuestionPage({this.question});
+  ViewQuestionPage({@required this.question});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,6 @@ class ViewQuestionPage extends StatelessWidget {
 
     var _questionSection = QuestionItemView(
       question: question,
-      source: tag,
     );
 
     var _answersSection = StreamBuilder(

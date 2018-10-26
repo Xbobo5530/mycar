@@ -80,7 +80,7 @@ class _AnswerQuestionPageState extends State<AnswerQuestionPage> {
           child: _submitStatus == StatusCode.waiting
               ? MyProgressIndicator(
                   size: 15.0,
-            color: Colors.white,
+                  color: Colors.white,
                 )
               : Text(
                   submitText,
