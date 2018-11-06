@@ -5,18 +5,18 @@ class LabeledFlatButton extends StatelessWidget {
   final GestureTapCallback onTap;
   final Widget label;
 
-  LabeledFlatButton({this.icon, this.label, this.onTap});
+  LabeledFlatButton({this.icon, @required this.label, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () => onTap(),
+        onTap: () => onTap != null ? onTap() : null,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-              child: icon,
+              child: icon != null ? icon : Container(),
             ),
             label,
           ],

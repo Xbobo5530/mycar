@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
       content: Text(errorMessage),
     );
 
-    _signInWithGoogle(BuildContext context, MyCarModel model) async {
+    _signInWithGoogle(BuildContext context, MainModel model) async {
       setState(() {
         _loginStatus = StatusCode.waiting;
       });
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: Builder(
           builder: (context) {
-            return ScopedModelDescendant<MyCarModel>(
+            return ScopedModelDescendant<MainModel>(
               builder: (BuildContext context, Widget child, model) {
                 return FlatButton(
                     textColor: Colors.blue,

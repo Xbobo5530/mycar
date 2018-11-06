@@ -4,17 +4,17 @@ import 'package:my_car/pages/home.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-void main() => runApp(MyCar(model: MyCarModel()));
+void main() => runApp(MyCar(model: MainModel()));
 
 class MyCar extends StatelessWidget {
-  final MyCarModel model;
+  final MainModel model;
 
   const MyCar({Key key, @required this.model}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var primaryColor = Colors.white;
 
-    return ScopedModel<MyCarModel>(
+    return ScopedModel<MainModel>(
       model: model,
       child: MaterialApp(
         title: APP_NAME,

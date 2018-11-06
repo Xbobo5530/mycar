@@ -56,3 +56,6 @@ const devByText = 'Developed by NyayoZangu Labs';
 const emailUrl = 'mailto:dev@nyayozangu.com?subject=MyCarApp';
 
 const loadingText = 'Loading...';
+
+const homeText = 'Home';
+const toolsText = 'Tools';

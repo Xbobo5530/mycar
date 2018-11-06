@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/functions/status_code.dart';
@@ -13,17 +15,21 @@ final fun = Functions();
 
 abstract class LoginModel extends Model {
   bool _isLoggedIn = false;
+
   bool get isLoggedIn => _isLoggedIn;
 
   StatusCode _loginStatus;
 
   StatusCode get loginStatus => _loginStatus;
 
-  void getLoginStatus() {
+  Future<void> getLoginStatus() async {
     // get login status
-    loginFun.isLoggedIn().then((isLoggedIn) {
-      _isLoggedIn = isLoggedIn;
-    });
+
+    _isLoggedIn = await loginFun.isLoggedIn();
+
+//    loginFun.isLoggedIn().then((isLoggedIn) {
+//      _isLoggedIn = isLoggedIn;
+//    });
     // Then notify all the listeners.
     notifyListeners();
   }
@@ -97,10 +103,21 @@ abstract class AnswerModel extends Model {
   }
 }
 
-class MyCarModel extends Model
-    with LoginModel, UserModel, QuestionModel, AnswerModel {
-  MyCarModel() {
-    print('$tag at MyCarModel()');
+abstract class NavModel extends Model {
+  int _currentNavItem = 0;
+
+  int get currentNavItem => _currentNavItem;
+
+  updateSelectedNavItem(int selectedItem) {
+    _currentNavItem = selectedItem;
+    notifyListeners();
+  }
+}
+
+class MainModel extends Model
+    with LoginModel, UserModel, QuestionModel, AnswerModel, NavModel {
+  MainModel() {
+    print('$tag at MainModel()');
     getLoginStatus();
     getCurrentUser();
   }

@@ -22,7 +22,6 @@ class _AskPageState extends State<AskPage> {
     );
 
     _submitQuestion(BuildContext context) async {
-      //todo handle asked question
       //todo receive the error message then status code is 'failed'
       var question = _mController.text.trim();
       if (question.isNotEmpty) {

@@ -16,7 +16,7 @@ class UserProfilePage extends StatelessWidget {
   UserProfilePage({this.user, this.isCurrentUser});
   @override
   Widget build(BuildContext context) {
-    _logout(MyCarModel model) {
+    _logout(MainModel model) {
       _loginFun.logout();
       model.getLoginStatus();
       model.getCurrentUser();
@@ -42,8 +42,8 @@ class UserProfilePage extends StatelessWidget {
       }
     }
 
-    var _logoutSection = ScopedModelDescendant<MyCarModel>(
-      builder: (BuildContext context, Widget child, MyCarModel model) {
+    var _logoutSection = ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
         model.checkIsCurrentUser(user.id);
 
         if (isCurrentUser != null && isCurrentUser)

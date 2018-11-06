@@ -9,13 +9,15 @@ import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/login.dart';
+import 'package:my_car/pages/tools_page.dart';
 import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/pages/view_question.dart';
+import 'package:my_car/values/consts.dart';
 import 'package:my_car/values/strings.dart';
 import 'package:my_car/views/question_item.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-const tag = 'HomePage:';
+const _tag = 'HomePage:';
 
 final fun = Functions();
 final loginFun = LoginFunctions();
@@ -36,8 +38,8 @@ class HomePage extends StatelessWidget {
       showModalBottomSheet(
           context: context,
           builder: (context) {
-            return ScopedModelDescendant<MyCarModel>(
-              builder: (BuildContext context, Widget child, MyCarModel model) {
+            return ScopedModelDescendant<MainModel>(
+              builder: (BuildContext context, Widget child, MainModel model) {
                 return UserProfilePage(
                     user: model.currentUser, isCurrentUser: true);
               },
@@ -58,8 +60,8 @@ class HomePage extends StatelessWidget {
           MaterialPageRoute(builder: (_) => AskPage(), fullscreenDialog: true));
     }
 
-    var _askQuestionSection = ScopedModelDescendant<MyCarModel>(
-      builder: (BuildContext context, Widget child, MyCarModel model) {
+    var _askQuestionSection = ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
         return IconButton(
             icon: Icon(Icons.add),
             onPressed: model.isLoggedIn
@@ -70,8 +72,8 @@ class HomePage extends StatelessWidget {
 
     var _currentUserProfileSection = Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ScopedModelDescendant<MyCarModel>(
-        builder: (BuildContext context, Widget child, MyCarModel model) {
+      child: ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
           return IconButton(
             onPressed: model.isLoggedIn
                 ? () => _goToProfilePage()
@@ -92,7 +94,7 @@ class HomePage extends StatelessWidget {
       ),
     );
 
-    var _bodySection = StreamBuilder(
+    final _forumView = StreamBuilder(
         stream: _data,
         builder: (_, snapshot) {
           if (!snapshot.hasData)
@@ -113,24 +115,53 @@ class HomePage extends StatelessWidget {
               });
         });
 
+    final _bodySection =
+    ScopedModelDescendant<MainModel>(builder: (_, __, model) {
+      switch (model.currentNavItem) {
+        case NAV_ITEM_HOME:
+          return _forumView;
+          break;
+        case NAV_ITEM_TOOLS:
+          return ToolsPage();
+          break;
+        default:
+          print('$_tag selected nav item is ${model.currentNavItem}');
+      }
+    });
+
     return Scaffold(
-        body: NestedScrollView(
-            controller: _scrollViewController,
-            headerSliverBuilder: (_, innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  forceElevated: innerBoxIsScrolled,
-//                  pinned: true,
-                  snap: true,
-                  floating: true,
-                  leading: _askQuestionSection,
-                  title: Text(APP_NAME),
-                  actions: <Widget>[
-                    _currentUserProfileSection,
-                  ],
-                )
-              ];
-            },
-            body: _bodySection));
+      body: NestedScrollView(
+          controller: _scrollViewController,
+          headerSliverBuilder: (_, innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                forceElevated: innerBoxIsScrolled,
+                snap: true,
+                floating: true,
+                leading: _askQuestionSection,
+                title: Text(APP_NAME),
+                actions: <Widget>[
+                  _currentUserProfileSection,
+                ],
+              )
+            ];
+          },
+          body: _bodySection),
+      bottomNavigationBar: ScopedModelDescendant<MainModel>(
+        builder: (context, child, model) {
+          return BottomNavigationBar(
+            onTap: (selectedItem) => model.updateSelectedNavItem(selectedItem),
+            currentIndex: model.currentNavItem,
+            fixedColor: Colors.blue,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                  title: Text(homeText), icon: Icon(Icons.home)),
+              BottomNavigationBarItem(
+                  title: Text(toolsText), icon: Icon(Icons.settings)),
+            ],
+          );
+        },
+      ),
+    );
   }
 }

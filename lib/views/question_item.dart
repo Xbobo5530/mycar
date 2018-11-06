@@ -119,8 +119,8 @@ class _QuestionItemViewState extends State<QuestionItemView> {
         label: Text(shareText),
         onTap: () => _shareQuestion());
 
-    var _answerButton = ScopedModelDescendant<MyCarModel>(
-      builder: (BuildContext context, Widget child, MyCarModel model) {
+    var _answerButton = ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
         return LabeledFlatButton(
             icon: Icon(Icons.edit, size: 18.0, color: Colors.grey),
             label: Text(answerText),
