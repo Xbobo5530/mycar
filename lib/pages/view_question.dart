@@ -21,7 +21,7 @@ class ViewQuestionPage extends StatelessWidget {
     final _userIcon = Icon(
       Icons.account_circle,
       color: Colors.grey,
-      size: 18.0,
+      size: 40.0,
     );
     final _questionSection = Material(
       elevation: 4.0,
@@ -42,7 +42,9 @@ class ViewQuestionPage extends StatelessWidget {
                 });
           },
         ),
-        title: Text('${question.question.substring(0, 35)}...'),
+        title: Text(question.question.length >= 35
+            ? '${question.question.substring(0, 35)}...'
+            : question.question),
         children: <Widget>[
           ListTile(
             title: Padding(

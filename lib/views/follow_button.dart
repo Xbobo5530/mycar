@@ -10,17 +10,28 @@ import 'package:scoped_model/scoped_model.dart';
 
 const _tag = 'FollowButtonView:';
 
-class FollowButtonView extends StatelessWidget {
+class FollowButtonView extends StatefulWidget {
   final Question question;
 
   FollowButtonView({@required this.question, Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final snackBar = SnackBar(
-      content: Text(errorMessage),
-    );
+  _FollowButtonViewState createState() => _FollowButtonViewState();
+}
 
+class _FollowButtonViewState extends State<FollowButtonView> {
+  StatusCode _handlingFollowQuestionStatus;
+  bool _isFollowing = false;
+  bool _isDisposed = false;
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     _goToLoginPage() {
       showModalBottomSheet(
           context: context,
@@ -33,25 +44,35 @@ class FollowButtonView extends StatelessWidget {
       if (!model.isLoggedIn)
         _goToLoginPage();
       else {
-        StatusCode statusCode =
-        await model.handleFollowQuestion(question, model.currentUser.id);
+        if (!_isDisposed)
+          setState(() {
+            _handlingFollowQuestionStatus = StatusCode.waiting;
+          });
+        StatusCode statusCode = await model.handleFollowQuestion(
+            widget.question, model.currentUser.id);
         if (statusCode == StatusCode.failed)
-          Scaffold.of(context).showSnackBar(snackBar);
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(errorMessage),
+          ));
+
+        if (!_isDisposed)
+          setState(() {
+            _handlingFollowQuestionStatus = statusCode;
+          });
       }
     }
 
     return ScopedModelDescendant<MainModel>(builder: (_, __, model) {
       return FutureBuilder<bool>(
           initialData: false,
-          future: model.isUserFollowing(question, model.currentUser),
+          future: model.isUserFollowing(widget.question, model.currentUser),
           builder: (context, snapshot) {
             final isFollowing = snapshot.data;
             print('$_tag isFollowing is : $isFollowing');
             return Builder(
               builder: (context) {
                 return LabeledFlatButton(
-                    icon:
-                    model.handlingFollowQuestionStatus == StatusCode.waiting
+                    icon: _handlingFollowQuestionStatus == StatusCode.waiting
                         ? MyProgressIndicator(
                       size: 15.0,
                       color: isFollowing ? Colors.blue : Colors.grey,

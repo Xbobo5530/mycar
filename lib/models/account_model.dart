@@ -17,7 +17,6 @@ abstract class AccountModel extends Model {
   bool get isLoggedIn => _isLoggedIn;
 
   StatusCode _loggingOutStatus;
-
   StatusCode get loggingOutStatus => _loggingOutStatus;
 
   StatusCode _loginStatus;
@@ -31,10 +30,8 @@ abstract class AccountModel extends Model {
 
   Future<void> updateLoginStatus() async {
     print('$_tag at getLoginStatus');
-    bool _hasError = false;
     final user = await _auth.currentUser().catchError((error) {
       print('$_tag error on getting current user: $error');
-      _hasError = true;
       _isLoggedIn = false;
       _currentUser = null;
       notifyListeners();
@@ -57,11 +54,13 @@ abstract class AccountModel extends Model {
       _hasError = true;
     });
     if (_hasError || user == null) {
-      updateCurrentUser();
+      updateLoginStatus();
       return StatusCode.failed;
     }
-    updateCurrentUser();
-    return await _checkIfUserExists(user);
+    updateLoginStatus();
+    _loginStatus = await _checkIfUserExists(user);
+    notifyListeners();
+    return _loginStatus;
   }
 
   Future<FirebaseUser> _handleGoogleSignIn() async {
@@ -81,8 +80,8 @@ abstract class AccountModel extends Model {
     print('$tag at _checkIfUserExists');
     bool _hasError = false;
 
-    var userId = user.uid;
-    var userDoc = await _database
+    final userId = user.uid;
+    final userDoc = await _database
         .collection(USERS_COLLECTION)
         .document(userId)
         .get()
@@ -130,8 +129,9 @@ abstract class AccountModel extends Model {
     bool _hasError = false;
     if (!_isLoggedIn) {
       _currentUser = null;
+      _updatingCurrentUserStatus = StatusCode.success;
       notifyListeners();
-      return StatusCode.success;
+      return _updatingCurrentUserStatus;
     }
     final user = await _auth.currentUser().catchError((error) {
       print('$_tag error on getting current user: $error');
@@ -139,13 +139,15 @@ abstract class AccountModel extends Model {
     });
     if (_hasError) {
       _currentUser = null;
+      _updatingCurrentUserStatus = StatusCode.failed;
       notifyListeners();
-      return StatusCode.failed;
+      return _updatingCurrentUserStatus;
     }
     if (user == null) {
       _currentUser = null;
+      _updatingCurrentUserStatus = StatusCode.success;
       notifyListeners();
-      return StatusCode.success;
+      return _updatingCurrentUserStatus;
     }
     final userId = user.uid;
     final DocumentSnapshot document = await _database
@@ -159,16 +161,20 @@ abstract class AccountModel extends Model {
 
     if (!document.exists || _hasError) {
       _currentUser = null;
+      _updatingCurrentUserStatus = StatusCode.failed;
       notifyListeners();
-      return StatusCode.failed;
+      return _updatingCurrentUserStatus;
     }
     _currentUser = User.fromSnapshot(document);
+    _updatingCurrentUserStatus = StatusCode.success;
     notifyListeners();
-    return StatusCode.success;
+    return _updatingCurrentUserStatus;
   }
 
   Future<StatusCode> logout() async {
     print('$_tag at logout');
+    _loggingOutStatus = StatusCode.waiting;
+    notifyListeners();
     bool _hasError = false;
     _auth.signOut().catchError((error) {
       print('$_tag error on signing out');
