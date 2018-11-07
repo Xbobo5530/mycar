@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
-import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/answer.dart';
 import 'package:my_car/pages/login.dart';
-import 'package:my_car/values/strings.dart';
+import 'package:my_car/utils/status_code.dart';
+import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
 import 'package:my_car/views/upvote_count.dart';
 

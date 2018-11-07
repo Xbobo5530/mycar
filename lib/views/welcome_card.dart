@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_car/values/strings.dart';
+import 'package:my_car/utils/strings.dart';
 
 class WelcomeCardView extends StatelessWidget {
   @override

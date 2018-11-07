@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
-import 'package:my_car/functions/status_code.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/pages/login.dart';
-import 'package:my_car/values/strings.dart';
+import 'package:my_car/utils/status_code.dart';
+import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/labeled_flat_button.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
 
@@ -66,7 +66,7 @@ class _FollowButtonViewState extends State<FollowButtonView> {
           _followStatus = StatusCode.waiting;
         });
 
-        StatusCode statusCode = await fun.followQuestion(widget.question);
+        StatusCode statusCode = await fun.handleFollowQuestion(widget.question);
         bool isFollowing = await fun.isUserFollowing(widget.question);
         if (statusCode == StatusCode.failed) {
           Scaffold.of(context).showSnackBar(snackBar);

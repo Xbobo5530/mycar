@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/functions/login_fun.dart';
-import 'package:my_car/models/main_scopped_model.dart';
+import 'package:my_car/models/main_model.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/answer_question.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/user_profile.dart';
-import 'package:my_car/values/strings.dart';
+import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/answers_count.dart';
 import 'package:my_car/views/follow_button.dart';
 import 'package:my_car/views/labeled_flat_button.dart';

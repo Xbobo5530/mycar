@@ -1,9 +1,4 @@
 const APP_NAME = 'MyCar';
-const USERS_COLLECTION = 'Users';
-const QUESTIONS_COLLECTION = 'Questions';
-const ANSWERS_COLLECTION = 'Answers';
-const UPVOTES_COLLECTION = 'Upvotes';
-const FOLLOWERS_COLLECTION = 'Followers';
 
 const welcomeText = 'Karibu';
 const introductionText = '''
@@ -29,19 +24,6 @@ const profileText = 'profile';
 const upvoteText = 'Upvote';
 const upvotedText = 'Upvoted';
 const answerText = 'Answer';
-
-const CREATED_AT_FIELD = 'created_at';
-const USER_ID_FIELD = 'user_id';
-const QUESTION_FIELD = 'question';
-const ANSWER_FIELD = 'answer';
-const QUESTION_ID = 'question_id';
-const NAME_FIELD = 'name';
-const BIO_FIELD = 'bio';
-const IMAGE_URL_FIELD = 'image_url';
-const ID_FIELD = 'image_url';
-const QUESTION_ID_FIELD = 'question_id';
-const VOTES_FIELD = 'votes';
-const ANSWER_ID_FIELD = 'answer_id';
 
 //view question page
 const questionText = 'Question';

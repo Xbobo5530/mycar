@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/login_fun.dart';
-import 'package:my_car/models/main_scopped_model.dart';
+import 'package:my_car/models/main_model.dart';
 import 'package:my_car/models/user.dart';
-import 'package:my_car/values/strings.dart';
+import 'package:my_car/utils/strings.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,8 +18,8 @@ class UserProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     _logout(MainModel model) {
       _loginFun.logout();
-      model.getLoginStatus();
-      model.getCurrentUser();
+      model.updateLoginStatus();
+      model.updateCurrentUser();
       Navigator.pop(context);
     }
 

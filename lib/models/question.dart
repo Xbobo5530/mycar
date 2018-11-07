@@ -1,39 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
-import 'package:my_car/values/strings.dart';
+import 'package:my_car/utils/consts.dart';
+import 'package:my_car/utils/strings.dart';
 
 const tag = 'Question';
 final fun = Functions();
 
 class Question {
-  String id, userId, question;
+  String id, userId, createdBy, question;
   int createdAt;
 
-  Question({this.question, this.id, this.userId, this.createdAt});
+  Question({@required this.question,
+    @required this.id,
+    this.userId,
+    @required this.createdBy,
+    @required this.createdAt});
 
-  Question.fromSnapshot(DocumentSnapshot document) {
-    this.id = document.documentID;
-    this.question = document[QUESTION_FIELD];
-    this.userId = document[USER_ID_FIELD];
-    this.createdAt = document[CREATED_AT_FIELD];
-  }
-
-  var _cachedQuestionsSnapshot;
-
-//
-//  Stream<QuerySnapshot> getQuestionsStream() {
-//    if (_cachedQuestionsSnapshot == null)
-//      return _cachedQuestionsSnapshot;
-//    else {
-//      _cachedQuestionsSnapshot =
-//          fun.database.collection(QUESTIONS_COLLECTION).snapshots();
-//      return _cachedQuestionsSnapshot;
-//    }
-//  }
-
-  Question getQnFromSnapshots(AsyncSnapshot snapshots, int index) {
-    DocumentSnapshot document = snapshots.data.documents[index];
-    return Question.fromSnapshot(document);
-  }
+  Question.fromSnapshot(DocumentSnapshot document)
+      : this.question = document[QUESTION_FIELD],
+        this.userId = document[USER_ID_FIELD],
+        this.createdBy = document[CREATED_BY_FIELD],
+        this.createdAt = document[CREATED_AT_FIELD];
 }

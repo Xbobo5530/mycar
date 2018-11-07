@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
-import 'package:my_car/functions/status_code.dart';
-import 'package:my_car/values/strings.dart';
+import 'package:my_car/utils/status_code.dart';
+import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
 
 final fun = Functions();
@@ -62,7 +62,7 @@ class _AskPageState extends State<AskPage> {
           child: _submitStatus == StatusCode.waiting
               ? MyProgressIndicator(
                   size: 15.0,
-            color: Colors.white,
+                  color: Colors.white,
                 )
               : Text(submitText, style: TextStyle(color: Colors.white)),
         )

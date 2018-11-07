@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/functions/functions.dart';
 import 'package:my_car/models/answer.dart';
-import 'package:my_car/values/strings.dart';
+import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
 
 const tag = 'UpvoteCountView';
