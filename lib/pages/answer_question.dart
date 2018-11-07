@@ -1,62 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:my_car/functions/functions.dart';
+import 'package:my_car/models/main_model.dart';
 import 'package:my_car/models/question.dart';
+import 'package:my_car/utils/colors.dart';
 import 'package:my_car/utils/status_code.dart';
 import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
+import 'package:scoped_model/scoped_model.dart';
 
-final fun = Functions();
+const _tag = 'AnswerQuestionPage:';
 
-class AnswerQuestionPage extends StatefulWidget {
+class AnswerQuestionPage extends StatelessWidget {
   final Question question;
 
-  AnswerQuestionPage({this.question});
+  AnswerQuestionPage({@required this.question});
 
   @override
-  _AnswerQuestionPageState createState() => _AnswerQuestionPageState();
-}
-
-class _AnswerQuestionPageState extends State<AnswerQuestionPage> {
-  StatusCode _submitStatus;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext mainContext) {
     var _answerController = TextEditingController();
 
     final snackBar = SnackBar(
       content: Text(errorMessage),
     );
 
-    _submitAnswer(BuildContext context) async {
-      var answer = _answerController.text.trim();
+    _submitAnswer(BuildContext context, MainModel model) async {
+      final answer = _answerController.text.trim();
 
       if (answer.isNotEmpty) {
-        setState(() {
-          _submitStatus = StatusCode.waiting;
-        });
-
-        StatusCode statusCode = await fun.submitAnswer(widget.question, answer);
-        setState(() {
-          _submitStatus = statusCode;
-        });
-
-        statusCode == StatusCode.success
-            ? Navigator.pop(context)
-            : Scaffold.of(context).showSnackBar(snackBar);
+        StatusCode statusCode =
+        await model.submitAnswer(question, answer, model.currentUser.id);
+        switch (statusCode) {
+        //todo test if can pop main context
+          case StatusCode.success:
+            Navigator.pop(mainContext);
+            break;
+          case StatusCode.failed:
+            Scaffold.of(context).showSnackBar(snackBar);
+            break;
+          default:
+            print('$_tag status code is $statusCode');
+        }
       }
     }
 
-    var _questionSection = Material(
+    final _questionSection = Material(
       elevation: 4.0,
       child: ListTile(
         title: Text(
-          widget.question.question,
+          question.question,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
         ),
       ),
     );
 
-    var _answerField = Expanded(
+    final _answerField = Expanded(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
@@ -70,22 +66,31 @@ class _AnswerQuestionPageState extends State<AnswerQuestionPage> {
       ),
     );
 
-    var _actions = ButtonBar(
+    final _actions = ButtonBar(
       children: <Widget>[
-        RaisedButton(
-          color: Color(0xFF1A1A1A),
-          onPressed: () => _submitStatus == StatusCode.waiting
-              ? null
-              : _submitAnswer(context),
-          child: _submitStatus == StatusCode.waiting
-              ? MyProgressIndicator(
-                  size: 15.0,
-                  color: Colors.white,
-                )
-              : Text(
-                  submitText,
-                  style: TextStyle(color: Colors.white),
-                ),
+        ScopedModelDescendant<MainModel>(
+          builder: (_, __, model) {
+            return Builder(
+              builder: (context) {
+                return RaisedButton(
+                  color: darkColor,
+                  onPressed: () =>
+                  model.submittingAnswerStatus == StatusCode.waiting
+                      ? null
+                      : _submitAnswer(context, model),
+                  child: model.submittingAnswerStatus == StatusCode.waiting
+                      ? MyProgressIndicator(
+                    size: 15.0,
+                    color: Colors.white,
+                  )
+                      : Text(
+                    submitText,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                );
+              },
+            );
+          },
         )
       ],
     );

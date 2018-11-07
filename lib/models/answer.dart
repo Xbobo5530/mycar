@@ -11,7 +11,7 @@ class Answer {
   Answer(
       {this.id,
       this.userId,
-        this.createdBy,
+      this.createdBy,
       this.answer,
       this.questionId,
       this.createdAt,

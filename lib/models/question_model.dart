@@ -11,8 +11,11 @@ abstract class QuestionModel extends Model with AccountModel {
   final Firestore _database = Firestore.instance;
 
   StatusCode _submittingQuestionStatus;
-
   StatusCode get submittingQuestionStatus => _submittingQuestionStatus;
+
+  StatusCode _handlingFollowQuestionStatus;
+
+  StatusCode get handlingFollowQuestionStatus => _handlingFollowQuestionStatus;
 
   Future<StatusCode> submitQuestion(
       String question, String currentUserId) async {
@@ -69,10 +72,13 @@ abstract class QuestionModel extends Model with AccountModel {
   /// if the user has not followed the [question], follow it
   /// [userId] is the Id of the user (usually current user)
   /// returns a [Future] of a [StatusCode] for the status of the follow
+
   Future<StatusCode> handleFollowQuestion(
       Question question, String userId) async {
     print('$tag at followQuestion');
-    var _hasError = false;
+    _handlingFollowQuestionStatus = StatusCode.waiting;
+    notifyListeners();
+    bool _hasError = false;
 
     DocumentReference followerDocRef =
         _getFollowingDocumentRef(question, userId);
@@ -97,10 +103,14 @@ abstract class QuestionModel extends Model with AccountModel {
       followerDocRef.setData(followMap).catchError((error) {
         print('$tag error on adding follow: $error');
         _hasError = true;
+        _handlingFollowQuestionStatus = StatusCode.failed;
+        notifyListeners();
       });
     }
 
     if (_hasError) return StatusCode.failed;
-    return StatusCode.success;
+    _handlingFollowQuestionStatus = StatusCode.success;
+    notifyListeners();
+    return _handlingFollowQuestionStatus;
   }
 }

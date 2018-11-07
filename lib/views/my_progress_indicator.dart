@@ -4,7 +4,7 @@ class MyProgressIndicator extends StatelessWidget {
   final double size;
   final Color color;
 
-  MyProgressIndicator({this.size, this.color});
+  MyProgressIndicator({@required this.size, @required this.color});
 
   @override
   Widget build(BuildContext context) {

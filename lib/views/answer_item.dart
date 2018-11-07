@@ -23,7 +23,7 @@ class AnswerItemView extends StatelessWidget {
     }
 
     final _userSection =
-    ScopedModelDescendant<MainModel>(builder: (_, __, model) {
+        ScopedModelDescendant<MainModel>(builder: (_, __, model) {
       return GestureDetector(
         onTap: model.isLoggedIn != null
             ? () => _openUserProfile(model.currentUser)
@@ -31,9 +31,9 @@ class AnswerItemView extends StatelessWidget {
         child: Chip(
             avatar: model.isLoggedIn && model.currentUser.imageUrl != null
                 ? CircleAvatar(
-              backgroundImage: NetworkImage(model.currentUser.imageUrl),
-              backgroundColor: Colors.black12,
-            )
+                    backgroundImage: NetworkImage(model.currentUser.imageUrl),
+                    backgroundColor: Colors.black12,
+                  )
                 : Icon(Icons.account_circle),
             label: model.isLoggedIn
                 ? Text(model.currentUser.name)

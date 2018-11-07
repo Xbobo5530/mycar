@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_car/functions/functions.dart';
-import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/models/main_model.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
@@ -14,54 +12,19 @@ import 'package:my_car/views/labeled_flat_button.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:share/share.dart';
 
-const tag = 'QuestionItemView';
+const _tag = 'QuestionItemView';
 
-final userFun = User();
-final qnFun = Question();
-final fun = Functions();
-final loginFun = LoginFunctions();
-
-class QuestionItemView extends StatefulWidget {
+class QuestionItemView extends StatelessWidget {
   final Question question;
   final String source;
-
-  /// method to call when the question is tapped
-  /// null when when the question should now respond to a tap
   final GestureTapCallback onTap;
 
   QuestionItemView({Key key, @required this.question, this.source, this.onTap})
       : super(key: key);
 
   @override
-  _QuestionItemViewState createState() => _QuestionItemViewState();
-}
-
-class _QuestionItemViewState extends State<QuestionItemView> {
-  User _user;
-  bool _isDisposed = false;
-
-  @override
-  void initState() {
-    (() async {
-      var questionUserId = widget.question.userId;
-      User questionUser = await userFun.getUserFromUserId(questionUserId);
-      if (!_isDisposed)
-        setState(() {
-          _user = questionUser;
-        });
-    })();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _isDisposed = true;
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    bool enabled = widget.onTap != null;
+    bool enabled = onTap != null;
 
     _goToLoginPage() {
       showModalBottomSheet(
@@ -75,13 +38,15 @@ class _QuestionItemViewState extends State<QuestionItemView> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (_) => AnswerQuestionPage(question: widget.question),
+              builder: (_) => AnswerQuestionPage(question: question),
               fullscreenDialog: true));
     }
 
     _shareQuestion() {
-      Share.share('${widget.question.question}\nshared from the MyCar App');
+      Share.share('${question.question}\nshared from the MyCar App');
     }
+
+    //todo add dynamic links to questions
 
     _openUserProfile(User user) {
       showModalBottomSheet(
@@ -91,35 +56,38 @@ class _QuestionItemViewState extends State<QuestionItemView> {
           });
     }
 
-    var _userSection = GestureDetector(
-      onTap: _user != null ? () => _openUserProfile(_user) : null,
-      child: Chip(
-        label: _user != null ? Text(_user.name) : Text(loadingText),
-        avatar: _user != null
-            ? CircleAvatar(
-          backgroundColor: Colors.black12,
-          backgroundImage: NetworkImage(_user.imageUrl),
-        )
-            : Icon(Icons.account_circle),
-      ),
-    );
+    final _userSection =
+    ScopedModelDescendant<MainModel>(builder: (_, __, model) {
+      return GestureDetector(
+        onTap:
+        model.isLoggedIn ? () => _openUserProfile(model.currentUser) : null,
+        child: Chip(
+          label: model.isLoggedIn
+              ? Text(model.currentUser.name)
+              : Text(loadingText),
+          avatar: model.isLoggedIn
+              ? CircleAvatar(
+            backgroundColor: Colors.black12,
+            backgroundImage: NetworkImage(model.currentUser.imageUrl),
+          )
+              : Icon(Icons.account_circle),
+        ),
+      );
+    });
 
-    var _midSection = Container(
+    final _midSection = Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          _userSection,
-          AnswersCountView(question: widget.question)
-        ],
+        children: <Widget>[_userSection, AnswersCountView(question: question)],
       ),
     );
 
-    var _shareButton = LabeledFlatButton(
+    final _shareButton = LabeledFlatButton(
         icon: Icon(Icons.share, size: 18.0, color: Colors.grey),
         label: Text(shareText),
         onTap: () => _shareQuestion());
 
-    var _answerButton = ScopedModelDescendant<MainModel>(
+    final _answerButton = ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
         return LabeledFlatButton(
             icon: Icon(Icons.edit, size: 18.0, color: Colors.grey),
@@ -130,26 +98,26 @@ class _QuestionItemViewState extends State<QuestionItemView> {
       },
     );
 
-    var _actionsSection = Material(
+    final _actionsSection = Material(
       elevation: 4.0,
       child: ButtonBar(
         alignment: MainAxisAlignment.center,
         children: <Widget>[
           _shareButton,
           FollowButtonView(
-            question: widget.question,
+            question: question,
           ),
           _answerButton,
         ],
       ),
     );
 
-    var _questionDetailsSection = ListTile(
-      onTap: enabled ? widget.onTap : null,
+    final _questionDetailsSection = ListTile(
+      onTap: enabled ? onTap : null,
       title: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Text(
-          widget.question.question,
+          question.question,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
         ),
       ),

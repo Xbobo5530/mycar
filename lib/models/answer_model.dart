@@ -10,10 +10,38 @@ const _tag = 'AnswerModel:';
 abstract class AnswerModel with AccountModel {
   final _database = Firestore.instance;
 
+  StatusCode _submittingAnswerStatus;
+
+  StatusCode get submittingAnswerStatus => _submittingAnswerStatus;
+
+  StatusCode _handlingUpvoteAnswerStatus;
+
+  StatusCode get handlingUpvoteAnswerStatus => _handlingUpvoteAnswerStatus;
+
+  Stream<QuerySnapshot> answersStreamFor(Question question) {
+    return _database
+        .collection(QUESTIONS_COLLECTION)
+        .document(question.id)
+        .collection(ANSWERS_COLLECTION)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> upvotesStreamFor(Answer answer) {
+    return _database
+        .collection(QUESTIONS_COLLECTION)
+        .document(answer.questionId)
+        .collection(ANSWERS_COLLECTION)
+        .document(answer.id)
+        .collection(UPVOTES_COLLECTION)
+        .snapshots();
+  }
+
   Future<StatusCode> submitAnswer(
       Question question, String answer, String userId) async {
     print('$tag at submitAnswer');
-    var _hasError = false;
+    _submittingAnswerStatus = StatusCode.waiting;
+    notifyListeners();
+    bool _hasError = false;
 
     Map<String, dynamic> answerMap = {
       CREATED_BY_FIELD: userId,
@@ -30,29 +58,39 @@ abstract class AnswerModel with AccountModel {
         .catchError((error) {
       print('$tag error on submitting question $error');
       _hasError = true;
+      _submittingAnswerStatus = StatusCode.failed;
+      notifyListeners();
     });
 
     if (_hasError) return StatusCode.failed;
-    return StatusCode.success;
+    _submittingAnswerStatus = StatusCode.success;
+    notifyListeners();
+    return _submittingAnswerStatus;
   }
 
   Future<StatusCode> handleUpvoteAnswer(Answer answer, String userId) async {
     print('$_tag at upvoteAnswer');
-    var _hasError = false;
+    _handlingUpvoteAnswerStatus = StatusCode.waiting;
+    notifyListeners();
+    bool _hasError = false;
 
     DocumentReference upvoteDocRef = _getUpvoteDocumentRef(answer, userId);
 
     DocumentSnapshot document = await upvoteDocRef.get().catchError(((error) {
       print('$_tag error on upvoting answer: $error');
       _hasError = true;
+      _handlingUpvoteAnswerStatus = StatusCode.failed;
+      notifyListeners();
     }));
 
-    if (_hasError) return StatusCode.failed;
+    if (_hasError) return _handlingUpvoteAnswerStatus;
 
     if (document.exists)
       upvoteDocRef.delete().catchError((error) {
         print('$_tag error on deleting upvoted doc: $error');
         _hasError = true;
+        _handlingUpvoteAnswerStatus = StatusCode.failed;
+        notifyListeners();
       });
     else {
       Map<String, dynamic> upvoteMap = {
@@ -64,11 +102,15 @@ abstract class AnswerModel with AccountModel {
       upvoteDocRef.setData(upvoteMap).catchError((error) {
         print('$_tag error on adding upvote: $error');
         _hasError = true;
+        _handlingUpvoteAnswerStatus = StatusCode.failed;
+        notifyListeners();
       });
     }
 
     if (_hasError) return StatusCode.failed;
-    return StatusCode.success;
+    _handlingUpvoteAnswerStatus = StatusCode.success;
+    notifyListeners();
+    return _handlingUpvoteAnswerStatus;
   }
 
   Future<bool> userHasUpvoted(Answer answer, String userId) async {

@@ -1,48 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:my_car/functions/functions.dart';
-import 'package:my_car/functions/login_fun.dart';
+import 'package:my_car/models/main_model.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/utils/status_code.dart';
 import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/labeled_flat_button.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
+import 'package:scoped_model/scoped_model.dart';
 
-const tag = 'FollowButtonView:';
-final fun = Functions();
-final loginFun = LoginFunctions();
-
-class FollowButtonView extends StatefulWidget {
+class FollowButtonView extends StatelessWidget {
   final Question question;
 
   FollowButtonView({this.question});
-
-  @override
-  _FollowButtonViewState createState() => _FollowButtonViewState();
-}
-
-class _FollowButtonViewState extends State<FollowButtonView> {
-  bool _isFollowing = false;
-  StatusCode _followStatus;
-  bool _isDisposed = false;
-
-  @override
-  void initState() {
-    (() async {
-      bool isFollowing = await fun.isUserFollowing(widget.question);
-      if (!_isDisposed)
-        setState(() {
-          _isFollowing = isFollowing;
-        });
-    })();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _isDisposed = true;
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,41 +27,39 @@ class _FollowButtonViewState extends State<FollowButtonView> {
           });
     }
 
-    _followQuestion() async {
-      bool isLoggedIn = await loginFun.isLoggedIn();
-
-      if (isLoggedIn) {
-        setState(() {
-          _followStatus = StatusCode.waiting;
-        });
-
-        StatusCode statusCode = await fun.handleFollowQuestion(widget.question);
-        bool isFollowing = await fun.isUserFollowing(widget.question);
-        if (statusCode == StatusCode.failed) {
-          Scaffold.of(context).showSnackBar(snackBar);
-        } else {
-          setState(() {
-            _isFollowing = isFollowing;
-          });
-        }
-
-        setState(() {
-          _followStatus = statusCode;
-        });
-      } else
-        _goToLoginPage();
+    _followQuestion(BuildContext context, MainModel model) async {
+      if (!model.isLoggedIn) _goToLoginPage();
+      StatusCode statusCode =
+      await model.handleFollowQuestion(question, model.currentUser.id);
+      if (statusCode == StatusCode.failed)
+        Scaffold.of(context).showSnackBar(snackBar);
     }
 
-    return LabeledFlatButton(
-        icon: _followStatus == StatusCode.waiting
-            ? MyProgressIndicator(
-          size: 15.0,
-          color: _isFollowing ? Colors.blue : Colors.grey,
-        )
-            : Icon(Icons.rss_feed,
-            size: 18.0, color: _isFollowing ? Colors.blue : Colors.grey),
-        label: Text(_isFollowing ? followingText : followText,
-            style: TextStyle(color: _isFollowing ? Colors.blue : Colors.grey)),
-        onTap: () => _followQuestion());
+    return ScopedModelDescendant<MainModel>(builder: (_, __, model) {
+      return FutureBuilder<bool>(
+          initialData: false,
+          future: model.isUserFollowing(question, model.currentUser.id),
+          builder: (context, snapshot) {
+            final isFollowing = snapshot.data;
+            return Builder(
+              builder: (context) {
+                return LabeledFlatButton(
+                    icon:
+                    model.handlingFollowQuestionStatus == StatusCode.waiting
+                        ? MyProgressIndicator(
+                      size: 15.0,
+                      color: isFollowing ? Colors.blue : Colors.grey,
+                    )
+                        : Icon(Icons.rss_feed,
+                        size: 18.0,
+                        color: isFollowing ? Colors.blue : Colors.grey),
+                    label: Text(isFollowing ? followingText : followText,
+                        style: TextStyle(
+                            color: isFollowing ? Colors.blue : Colors.grey)),
+                    onTap: () => _followQuestion(context, model));
+              },
+            );
+          });
+    });
   }
 }
