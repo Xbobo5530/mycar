@@ -8,8 +8,6 @@ import 'package:my_car/views/my_progress_indicator.dart';
 import 'package:my_car/views/upvote_count.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-const _tag = 'UpvoteButtonView:';
-
 class UpvoteButtonView extends StatelessWidget {
   final Answer answer;
 
@@ -17,10 +15,6 @@ class UpvoteButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final snackBar = SnackBar(
-      content: Text(errorMessage),
-    );
-
     _goToLoginPage() {
       showModalBottomSheet(
           context: context,
@@ -30,12 +24,16 @@ class UpvoteButtonView extends StatelessWidget {
     }
 
     _handleUpvoteAnswer(BuildContext context, MainModel model) async {
-      if (!model.isLoggedIn) _goToLoginPage();
+      if (!model.isLoggedIn)
+        _goToLoginPage();
+      else {
+        StatusCode statusCode =
+        await model.handleUpvoteAnswer(answer, model.currentUser.id);
 
-      StatusCode statusCode = await fun.upvoteAnswer(answer);
-
-      if (statusCode == StatusCode.failed) {
-        Scaffold.of(context).showSnackBar(snackBar);
+        if (statusCode == StatusCode.failed)
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(errorMessage),
+          ));
       }
     }
 
@@ -44,7 +42,7 @@ class UpvoteButtonView extends StatelessWidget {
         return model.handlingUpvoteAnswerStatus == StatusCode.waiting
             ? FutureBuilder<bool>(
           initialData: false,
-          future: model.userHasUpvoted(answer, model.currentUser.id),
+          future: model.userHasUpvoted(answer, model.currentUser),
           builder: (_, snapshot) {
             bool _hasUpvoted = snapshot.data;
             return Chip(
@@ -66,8 +64,7 @@ class UpvoteButtonView extends StatelessWidget {
               onTap: () => _handleUpvoteAnswer(context, model),
               child: FutureBuilder<bool>(
                 initialData: false,
-                future:
-                model.userHasUpvoted(answer, model.currentUser.id),
+                future: model.userHasUpvoted(answer, model.currentUser),
                 builder: (_, snapshot) {
                   bool _hasUpvoted = snapshot.data;
                   return Chip(
@@ -81,7 +78,7 @@ class UpvoteButtonView extends StatelessWidget {
                       label: Row(
                         children: <Widget>[
                           Text(
-                            _hasUpvoted ? upvotedText : upvoteText,
+                            _hasUpvoted ? '' : upvoteText,
                             style: TextStyle(
                                 color: _hasUpvoted
                                     ? Colors.blue

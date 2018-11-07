@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:my_car/functions/functions.dart';
+import 'package:my_car/models/main_model.dart';
+import 'package:my_car/utils/colors.dart';
 import 'package:my_car/utils/status_code.dart';
 import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
+import 'package:scoped_model/scoped_model.dart';
 
-final fun = Functions();
+const _tag = 'AskPage';
 
-class AskPage extends StatefulWidget {
-  @override
-  _AskPageState createState() => _AskPageState();
-}
-
-class _AskPageState extends State<AskPage> {
-  StatusCode _submitStatus;
+class AskPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var _mController = TextEditingController();
+    final _mController = TextEditingController();
 
     final snackBar = SnackBar(
       content: Text(errorMessage),
     );
 
-    _submitQuestion(BuildContext context) async {
+    _submitQuestion(BuildContext context, MainModel model) async {
       //todo receive the error message then status code is 'failed'
-      var question = _mController.text.trim();
+      final question = _mController.text.trim();
       if (question.isNotEmpty) {
-        setState(() {
-          _submitStatus = StatusCode.waiting;
-        });
-        StatusCode statusCode = await fun.submitQuestion(question);
-        setState(() {
-          _submitStatus = statusCode;
-        });
-        statusCode == StatusCode.success
-            ? Navigator.pop(context)
-            : Scaffold.of(context).showSnackBar(snackBar);
+        StatusCode statusCode =
+        await model.submitQuestion(question, model.currentUser.id);
+
+        switch (statusCode) {
+          case StatusCode.success:
+            Navigator.pop(context);
+            break;
+          case StatusCode.failed:
+            Scaffold.of(context).showSnackBar(snackBar);
+            break;
+          default:
+            print('$_tag the submit question status code is $statusCode');
+        }
       }
     }
 
-    var _questionField = Expanded(
+    final _questionField = Expanded(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
@@ -52,19 +51,24 @@ class _AskPageState extends State<AskPage> {
       ),
     );
 
-    var _actions = ButtonBar(
+    final _actions = ButtonBar(
       children: <Widget>[
-        RaisedButton(
-          color: Color(0xFF1A1A1A),
-          onPressed: () => _submitStatus == StatusCode.waiting
-              ? null
-              : _submitQuestion(context),
-          child: _submitStatus == StatusCode.waiting
-              ? MyProgressIndicator(
-                  size: 15.0,
-                  color: Colors.white,
-                )
-              : Text(submitText, style: TextStyle(color: Colors.white)),
+        ScopedModelDescendant<MainModel>(
+          builder: (_, __, model) {
+            return RaisedButton(
+              color: darkColor,
+              onPressed: () =>
+              model.submittingQuestionStatus == StatusCode.waiting
+                  ? null
+                  : _submitQuestion(context, model),
+              child: model.submittingQuestionStatus == StatusCode.waiting
+                  ? MyProgressIndicator(
+                size: 15.0,
+                color: Colors.white,
+              )
+                  : Text(submitText, style: TextStyle(color: Colors.white)),
+            );
+          },
         )
       ],
     );

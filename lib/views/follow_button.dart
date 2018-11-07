@@ -8,10 +8,12 @@ import 'package:my_car/views/labeled_flat_button.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+const _tag = 'FollowButtonView:';
+
 class FollowButtonView extends StatelessWidget {
   final Question question;
 
-  FollowButtonView({this.question});
+  FollowButtonView({@required this.question});
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +30,23 @@ class FollowButtonView extends StatelessWidget {
     }
 
     _followQuestion(BuildContext context, MainModel model) async {
-      if (!model.isLoggedIn) _goToLoginPage();
-      StatusCode statusCode =
-      await model.handleFollowQuestion(question, model.currentUser.id);
-      if (statusCode == StatusCode.failed)
-        Scaffold.of(context).showSnackBar(snackBar);
+      if (!model.isLoggedIn)
+        _goToLoginPage();
+      else {
+        StatusCode statusCode =
+        await model.handleFollowQuestion(question, model.currentUser.id);
+        if (statusCode == StatusCode.failed)
+          Scaffold.of(context).showSnackBar(snackBar);
+      }
     }
 
     return ScopedModelDescendant<MainModel>(builder: (_, __, model) {
       return FutureBuilder<bool>(
           initialData: false,
-          future: model.isUserFollowing(question, model.currentUser.id),
+          future: model.isUserFollowing(question, model.currentUser),
           builder: (context, snapshot) {
             final isFollowing = snapshot.data;
+            print('$_tag isFollowing is : $isFollowing');
             return Builder(
               builder: (context) {
                 return LabeledFlatButton(

@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:my_car/functions/functions.dart';
-import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/models/main_model.dart';
 import 'package:my_car/utils/status_code.dart';
 import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-const tag = 'LoginPage:';
-final functions = Functions();
-final loginFunctions = LoginFunctions();
+const _tag = 'LoginPage:';
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  StatusCode _loginStatus;
-
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final snackBar = SnackBar(
@@ -26,19 +15,18 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     _signInWithGoogle(BuildContext context, MainModel model) async {
-      setState(() {
-        _loginStatus = StatusCode.waiting;
-      });
-      StatusCode loginStatusCode = await loginFunctions.singInWithGoogle();
-      model.updateLoginStatus();
-      model.updateCurrentUser();
+      StatusCode loginStatusCode = await model.singInWithGoogle();
 
-      setState(() {
-        _loginStatus = loginStatusCode;
-      });
-      loginStatusCode == StatusCode.success
-          ? Navigator.pop(context)
-          : Scaffold.of(context).showSnackBar(snackBar);
+      switch (loginStatusCode) {
+        case StatusCode.failed:
+          Scaffold.of(context).showSnackBar(snackBar);
+          break;
+        case StatusCode.success:
+          Navigator.pop(context);
+          break;
+        default:
+          print('$_tag login status code is $loginStatusCode');
+      }
     }
 
     return Scaffold(
@@ -54,13 +42,13 @@ class _LoginPageState extends State<LoginPage> {
               builder: (BuildContext context, Widget child, model) {
                 return FlatButton(
                     textColor: Colors.blue,
-                    child: _loginStatus == StatusCode.waiting
+                    child: model.loginStatus == StatusCode.waiting
                         ? MyProgressIndicator(
                             size: 15.0,
                             color: Colors.cyan,
                           )
                         : Text(signInWithGoogleText),
-                    onPressed: _loginStatus == StatusCode.waiting
+                    onPressed: model.loginStatus == StatusCode.waiting
                         ? null
                         : () => _signInWithGoogle(context, model));
               },

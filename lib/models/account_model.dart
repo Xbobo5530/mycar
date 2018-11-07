@@ -14,36 +14,36 @@ abstract class AccountModel extends Model {
   final Firestore _database = Firestore.instance;
 
   bool _isLoggedIn = false;
-
   bool get isLoggedIn => _isLoggedIn;
 
-  StatusCode _loginStatus;
+  StatusCode _loggingOutStatus;
 
+  StatusCode get loggingOutStatus => _loggingOutStatus;
+
+  StatusCode _loginStatus;
   StatusCode get loginStatus => _loginStatus;
 
   User _currentUser;
-
   User get currentUser => _currentUser;
 
   StatusCode _updatingCurrentUserStatus;
-
   StatusCode get updatingCurrentUserStatus => _updatingCurrentUserStatus;
 
   Future<void> updateLoginStatus() async {
     print('$_tag at getLoginStatus');
     bool _hasError = false;
-    final user = _auth.currentUser().catchError((error) {
+    final user = await _auth.currentUser().catchError((error) {
       print('$_tag error on getting current user: $error');
-      _hasError = false;
-    });
-    if (user == null || _hasError) {
-      _currentUser = null;
+      _hasError = true;
       _isLoggedIn = false;
+      _currentUser = null;
       notifyListeners();
-      return;
-    }
-    _isLoggedIn = true;
+    });
+
+    _isLoggedIn = user != null;
+    updateCurrentUser();
     notifyListeners();
+    print('$_tag isLoggedIn is $_isLoggedIn');
   }
 
   Future<StatusCode> singInWithGoogle() async {
@@ -52,7 +52,7 @@ abstract class AccountModel extends Model {
     notifyListeners();
 
     bool _hasError = false;
-    var user = await _handleGoogleSignIn().catchError((error) {
+    final user = await _handleGoogleSignIn().catchError((error) {
       print('$tag error: $error');
       _hasError = true;
     });
@@ -60,7 +60,7 @@ abstract class AccountModel extends Model {
       updateCurrentUser();
       return StatusCode.failed;
     }
-
+    updateCurrentUser();
     return await _checkIfUserExists(user);
   }
 
@@ -82,7 +82,7 @@ abstract class AccountModel extends Model {
     bool _hasError = false;
 
     var userId = user.uid;
-    var userDoc = await functions.database
+    var userDoc = await _database
         .collection(USERS_COLLECTION)
         .document(userId)
         .get()
@@ -110,7 +110,7 @@ abstract class AccountModel extends Model {
       IMAGE_URL_FIELD: userImageUrl,
       CREATED_AT_FIELD: createdAt,
     };
-    await functions.database
+    await _database
         .collection(USERS_COLLECTION)
         .document(userId)
         .setData(userDocMap)
@@ -137,10 +137,15 @@ abstract class AccountModel extends Model {
       print('$_tag error on getting current user: $error');
       _hasError = true;
     });
-    if (user == null || _hasError) {
+    if (_hasError) {
       _currentUser = null;
       notifyListeners();
       return StatusCode.failed;
+    }
+    if (user == null) {
+      _currentUser = null;
+      notifyListeners();
+      return StatusCode.success;
     }
     final userId = user.uid;
     final DocumentSnapshot document = await _database
@@ -160,5 +165,20 @@ abstract class AccountModel extends Model {
     _currentUser = User.fromSnapshot(document);
     notifyListeners();
     return StatusCode.success;
+  }
+
+  Future<StatusCode> logout() async {
+    print('$_tag at logout');
+    bool _hasError = false;
+    _auth.signOut().catchError((error) {
+      print('$_tag error on signing out');
+      _hasError = true;
+      _loggingOutStatus = StatusCode.failed;
+      notifyListeners();
+    });
+    if (_hasError) return _loggingOutStatus;
+    updateLoginStatus();
+    _loggingOutStatus = StatusCode.success;
+    return _loggingOutStatus;
   }
 }

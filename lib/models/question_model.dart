@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_car/models/account_model.dart';
 import 'package:my_car/models/question.dart';
+import 'package:my_car/models/user.dart';
 import 'package:my_car/utils/consts.dart';
 import 'package:my_car/utils/status_code.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -14,8 +15,14 @@ abstract class QuestionModel extends Model with AccountModel {
   StatusCode get submittingQuestionStatus => _submittingQuestionStatus;
 
   StatusCode _handlingFollowQuestionStatus;
-
   StatusCode get handlingFollowQuestionStatus => _handlingFollowQuestionStatus;
+
+  Stream<QuerySnapshot> questionsStream() {
+    return _database
+        .collection(QUESTIONS_COLLECTION)
+        .orderBy(CREATED_AT_FIELD, descending: true)
+        .snapshots();
+  }
 
   Future<StatusCode> submitQuestion(
       String question, String currentUserId) async {
@@ -44,12 +51,13 @@ abstract class QuestionModel extends Model with AccountModel {
     return StatusCode.success;
   }
 
-  Future<bool> isUserFollowing(Question question, String userId) async {
+  Future<bool> isUserFollowing(Question question, User user) async {
     print('$_tag at isUserFollowing');
     bool _hasError = false;
 
-    if (!isLoggedIn) return false;
-    DocumentReference followDocRef = _getFollowingDocumentRef(question, userId);
+    if (user == null) return false;
+    DocumentReference followDocRef =
+    _getFollowingDocumentRef(question, user.id);
     DocumentSnapshot document = await followDocRef.get().catchError((error) {
       print('$_tag error on getting document for checking following status');
       _hasError = true;

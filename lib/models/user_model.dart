@@ -4,15 +4,14 @@ import 'package:my_car/utils/consts.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 abstract class UserModel extends Model {
-  User _userFromId;
-
-  User get userFromId => _userFromId;
+  Map<String, User> _cachedUsers = Map();
 
   final _database = Firestore.instance;
 
   Future<User> getUserFromUserId(String userId) async {
-    var _hasError = false;
-    var userDocument = await _database
+    if (_cachedUsers.containsKey(userId)) return _cachedUsers[userId];
+    bool _hasError = false;
+    final userDocument = await _database
         .collection(USERS_COLLECTION)
         .document(userId)
         .get()
@@ -20,9 +19,9 @@ abstract class UserModel extends Model {
       print('$tag error on getting user from userId: $error');
       _hasError = true;
     });
-    if (!userDocument.exists || _hasError)
-      return null;
-    else
-      return User.fromSnapshot(userDocument);
+    if (!userDocument.exists || _hasError) return null;
+    final userFromId = User.fromSnapshot(userDocument);
+    _cachedUsers.putIfAbsent(userId, () => userFromId);
+    return userFromId;
   }
 }

@@ -9,10 +9,9 @@ import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/answers_count.dart';
 import 'package:my_car/views/follow_button.dart';
 import 'package:my_car/views/labeled_flat_button.dart';
+import 'package:my_car/views/my_progress_indicator.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:share/share.dart';
-
-const _tag = 'QuestionItemView';
 
 class QuestionItemView extends StatelessWidget {
   final Question question;
@@ -25,7 +24,8 @@ class QuestionItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool enabled = onTap != null;
-
+    String createdBy =
+    question.createdBy == null ? question.userId : question.createdBy;
     _goToLoginPage() {
       showModalBottomSheet(
           context: context,
@@ -58,20 +58,30 @@ class QuestionItemView extends StatelessWidget {
 
     final _userSection =
     ScopedModelDescendant<MainModel>(builder: (_, __, model) {
-      return GestureDetector(
-        onTap:
-        model.isLoggedIn ? () => _openUserProfile(model.currentUser) : null,
-        child: Chip(
-          label: model.isLoggedIn
-              ? Text(model.currentUser.name)
-              : Text(loadingText),
-          avatar: model.isLoggedIn
-              ? CircleAvatar(
-            backgroundColor: Colors.black12,
-            backgroundImage: NetworkImage(model.currentUser.imageUrl),
-          )
-              : Icon(Icons.account_circle),
-        ),
+      return FutureBuilder<User>(
+        future: model.getUserFromUserId(createdBy),
+        builder: (_, snapshot) {
+          if (!snapshot.hasData)
+            return MyProgressIndicator(
+              color: Colors.black12,
+              size: 15.0,
+            );
+          final questionUser = snapshot.data;
+          return GestureDetector(
+            onTap: questionUser != null
+                ? () => _openUserProfile(questionUser)
+                : null,
+            child: Chip(
+              label: Text(questionUser.name),
+              avatar: questionUser.imageUrl != null
+                  ? CircleAvatar(
+                backgroundColor: Colors.black12,
+                backgroundImage: NetworkImage(questionUser.imageUrl),
+              )
+                  : Icon(Icons.account_circle, color: Colors.grey),
+            ),
+          );
+        },
       );
     });
 
@@ -112,15 +122,17 @@ class QuestionItemView extends StatelessWidget {
       ),
     );
 
+    final _topSection = Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Text(
+        question.question,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+      ),
+    );
+
     final _questionDetailsSection = ListTile(
       onTap: enabled ? onTap : null,
-      title: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: Text(
-          question.question,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-        ),
-      ),
+      title: _topSection,
       subtitle: _midSection,
     );
 

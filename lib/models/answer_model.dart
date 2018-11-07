@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_car/models/account_model.dart';
 import 'package:my_car/models/answer.dart';
 import 'package:my_car/models/question.dart';
+import 'package:my_car/models/user.dart';
 import 'package:my_car/utils/consts.dart';
 import 'package:my_car/utils/status_code.dart';
 
@@ -11,11 +12,9 @@ abstract class AnswerModel with AccountModel {
   final _database = Firestore.instance;
 
   StatusCode _submittingAnswerStatus;
-
   StatusCode get submittingAnswerStatus => _submittingAnswerStatus;
 
   StatusCode _handlingUpvoteAnswerStatus;
-
   StatusCode get handlingUpvoteAnswerStatus => _handlingUpvoteAnswerStatus;
 
   Stream<QuerySnapshot> answersStreamFor(Question question) {
@@ -23,6 +22,7 @@ abstract class AnswerModel with AccountModel {
         .collection(QUESTIONS_COLLECTION)
         .document(question.id)
         .collection(ANSWERS_COLLECTION)
+        .orderBy(CREATED_AT_FIELD, descending: true)
         .snapshots();
   }
 
@@ -38,7 +38,7 @@ abstract class AnswerModel with AccountModel {
 
   Future<StatusCode> submitAnswer(
       Question question, String answer, String userId) async {
-    print('$tag at submitAnswer');
+    print('$_tag at submitAnswer');
     _submittingAnswerStatus = StatusCode.waiting;
     notifyListeners();
     bool _hasError = false;
@@ -56,7 +56,7 @@ abstract class AnswerModel with AccountModel {
         .collection(ANSWERS_COLLECTION)
         .add(answerMap)
         .catchError((error) {
-      print('$tag error on submitting question $error');
+      print('$_tag error on submitting question $error');
       _hasError = true;
       _submittingAnswerStatus = StatusCode.failed;
       notifyListeners();
@@ -113,11 +113,11 @@ abstract class AnswerModel with AccountModel {
     return _handlingUpvoteAnswerStatus;
   }
 
-  Future<bool> userHasUpvoted(Answer answer, String userId) async {
+  Future<bool> userHasUpvoted(Answer answer, User user) async {
     print('$_tag at userHasUpvoted');
     bool _hasError = false;
-
-    DocumentReference upvoteDocRef = _getUpvoteDocumentRef(answer, userId);
+    if (user == null) return false;
+    DocumentReference upvoteDocRef = _getUpvoteDocumentRef(answer, user.id);
     DocumentSnapshot document = await upvoteDocRef.get().catchError((error) {
       print('$_tag error on getting document for checking user upvote');
       _hasError = true;

@@ -1,12 +1,6 @@
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:my_car/functions/functions.dart';
-import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/models/main_model.dart';
 import 'package:my_car/models/question.dart';
-import 'package:my_car/models/user.dart';
 import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/tools_page.dart';
@@ -19,20 +13,10 @@ import 'package:scoped_model/scoped_model.dart';
 
 const _tag = 'HomePage:';
 
-final fun = Functions();
-final loginFun = LoginFunctions();
-final qnFun = Question();
-final userFun = User();
-
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _scrollViewController = ScrollController();
-
-    Stream<QuerySnapshot> _data = fun.database
-        .collection(QUESTIONS_COLLECTION)
-        .orderBy(CREATED_AT_FIELD, descending: true)
-        .snapshots();
 
     _goToProfilePage() {
       showModalBottomSheet(
@@ -40,8 +24,7 @@ class HomePage extends StatelessWidget {
           builder: (context) {
             return ScopedModelDescendant<MainModel>(
               builder: (BuildContext context, Widget child, MainModel model) {
-                return UserProfilePage(
-                    user: model.currentUser, isCurrentUser: true);
+                return UserProfilePage(user: model.currentUser);
               },
             );
           });
@@ -60,7 +43,7 @@ class HomePage extends StatelessWidget {
           MaterialPageRoute(builder: (_) => AskPage(), fullscreenDialog: true));
     }
 
-    var _askQuestionSection = ScopedModelDescendant<MainModel>(
+    final _askQuestionSection = ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
         return IconButton(
             icon: Icon(Icons.add),
@@ -70,7 +53,7 @@ class HomePage extends StatelessWidget {
       },
     );
 
-    var _currentUserProfileSection = Padding(
+    final _currentUserProfileSection = Padding(
       padding: const EdgeInsets.all(8.0),
       child: ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
@@ -94,26 +77,31 @@ class HomePage extends StatelessWidget {
       ),
     );
 
-    final _forumView = StreamBuilder(
-        stream: _data,
-        builder: (_, snapshot) {
-          if (!snapshot.hasData)
-            return Center(child: CircularProgressIndicator());
-          return ListView.builder(
-              itemCount: snapshot.data.documents.length,
-              itemBuilder: (_, index) {
-                var question = qnFun.getQnFromSnapshots(snapshot, index);
-                return QuestionItemView(
-                  question: question,
-                  onTap: () =>
-                      Navigator.push(
+    final _forumView = ScopedModelDescendant<MainModel>(
+      builder: (_, __, model) {
+        return StreamBuilder(
+            stream: model.questionsStream(),
+            builder: (_, snapshot) {
+              if (!snapshot.hasData)
+                return Center(child: CircularProgressIndicator());
+              return ListView.builder(
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (_, index) {
+                    final document = snapshot.data.documents[index];
+                    final question = Question.fromSnapshot(document);
+                    return QuestionItemView(
+                      question: question,
+                      onTap: () =>
+                          Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) =>
                                   ViewQuestionPage(question: question))),
-                );
-              });
-        });
+                    );
+                  });
+            });
+      },
+    );
 
     final _bodySection =
     ScopedModelDescendant<MainModel>(builder: (_, __, model) {

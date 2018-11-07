@@ -1,14 +1,6 @@
-import 'dart:async';
-
-import 'package:my_car/functions/functions.dart';
-import 'package:my_car/functions/login_fun.dart';
 import 'package:my_car/utils/consts.dart';
-import 'package:my_car/utils/strings.dart';
 
 const tag = 'User';
-
-final functions = Functions();
-final loginFun = LoginFunctions();
 
 class User {
   String id, name, imageUrl, bio;

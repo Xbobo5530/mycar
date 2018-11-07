@@ -14,6 +14,9 @@ class AnswerItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final createdBy =
+        answer.createdBy != null ? answer.createdBy : answer.userId;
+
     _openUserProfile(User user) {
       showModalBottomSheet(
           context: context,
@@ -24,20 +27,29 @@ class AnswerItemView extends StatelessWidget {
 
     final _userSection =
         ScopedModelDescendant<MainModel>(builder: (_, __, model) {
-      return GestureDetector(
-        onTap: model.isLoggedIn != null
-            ? () => _openUserProfile(model.currentUser)
-            : null,
-        child: Chip(
-            avatar: model.isLoggedIn && model.currentUser.imageUrl != null
-                ? CircleAvatar(
-                    backgroundImage: NetworkImage(model.currentUser.imageUrl),
-                    backgroundColor: Colors.black12,
-                  )
-                : Icon(Icons.account_circle),
-            label: model.isLoggedIn
-                ? Text(model.currentUser.name)
-                : Text(loadingText)),
+      return FutureBuilder<User>(
+        future: model.getUserFromUserId(createdBy),
+        builder: (_, snapshot) {
+          if (!snapshot.hasData)
+            return Chip(
+              label: Text(loadingText),
+            );
+          final answerUser = snapshot.data;
+          return GestureDetector(
+            onTap:
+                answerUser != null ? () => _openUserProfile(answerUser) : null,
+            child: Chip(
+                avatar: answerUser.imageUrl != null
+                    ? CircleAvatar(
+                        backgroundImage: NetworkImage(answerUser.imageUrl),
+                        backgroundColor: Colors.black12,
+                      )
+                    : Icon(Icons.account_circle),
+                label: answerUser != null
+                    ? Text(answerUser.name)
+                    : Text(loadingText)),
+          );
+        },
       );
     });
 

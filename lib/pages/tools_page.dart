@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:my_car/models/tools.dart';
 import 'package:my_car/utils/consts.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -114,21 +115,4 @@ class ToolsPage extends StatelessWidget {
           );
         });
   }
-}
-
-class Tool {
-  String title, description, imageUrl, goToUrl;
-  Icon icon;
-  bool isPdf;
-
-  Tool(
-      {@required this.title,
-      @required this.description,
-      this.imageUrl,
-      @required this.icon,
-      @required this.goToUrl,
-      this.isPdf = false})
-      : assert(title != null),
-        assert(description != null),
-        assert(goToUrl != null);
 }

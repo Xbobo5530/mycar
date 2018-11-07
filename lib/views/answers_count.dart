@@ -5,8 +5,6 @@ import 'package:my_car/utils/colors.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-const _tag = 'AnswersCountView:';
-
 class AnswersCountView extends StatelessWidget {
   final Question question;
 
