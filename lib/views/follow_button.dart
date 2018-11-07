@@ -13,7 +13,7 @@ const _tag = 'FollowButtonView:';
 class FollowButtonView extends StatelessWidget {
   final Question question;
 
-  FollowButtonView({@required this.question});
+  FollowButtonView({@required this.question, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

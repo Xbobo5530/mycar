@@ -63,6 +63,7 @@ abstract class QuestionModel extends Model with AccountModel {
       _hasError = true;
     });
     if (!document.exists || _hasError) return false;
+    print('$_tag ${user.name} is following ${question.question}');
 
     return true;
   }
@@ -83,7 +84,7 @@ abstract class QuestionModel extends Model with AccountModel {
 
   Future<StatusCode> handleFollowQuestion(
       Question question, String userId) async {
-    print('$tag at followQuestion');
+    print('$tag at handleFollowQuestion');
     _handlingFollowQuestionStatus = StatusCode.waiting;
     notifyListeners();
     bool _hasError = false;
@@ -97,24 +98,29 @@ abstract class QuestionModel extends Model with AccountModel {
     }));
     if (_hasError) return StatusCode.failed;
 
-    if (document.exists)
+    if (document.exists) {
       followerDocRef.delete().catchError((error) {
         print('$tag error on deleting followed question doc: $error');
         _hasError = true;
       });
-    else {
-      Map<String, dynamic> followMap = {
-        USER_ID_FIELD: userId,
-        ANSWER_ID_FIELD: question.id,
-        CREATED_AT_FIELD: DateTime.now().millisecondsSinceEpoch
-      };
-      followerDocRef.setData(followMap).catchError((error) {
-        print('$tag error on adding follow: $error');
-        _hasError = true;
-        _handlingFollowQuestionStatus = StatusCode.failed;
-        notifyListeners();
-      });
+      _handlingFollowQuestionStatus = StatusCode.success;
+      notifyListeners();
+      return _handlingFollowQuestionStatus;
     }
+
+    Map<String, dynamic> followMap = {
+      USER_ID_FIELD: userId,
+      ANSWER_ID_FIELD: question.id,
+      CREATED_AT_FIELD: DateTime
+          .now()
+          .millisecondsSinceEpoch
+    };
+    followerDocRef.setData(followMap).catchError((error) {
+      print('$tag error on adding follow: $error');
+      _hasError = true;
+      _handlingFollowQuestionStatus = StatusCode.failed;
+      notifyListeners();
+    });
 
     if (_hasError) return StatusCode.failed;
     _handlingFollowQuestionStatus = StatusCode.success;

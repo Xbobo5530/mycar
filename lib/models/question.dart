@@ -6,11 +6,12 @@ class Question {
   String id, userId, createdBy, question;
   int createdAt;
 
-  Question({@required this.question,
-    @required this.id,
-    this.userId,
-    this.createdBy,
-    @required this.createdAt});
+  Question(
+      {@required this.question,
+      @required this.id,
+      this.userId,
+      this.createdBy,
+      @required this.createdAt});
 
   Question.fromSnapshot(DocumentSnapshot document)
       : this.id = document.documentID,

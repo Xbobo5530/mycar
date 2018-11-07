@@ -114,9 +114,7 @@ class QuestionItemView extends StatelessWidget {
         alignment: MainAxisAlignment.center,
         children: <Widget>[
           _shareButton,
-          FollowButtonView(
-            question: question,
-          ),
+          FollowButtonView(question: question, key: Key(question.id)),
           _answerButton,
         ],
       ),
