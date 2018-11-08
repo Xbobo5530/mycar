@@ -51,6 +51,7 @@ abstract class QuestionModel extends Model with AccountModel {
     return StatusCode.success;
   }
 
+  //todo check this method doesn't seem to be working
   Future<bool> isUserFollowing(Question question, User user) async {
     print('$_tag at isUserFollowing');
     bool _hasError = false;
@@ -62,7 +63,7 @@ abstract class QuestionModel extends Model with AccountModel {
       print('$_tag error on getting document for checking following status');
       _hasError = true;
     });
-    if (!document.exists || _hasError) return false;
+    if (_hasError || !document.exists) return false;
     print('$_tag ${user.name} is following ${question.question}');
 
     return true;
@@ -82,6 +83,7 @@ abstract class QuestionModel extends Model with AccountModel {
   /// [userId] is the Id of the user (usually current user)
   /// returns a [Future] of a [StatusCode] for the status of the follow
 
+  //todo check this method doesn't seem to be working
   Future<StatusCode> handleFollowQuestion(
       Question question, String userId) async {
     print('$tag at handleFollowQuestion');

@@ -26,13 +26,13 @@ class AnswersCountView extends StatelessWidget {
           return answersCount == 0
               ? Container()
               : Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Chip(
-              label: Text('$answersCount',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: darkColor)),
-            ),
-          );
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Chip(
+                    label: Text('$answersCount',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: darkColor)),
+                  ),
+                );
         },
       );
     });

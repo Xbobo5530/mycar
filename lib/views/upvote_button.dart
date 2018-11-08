@@ -8,10 +8,25 @@ import 'package:my_car/views/my_progress_indicator.dart';
 import 'package:my_car/views/upvote_count.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class UpvoteButtonView extends StatelessWidget {
+class UpvoteButtonView extends StatefulWidget {
   final Answer answer;
 
   UpvoteButtonView({@required this.answer});
+
+  @override
+  _UpvoteButtonViewState createState() => _UpvoteButtonViewState();
+}
+
+class _UpvoteButtonViewState extends State<UpvoteButtonView> {
+  bool _isDisposed = false;
+  bool _isFollowing = false;
+  StatusCode _handlingUpvoteAnswerStatus;
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,74 +42,96 @@ class UpvoteButtonView extends StatelessWidget {
       if (!model.isLoggedIn)
         _goToLoginPage();
       else {
+        if (!_isDisposed)
+          setState(() {
+            _handlingUpvoteAnswerStatus = StatusCode.waiting;
+          });
         StatusCode statusCode =
-        await model.handleUpvoteAnswer(answer, model.currentUser.id);
+        await model.handleUpvoteAnswer(widget.answer, model.currentUser.id);
 
         if (statusCode == StatusCode.failed)
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text(errorMessage),
           ));
+        if (!_isDisposed)
+          setState(() {
+            _handlingUpvoteAnswerStatus = statusCode;
+          });
       }
     }
 
-    return ScopedModelDescendant<MainModel>(
-      builder: (_, __, MainModel model) {
-        return model.handlingUpvoteAnswerStatus == StatusCode.waiting
-            ? FutureBuilder<bool>(
+    Widget _buildDisabledUpvoteButton(bool hasUpvoted) {
+      return Chip(
+        avatar: MyProgressIndicator(
+          size: 15.0,
+          color: hasUpvoted ? Colors.blue : Colors.grey,
+        ),
+        label: Text(
+          hasUpvoted ? upvotedText : upvoteText,
+          style: TextStyle(color: hasUpvoted ? Colors.blue : Colors.grey),
+        ),
+      );
+    }
+
+    Widget _buildEnabledChip(bool hasUpvoted) =>
+        Chip(
+            avatar: hasUpvoted
+                ? Icon(
+              Icons.done,
+              size: 20.0,
+              color: Colors.blue,
+            )
+                : Icon(Icons.thumb_up, color: Colors.grey),
+            label: Row(
+              children: <Widget>[
+                Text(
+                  hasUpvoted ? '' : upvoteText,
+                  style: TextStyle(
+                      color: hasUpvoted ? Colors.blue : Colors.grey),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: UpvoteCountView(answer: widget.answer),
+                ),
+              ],
+            ));
+
+    Widget _buildEnabledUpvoteButton(BuildContext context, MainModel model) {
+      return GestureDetector(
+        onTap: () => _handleUpvoteAnswer(context, model),
+        child: FutureBuilder<bool>(
           initialData: false,
-          future: model.userHasUpvoted(answer, model.currentUser),
+          future: model.userHasUpvoted(widget.answer, model.currentUser),
           builder: (_, snapshot) {
             bool _hasUpvoted = snapshot.data;
-            return Chip(
-              avatar: MyProgressIndicator(
-                size: 15.0,
-                color: _hasUpvoted ? Colors.blue : Colors.grey,
-              ),
-              label: Text(
-                _hasUpvoted ? upvotedText : upvoteText,
-                style: TextStyle(
-                    color: _hasUpvoted ? Colors.blue : Colors.grey),
-              ),
-            );
+            return _buildEnabledChip(_hasUpvoted);
           },
-        )
-            : Builder(
-          builder: (context) {
-            return GestureDetector(
-              onTap: () => _handleUpvoteAnswer(context, model),
-              child: FutureBuilder<bool>(
-                initialData: false,
-                future: model.userHasUpvoted(answer, model.currentUser),
-                builder: (_, snapshot) {
-                  bool _hasUpvoted = snapshot.data;
-                  return Chip(
-                      avatar: _hasUpvoted
-                          ? Icon(
-                        Icons.done,
-                        size: 20.0,
-                        color: Colors.blue,
-                      )
-                          : Icon(Icons.thumb_up, color: Colors.grey),
-                      label: Row(
-                        children: <Widget>[
-                          Text(
-                            _hasUpvoted ? '' : upvoteText,
-                            style: TextStyle(
-                                color: _hasUpvoted
-                                    ? Colors.blue
-                                    : Colors.grey),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: UpvoteCountView(answer: answer),
-                          ),
-                        ],
-                      ));
-                },
-              ),
-            );
+        ),
+      );
+    }
+
+    Widget _disabledUpvoteButton(MainModel model) =>
+        FutureBuilder<bool>(
+          initialData: false,
+          future: model.userHasUpvoted(widget.answer, model.currentUser),
+          builder: (_, snapshot) {
+            bool _hasUpvoted = snapshot.data;
+            return _buildDisabledUpvoteButton(_hasUpvoted);
           },
         );
+
+    Widget _enabledUpvoteButton(MainModel model) =>
+        Builder(
+          builder: (context) {
+            return _buildEnabledUpvoteButton(context, model);
+          },
+        );
+
+    return ScopedModelDescendant<MainModel>(
+      builder: (_, __, MainModel model) {
+        return _handlingUpvoteAnswerStatus == StatusCode.waiting
+            ? _disabledUpvoteButton(model)
+            : _enabledUpvoteButton(model);
       },
     );
   }

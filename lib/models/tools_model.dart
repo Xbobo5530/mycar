@@ -21,14 +21,14 @@ abstract class ToolsModel extends Model {
           size: 50.0,
         ),
         goToUrl: ticketUrl),
-//      Tool(
-//          title: taxValuationTitle,
-//          description: taxValuationDesc,
-//          icon: Icon(
-//            Icons.directions_car,
-//            size: 50.0,
-//          ),
-//          goToUrl: taxUrl),
+    Tool(
+        title: taxValuationTitle,
+        description: taxValuationDesc,
+        icon: Icon(
+          Icons.directions_car,
+          size: 50.0,
+        ),
+        goToUrl: taxUrl),
     Tool(
         title: trafficActTitle,
         description: trafficActDesc,

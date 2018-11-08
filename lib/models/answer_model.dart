@@ -68,6 +68,8 @@ abstract class AnswerModel with AccountModel {
     return _submittingAnswerStatus;
   }
 
+  //todo check this method doesn't seem to be working
+
   Future<StatusCode> handleUpvoteAnswer(Answer answer, String userId) async {
     print('$_tag at upvoteAnswer');
     _handlingUpvoteAnswerStatus = StatusCode.waiting;
@@ -113,6 +115,7 @@ abstract class AnswerModel with AccountModel {
     return _handlingUpvoteAnswerStatus;
   }
 
+  //todo check this method doesn't seem to be working
   Future<bool> userHasUpvoted(Answer answer, User user) async {
     print('$_tag at userHasUpvoted');
     bool _hasError = false;
@@ -122,7 +125,7 @@ abstract class AnswerModel with AccountModel {
       print('$_tag error on getting document for checking user upvote');
       _hasError = true;
     });
-    if (!document.exists || !_hasError) return false;
+    if (!_hasError || !document.exists) return false;
     return true;
   }
 
