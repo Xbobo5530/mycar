@@ -6,6 +6,7 @@ const ticketUrl = 'http://tms.tpf.go.tz';
 //const taxUrl = 'https://google.com';
 const trafficActPdfUrl =
     'https://www.policeforce.go.tz/images/pdf/TheRoadTrafficact.pdf';
+const tiraUrl = 'https://mis.tira.go.tz/auth/validateCover';
 
 // collections
 const USERS_COLLECTION = 'Users';

@@ -41,3 +41,15 @@ const loadingText = 'Loading...';
 
 const homeText = 'Home';
 const toolsText = 'Tools';
+
+//tools
+const ticketCheckTitle = 'Ticket Check';
+const ticketCheckDesc = 'Check whether your Licence or Vehicle has a ticket';
+const trafficActTitle = 'The Road Traffic Act';
+const trafficActDesc =
+    'The road traffic act for the United Republic of Tanzania';
+const insuranceInfoTitle = 'Check Insurance Info';
+const insuranceInfoDesc =
+    'Check and Validate your vehicle\'s insurance information';
+const taxValuationTitle = 'Vehicle Tax Valuation';
+const taxValuationDesc = 'Check the Tax Valuation for importing a vehicle';
