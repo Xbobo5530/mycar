@@ -125,7 +125,7 @@ abstract class AnswerModel with AccountModel {
       print('$_tag error on getting document for checking user upvote');
       _hasError = true;
     });
-    if (!_hasError || !document.exists) return false;
+    if (_hasError || !document.exists) return false;
     return true;
   }
 

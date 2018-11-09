@@ -25,33 +25,35 @@ class AnswerItemView extends StatelessWidget {
           });
     }
 
-    final _userSection =
-        ScopedModelDescendant<MainModel>(builder: (_, __, model) {
-      return FutureBuilder<User>(
-        future: model.getUserFromUserId(createdBy),
-        builder: (_, snapshot) {
-          if (!snapshot.hasData)
-            return Chip(
-              label: Text(loadingText),
+    final _userSection = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: ScopedModelDescendant<MainModel>(builder: (_, __, model) {
+        return FutureBuilder<User>(
+          future: model.getUserFromUserId(createdBy),
+          builder: (_, snapshot) {
+            if (!snapshot.hasData)
+              return Chip(
+                label: Text(loadingText),
+              );
+            final answerUser = snapshot.data;
+            return ActionChip(
+              avatar: answerUser.imageUrl != null
+                  ? CircleAvatar(
+                backgroundImage: NetworkImage(answerUser.imageUrl),
+                backgroundColor: Colors.black12,
+              )
+                  : Icon(Icons.account_circle),
+              label: answerUser != null
+                  ? Text(answerUser.name)
+                  : Text(loadingText),
+              onPressed: answerUser != null
+                  ? () => _openUserProfile(answerUser)
+                  : null,
             );
-          final answerUser = snapshot.data;
-          return GestureDetector(
-            onTap:
-                answerUser != null ? () => _openUserProfile(answerUser) : null,
-            child: Chip(
-                avatar: answerUser.imageUrl != null
-                    ? CircleAvatar(
-                        backgroundImage: NetworkImage(answerUser.imageUrl),
-                        backgroundColor: Colors.black12,
-                      )
-                    : Icon(Icons.account_circle),
-                label: answerUser != null
-                    ? Text(answerUser.name)
-                    : Text(loadingText)),
-          );
-        },
-      );
-    });
+          },
+        );
+      }),
+    );
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
@@ -65,11 +67,15 @@ class AnswerItemView extends StatelessWidget {
               ),
             ),
             subtitle: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              height: 40.0,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   _userSection,
-                  UpvoteButtonView(answer: answer),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: UpvoteButtonView(answer: answer),
+                  ),
                 ],
               ),
             ),

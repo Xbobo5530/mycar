@@ -26,7 +26,7 @@ class UpvoteCountView extends StatelessWidget {
               );
 
             final upvotesCount = snapshot.data.documents.length;
-            if (upvotesCount == 0) return Container();
+//            if (upvotesCount == 0) return Container();
             return Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text('$upvotesCount',

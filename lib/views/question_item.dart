@@ -10,6 +10,7 @@ import 'package:my_car/views/answers_count.dart';
 import 'package:my_car/views/follow_button.dart';
 import 'package:my_car/views/labeled_flat_button.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
+import 'package:my_car/views/question_actions.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:share/share.dart';
 
@@ -139,7 +140,7 @@ class QuestionItemView extends StatelessWidget {
       child: Column(
         children: <Widget>[
           _questionDetailsSection,
-          _actionsSection,
+          QuestionActionsView(question: question),
         ],
       ),
     );

@@ -13,23 +13,14 @@ const _tag = 'FollowButtonView:';
 class FollowButtonView extends StatefulWidget {
   final Question question;
 
-  FollowButtonView({@required this.question, Key key}) : super(key: key);
-
+  FollowButtonView({Key key, this.question}) : super(key: key);
   @override
   _FollowButtonViewState createState() => _FollowButtonViewState();
 }
 
 class _FollowButtonViewState extends State<FollowButtonView> {
   StatusCode _handlingFollowQuestionStatus;
-  bool _isFollowing = false;
   bool _isDisposed = false;
-
-  @override
-  void dispose() {
-    _isDisposed = true;
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     _goToLoginPage() {
@@ -41,13 +32,13 @@ class _FollowButtonViewState extends State<FollowButtonView> {
     }
 
     _followQuestion(BuildContext context, MainModel model) async {
+      if (!_isDisposed)
+        setState(() {
+          _handlingFollowQuestionStatus = StatusCode.waiting;
+        });
       if (!model.isLoggedIn)
         _goToLoginPage();
       else {
-        if (!_isDisposed)
-          setState(() {
-            _handlingFollowQuestionStatus = StatusCode.waiting;
-          });
         StatusCode statusCode = await model.handleFollowQuestion(
             widget.question, model.currentUser.id);
         if (statusCode == StatusCode.failed)
@@ -62,13 +53,16 @@ class _FollowButtonViewState extends State<FollowButtonView> {
       }
     }
 
+    _getIsFollowing(MainModel model) async {}
+
     return ScopedModelDescendant<MainModel>(builder: (_, __, model) {
       return FutureBuilder<bool>(
           initialData: false,
           future: model.isUserFollowing(widget.question, model.currentUser),
           builder: (context, snapshot) {
-            final isFollowing = snapshot.data;
-            print('$_tag isFollowing is : $isFollowing');
+            var isFollowing = snapshot.data;
+            _getIsFollowing(model);
+//            print('$_tag isFollowing is : $isFollowing');
             return Builder(
               builder: (context) {
                 return LabeledFlatButton(

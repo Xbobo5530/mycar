@@ -5,6 +5,8 @@ import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/utils/strings.dart';
 import 'package:my_car/views/answer_item.dart';
+import 'package:my_car/views/heading_section.dart';
+import 'package:my_car/views/question_actions.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 const tag = 'ViewQuestionPage';
@@ -25,36 +27,27 @@ class ViewQuestionPage extends StatelessWidget {
     );
     final _questionSection = Material(
       elevation: 4.0,
-      child: ExpansionTile(
-        leading: ScopedModelDescendant<MainModel>(
-          builder: (_, __, model) {
-            return FutureBuilder<User>(
-                future: model.getUserFromUserId(createdBy),
-                builder: (_, snapshot) {
-                  if (!snapshot.hasData) return _userIcon;
-                  final user = snapshot.data;
-                  return user.imageUrl != null
-                      ? CircleAvatar(
-                    backgroundColor: Colors.black12,
-                    backgroundImage: NetworkImage(user.imageUrl),
-                  )
-                      : _userIcon;
-                });
-          },
-        ),
-        title: Text(question.question.length >= 35
-            ? '${question.question.substring(0, 35)}...'
-            : question.question),
+      child: Column(
         children: <Widget>[
-          ListTile(
-            title: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                question.question,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-              ),
-            ),
-          )
+          ScopedModelDescendant<MainModel>(
+            builder: (BuildContext context, Widget child, MainModel model) {
+              return FutureBuilder<User>(
+                future: model.getUserFromUserId(createdBy),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (!snapshot.hasData)
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  User userFromId = snapshot.data;
+                  return HeadingSectionView(
+                    imageUrl: userFromId.imageUrl,
+                    heading: question.question,
+                  );
+                },
+              );
+            },
+          ),
+          QuestionActionsView(question: question),
         ],
       ),
     );

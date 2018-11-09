@@ -19,7 +19,6 @@ class UpvoteButtonView extends StatefulWidget {
 
 class _UpvoteButtonViewState extends State<UpvoteButtonView> {
   bool _isDisposed = false;
-  bool _isFollowing = false;
   StatusCode _handlingUpvoteAnswerStatus;
 
   @override
@@ -73,40 +72,45 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
       );
     }
 
-    Widget _buildEnabledChip(bool hasUpvoted) =>
-        Chip(
-            avatar: hasUpvoted
+    Widget _buildEnabledUpvoteButton(BuildContext context, MainModel model) {
+      return FutureBuilder<bool>(
+        initialData: false,
+        future: model.userHasUpvoted(widget.answer, model.currentUser),
+        builder: (_, snapshot) {
+          bool _hasUpvoted = snapshot.data;
+          return ActionChip(
+            padding: const EdgeInsets.all(0.0),
+//            labelPadding: const EdgeInsets.only(left: 0.0),
+            avatar: _hasUpvoted
                 ? Icon(
               Icons.done,
               size: 20.0,
               color: Colors.blue,
             )
-                : Icon(Icons.thumb_up, color: Colors.grey),
+                : Icon(
+              Icons.thumb_up,
+              color: Colors.grey,
+              size: 20.0,
+            ),
             label: Row(
               children: <Widget>[
-                Text(
-                  hasUpvoted ? '' : upvoteText,
+                _hasUpvoted
+                    ? Container(
+                  height: 0.0,
+                  width: 0.0,
+                )
+                    : Text(
+                  upvoteText,
                   style: TextStyle(
-                      color: hasUpvoted ? Colors.blue : Colors.grey),
+                    color: _hasUpvoted ? Colors.blue : Colors.grey,
+                  ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: UpvoteCountView(answer: widget.answer),
-                ),
+                UpvoteCountView(answer: widget.answer),
               ],
-            ));
-
-    Widget _buildEnabledUpvoteButton(BuildContext context, MainModel model) {
-      return GestureDetector(
-        onTap: () => _handleUpvoteAnswer(context, model),
-        child: FutureBuilder<bool>(
-          initialData: false,
-          future: model.userHasUpvoted(widget.answer, model.currentUser),
-          builder: (_, snapshot) {
-            bool _hasUpvoted = snapshot.data;
-            return _buildEnabledChip(_hasUpvoted);
-          },
-        ),
+            ),
+            onPressed: () => _handleUpvoteAnswer(context, model),
+          );
+        },
       );
     }
 

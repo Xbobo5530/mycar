@@ -53,3 +53,6 @@ const insuranceInfoDesc =
     'Check and Validate your vehicle\'s insurance information';
 const taxValuationTitle = 'Vehicle Tax Valuation';
 const taxValuationDesc = 'Check the Tax Valuation for importing a vehicle';
+const dashboardWarningTitle = 'Dashboard Warning Signs';
+const dashboardWarningDesc =
+    'Reference to the Dashboard Warning Signs for how they look and what they mean when they come on';

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/models/main_model.dart';
 import 'package:my_car/models/question.dart';
+import 'package:my_car/models/user.dart';
 import 'package:my_car/utils/colors.dart';
 import 'package:my_car/utils/status_code.dart';
 import 'package:my_car/utils/strings.dart';
+import 'package:my_car/views/heading_section.dart';
 import 'package:my_car/views/my_progress_indicator.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -16,7 +18,10 @@ class AnswerQuestionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext mainContext) {
-    var _answerController = TextEditingController();
+    final createdBy =
+        question.createdBy != null ? question.createdBy : question.userId;
+
+    final _answerController = TextEditingController();
 
     final snackBar = SnackBar(
       content: Text(errorMessage),
@@ -27,9 +32,9 @@ class AnswerQuestionPage extends StatelessWidget {
 
       if (answer.isNotEmpty) {
         StatusCode statusCode =
-        await model.submitAnswer(question, answer, model.currentUser.id);
+            await model.submitAnswer(question, answer, model.currentUser.id);
         switch (statusCode) {
-        //todo test if can pop main context
+          //todo test if can pop main context
           case StatusCode.success:
             Navigator.pop(mainContext);
             break;
@@ -44,12 +49,22 @@ class AnswerQuestionPage extends StatelessWidget {
 
     final _questionSection = Material(
       elevation: 4.0,
-      child: ListTile(
-        title: Text(
-          question.question,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-        ),
-      ),
+      child: ScopedModelDescendant<MainModel>(builder: (_, __, model) {
+        return FutureBuilder<User>(
+          future: model.getUserFromUserId(createdBy),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData)
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            User questionUser = snapshot.data;
+            return HeadingSectionView(
+              imageUrl: questionUser.imageUrl,
+              heading: question.question,
+            );
+          },
+        );
+      }),
     );
 
     final _answerField = Expanded(
@@ -75,18 +90,18 @@ class AnswerQuestionPage extends StatelessWidget {
                 return RaisedButton(
                   color: darkColor,
                   onPressed: () =>
-                  model.submittingAnswerStatus == StatusCode.waiting
-                      ? null
-                      : _submitAnswer(context, model),
+                      model.submittingAnswerStatus == StatusCode.waiting
+                          ? null
+                          : _submitAnswer(context, model),
                   child: model.submittingAnswerStatus == StatusCode.waiting
                       ? MyProgressIndicator(
-                    size: 15.0,
-                    color: Colors.white,
-                  )
+                          size: 15.0,
+                          color: Colors.white,
+                        )
                       : Text(
-                    submitText,
-                    style: TextStyle(color: Colors.white),
-                  ),
+                          submitText,
+                          style: TextStyle(color: Colors.white),
+                        ),
                 );
               },
             );
