@@ -32,7 +32,8 @@ const VOTES_FIELD = 'votes';
 const ANSWER_ID_FIELD = 'answer_id';
 
 //native tools ids
-const NATIVE_TOOL_WARNING_SIGNS = 0;
+const NATIVE_TOOL_WARNING_SIGNS = 1;
+const NATIVE_TOOL_FORUM = 0;
 
 //dashboard warning signs
 const engineTempTitle = 'Engine Temperature Warning Light';

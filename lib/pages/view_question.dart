@@ -14,17 +14,19 @@ const tag = 'ViewQuestionPage';
 class ViewQuestionPage extends StatelessWidget {
   final Question question;
 
-  ViewQuestionPage({@required this.question});
+  const ViewQuestionPage({Key key, @required this.question}) : super(key: key);
+
+  
 
   @override
   Widget build(BuildContext context) {
     final createdBy =
         question.createdBy != null ? question.createdBy : question.userId;
-    final _userIcon = Icon(
-      Icons.account_circle,
-      color: Colors.grey,
-      size: 40.0,
-    );
+    // final _userIcon = Icon(
+    //   Icons.account_circle,
+    //   color: Colors.grey,
+    //   size: 40.0,
+    // );
     final _questionSection = Material(
       elevation: 4.0,
       child: Column(
@@ -47,7 +49,7 @@ class ViewQuestionPage extends StatelessWidget {
               );
             },
           ),
-          QuestionActionsView(question: question),
+          QuestionActionsView(question: question,),
         ],
       ),
     );

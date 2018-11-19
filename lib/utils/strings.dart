@@ -43,6 +43,9 @@ const homeText = 'Home';
 const toolsText = 'Tools';
 
 //tools
+const forumTitle = 'Forum';
+const forumDesc = 'Ask your questions to the community and engage in conversations about cars.\nContibute by answering questions that you have knolwedge to.';
+
 const ticketCheckTitle = 'Ticket Check';
 const ticketCheckDesc = 'Check whether your Licence or Vehicle has a ticket';
 const trafficActTitle = 'The Road Traffic Act';

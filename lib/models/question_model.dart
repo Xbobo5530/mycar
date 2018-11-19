@@ -68,7 +68,7 @@ abstract class QuestionModel extends Model with AccountModel {
   }
 
   Future<bool> isUserFollowing(Question question, User user) async {
-    print('$_tag at isUserFollowing');
+    // print('$_tag at isUserFollowing');
     bool _hasError = false;
 
     if (user == null) return false;

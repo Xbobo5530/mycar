@@ -23,6 +23,14 @@ class Tool {
 
 final List<Tool> tools = <Tool>[
   Tool(
+    id: NATIVE_TOOL_FORUM,
+    title: forumTitle,
+    description: forumDesc,
+    type: ToolType.native,
+    icon:Icon(Icons.forum, size: 50.0, ),
+    
+  ),
+  Tool(
       title: ticketCheckTitle,
       description: ticketCheckDesc,
       icon: Icon(

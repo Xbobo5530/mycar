@@ -14,12 +14,8 @@ class ToolsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final flutterWebviewPlugin = FlutterWebviewPlugin();
-    _handlePdf(MainModel model, Tool tool) {
-      print('$_tag at _handlePdf');
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => FutureBuilder<String>(
+
+    Widget _buildPdfPage(MainModel model, Tool tool) =>FutureBuilder<String>(
                     future: model.createFileOfPdfUrl(tool),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData)
@@ -35,7 +31,14 @@ class ToolsPage extends StatelessWidget {
                           ),
                           path: pathPDF);
                     },
-                  ),
+                  );
+
+    _handlePdf(MainModel model, Tool tool) {
+      print('$_tag at _handlePdf');
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => _buildPdfPage(model, tool),
               fullscreenDialog: true));
     }
 

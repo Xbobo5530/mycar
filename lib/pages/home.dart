@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/models/main_model.dart';
-import 'package:my_car/models/question.dart';
-import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/login.dart';
-import 'package:my_car/pages/question_search.dart';
 import 'package:my_car/pages/tools_page.dart';
 import 'package:my_car/pages/user_profile.dart';
-import 'package:my_car/pages/view_question.dart';
-import 'package:my_car/utils/consts.dart';
 import 'package:my_car/utils/strings.dart';
-import 'package:my_car/views/question_item.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 const _tag = 'HomePage:';
@@ -17,8 +11,6 @@ const _tag = 'HomePage:';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var _scrollViewController = ScrollController();
-
     _goToProfilePage() {
       showModalBottomSheet(
           context: context,
@@ -38,21 +30,6 @@ class HomePage extends StatelessWidget {
             return LoginPage();
           });
     }
-
-    _goToAskQuestionPage() {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (_) => AskPage(), fullscreenDialog: true));
-    }
-
-    final _askQuestionSection = ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model) {
-        return IconButton(
-            icon: Icon(Icons.add),
-            onPressed: model.isLoggedIn
-                ? () => _goToAskQuestionPage()
-                : () => _goToLoginPage());
-      },
-    );
 
     final _currentUserProfileSection = Padding(
       padding: const EdgeInsets.all(8.0),
@@ -78,95 +55,13 @@ class HomePage extends StatelessWidget {
       ),
     );
 
-    final _forumView = ScopedModelDescendant<MainModel>(
-      builder: (_, __, model) {
-        return StreamBuilder(
-            stream: model.questionsStream(),
-            builder: (_, snapshot) {
-              if (!snapshot.hasData)
-                return Center(child: CircularProgressIndicator());
-              return ListView.builder(
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (_, index) {
-                    final document = snapshot.data.documents[index];
-                    final question = Question.fromSnapshot(document);
-                    return QuestionItemView(
-                      question: question,
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) =>
-                                  ViewQuestionPage(question: question))),
-                    );
-                  });
-            });
-      },
-    );
-
-    final _bodySection =
-        ScopedModelDescendant<MainModel>(builder: (_, __, model) {
-      switch (model.currentNavItem) {
-        case NAV_ITEM_HOME:
-          return _forumView;
-          break;
-        case NAV_ITEM_TOOLS:
-          return ToolsPage();
-          break;
-        default:
-          print('$_tag selected nav item is ${model.currentNavItem}');
-      }
-    });
-
-    final _bottomNavigationBar = ScopedModelDescendant<MainModel>(
-      builder: (context, child, model) {
-        return BottomNavigationBar(
-          onTap: (selectedItem) => model.updateSelectedNavItem(selectedItem),
-          currentIndex: model.currentNavItem,
-          fixedColor: Colors.blue,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                title: Text(homeText), icon: Icon(Icons.home)),
-            BottomNavigationBarItem(
-                title: Text(toolsText), icon: Icon(Icons.settings)),
-          ],
-        );
-      },
-    );
-
-    final _searchSection = Builder(
-      builder: (context) => ScopedModelDescendant<MainModel>(
-        builder: (_,__,model){
-
-          return IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () async {
-              List<Question> questions = await model.getQuestions();
-              final Question result = await showSearch(
-                  context: context, delegate: QuestionsSearch(questions));
-            });} ,
-      ),
-    );
-
-    _buildAppBar(_, innerBoxIsScrolled) => <Widget>[
-          SliverAppBar(
-            forceElevated: innerBoxIsScrolled,
-            snap: true,
-            floating: true,
-            leading: _currentUserProfileSection,
-            title: Text(APP_NAME),
-            actions: <Widget>[
-              _askQuestionSection,
-              _searchSection,
-            ],
-          )
-        ];
-
     return Scaffold(
-      body: NestedScrollView(
-          controller: _scrollViewController,
-          headerSliverBuilder: _buildAppBar,
-          body: _bodySection),
-      bottomNavigationBar: _bottomNavigationBar,
+      appBar: AppBar(
+        elevation: 0.0,
+        leading: _currentUserProfileSection,
+        title: Text(APP_NAME),
+      ),
+      body: ToolsPage(),
     );
   }
 }

@@ -41,7 +41,7 @@ class QuestionsSearch extends SearchDelegate<Question> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ViewQuestionPage(question: result),
+                    builder: (context) => ViewQuestionPage(question: result, key: Key(result.id),),
                   ))))
           .toList(),
     );
@@ -49,6 +49,20 @@ class QuestionsSearch extends SearchDelegate<Question> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
+    final results = questionsList.where((question) =>
+        question.question.toLowerCase().contains(query.toLowerCase()));
+
+    return ListView(
+      children: results
+          .map<HeadingSectionView>((result) => HeadingSectionView(
+              heading: result.question,
+              imageUrl: result.createdBy,
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ViewQuestionPage(question: result, key: Key(result.id),),
+                  ))))
+          .toList(),
+    );
   }
 }
