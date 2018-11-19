@@ -26,7 +26,7 @@ class QuestionItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     bool enabled = onTap != null;
     String createdBy =
-    question.createdBy == null ? question.userId : question.createdBy;
+        question.createdBy == null ? question.userId : question.createdBy;
     _goToLoginPage() {
       showModalBottomSheet(
           context: context,
@@ -58,7 +58,7 @@ class QuestionItemView extends StatelessWidget {
     }
 
     final _userSection =
-    ScopedModelDescendant<MainModel>(builder: (_, __, model) {
+        ScopedModelDescendant<MainModel>(builder: (_, __, model) {
       return FutureBuilder<User>(
         future: model.getUserFromUserId(createdBy),
         builder: (_, snapshot) {
@@ -76,9 +76,9 @@ class QuestionItemView extends StatelessWidget {
               label: Text(questionUser.name),
               avatar: questionUser.imageUrl != null
                   ? CircleAvatar(
-                backgroundColor: Colors.black12,
-                backgroundImage: NetworkImage(questionUser.imageUrl),
-              )
+                      backgroundColor: Colors.black12,
+                      backgroundImage: NetworkImage(questionUser.imageUrl),
+                    )
                   : Icon(Icons.account_circle, color: Colors.grey),
             ),
           );

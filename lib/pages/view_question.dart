@@ -19,7 +19,7 @@ class ViewQuestionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final createdBy =
-    question.createdBy != null ? question.createdBy : question.userId;
+        question.createdBy != null ? question.createdBy : question.userId;
     final _userIcon = Icon(
       Icons.account_circle,
       color: Colors.grey,

@@ -1,0 +1,75 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter build bundle --suppress-analytics --target lib/main.dart --target-platform android-arm64 --depfile /Users/Sean/Dev/Projects/mycar/my_car/build/app/intermediates/flutter/dynamicRelease/snapshot_blob.bin.d --asset-dir /Users/Sean/Dev/Projects/mycar/my_car/build/app/intermediates/flutter/dynamicRelease/flutter_assets --release --dynamic
+
+## exception
+
+FileSystemException: FileSystemException: Cannot open file, path = '/Users/Sean/Dev/sdk/flutter/flutter/bin/cache/artifacts/engine/darwin-x64/product_vm_isolate_snapshot.bin' (OS Error: No such file or directory, errno = 2)
+
+```
+#0      _File.open.<anonymous closure> (dart:io/file_impl.dart:368:9)
+#1      _rootRunUnary (dart:async/zone.dart:1132:38)
+#2      _CustomZone.runUnary (dart:async/zone.dart:1029:19)
+#3      _FutureListener.handleValue (dart:async/future_impl.dart:129:18)
+#4      Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:642:45)
+#5      Future._propagateToListeners (dart:async/future_impl.dart:671:32)
+#6      Future._completeWithValue (dart:async/future_impl.dart:486:5)
+#7      Future._asyncComplete.<anonymous closure> (dart:async/future_impl.dart:516:7)
+#8      _rootRun (dart:async/zone.dart:1124:13)
+#9      _CustomZone.run (dart:async/zone.dart:1021:19)
+#10     _CustomZone.bindCallback.<anonymous closure> (dart:async/zone.dart:947:23)
+#11     _microtaskLoop (dart:async/schedule_microtask.dart:41:21)
+#12     _startMicrotaskLoop (dart:async/schedule_microtask.dart:50:5)
+#13     _runPendingImmediateCallback (dart:isolate/runtime/libisolate_patch.dart:115:13)
+#14     _RawReceivePortImpl._handleMessage (dart:isolate/runtime/libisolate_patch.dart:172:5)
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel beta, v0.9.4, on Mac OS X 10.13.6 17G65, locale en-US)
+    • Flutter version 0.9.4 at /Users/Sean/Dev/sdk/flutter/flutter
+    • Framework revision f37c235c32 (6 weeks ago), 2018-09-25 17:45:40 -0400
+    • Engine revision 74625aed32
+    • Dart version 2.1.0-dev.5.0.flutter-a2eb050044
+
+[✓] Android toolchain - develop for Android devices (Android SDK 27.0.3)
+    • Android SDK at /Users/Sean/Library/Android/sdk
+    • Android NDK location not configured (optional; useful for native profiling support)
+    • Platform android-27, build-tools 27.0.3
+    • Java binary at: /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_152-release-1136-b06)
+    • All Android licenses accepted.
+
+[✓] iOS toolchain - develop for iOS devices (Xcode 10.0)
+    • Xcode at /Applications/Xcode.app/Contents/Developer
+    • Xcode 10.0, Build version 10A255
+    • ios-deploy 2.0.0
+    • CocoaPods version 1.5.0
+
+[✓] Android Studio (version 3.2)
+    • Android Studio at /Applications/Android Studio.app/Contents
+    • Flutter plugin version 29.1.1
+    • Dart plugin version 181.5656
+    • Java version OpenJDK Runtime Environment (build 1.8.0_152-release-1136-b06)
+
+[!] IntelliJ IDEA Community Edition (version 2016.2.4)
+    • IntelliJ at /Applications/IntelliJ IDEA CE.app
+    ✗ Flutter plugin version 12.1 - the recommended minimum version is 16.0.0
+    • Dart plugin version 162.2924
+    • For information about installing plugins, see
+      https://flutter.io/intellij-setup/#installing-the-plugins
+    ✗ This install is older than the minimum recommended version of 2017.1.0.
+
+[✓] VS Code (version 1.28.2)
+    • VS Code at /Applications/Visual Studio Code.app/Contents
+    • Flutter extension version 2.19.0
+
+[✓] Connected devices (2 available)
+    • Android SDK built for x86 • emulator-5554                            • android-x86 • Android 5.1.1 (API 22) (emulator)
+    • Paul’s iPhone             • 1a5032ffdc9d0eed096269121a5b95fdc29f1526 • ios         • iOS 12.0.1
+
+! Doctor found issues in 1 category.
+```

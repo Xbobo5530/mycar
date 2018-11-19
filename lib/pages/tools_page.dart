@@ -19,8 +19,7 @@ class ToolsPage extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  FutureBuilder<String>(
+              builder: (context) => FutureBuilder<String>(
                     future: model.createFileOfPdfUrl(tool),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData)
@@ -46,8 +45,7 @@ class ToolsPage extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (_) =>
-                  WebviewScaffold(
+              builder: (_) => WebviewScaffold(
                     withJavascript: true,
                     url: tool.goToUrl,
                     headers: {'User-Agent': 'Mozilla/5.0'},
@@ -90,7 +88,7 @@ class ToolsPage extends StatelessWidget {
         return GridView.builder(
             itemCount: tools.length,
             gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
             itemBuilder: (_, index) {
               final tool = tools[index];
               return InkWell(

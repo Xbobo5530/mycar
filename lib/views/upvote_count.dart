@@ -31,7 +31,7 @@ class UpvoteCountView extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8.0),
               child: Text('$upvotesCount',
                   style:
-                  TextStyle(fontWeight: FontWeight.bold, color: darkColor)),
+                      TextStyle(fontWeight: FontWeight.bold, color: darkColor)),
             );
           },
         );

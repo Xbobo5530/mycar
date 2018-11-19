@@ -1,0 +1,1295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7f42a035-9344-452a-ba16-f4940ea09faa" name="Default" comment="mycar v0.1.11 fixes&#10;changes:&#10;- fixed follow button&#10;- fixed upvote button&#10;- changed answer question heading&#10;- added insurance tool">
+      <change afterPath="$PROJECT_DIR$/lib/pages/question_search.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/answer_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/answer_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/question_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/question_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/tools.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/tools.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/answer_question.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/answer_question.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/ask.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/ask.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/tools_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/tools_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/user_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/user_profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/view_question.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/view_question.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/answer_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/answer_item.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/follow_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/follow_button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/heading_section.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/heading_section.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/question_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/question_item.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/upvote_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/upvote_button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/upvote_count.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/upvote_count.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.dart_tool/" />
+    <ignored path="$PROJECT_DIR$/.idea/" />
+    <ignored path="$PROJECT_DIR$/.pub/" />
+    <ignored path="$PROJECT_DIR$/build/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="my_car" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="home.dart" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/pages/home.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1158">
+              <caret line="54" column="8" lean-forward="true" selection-start-line="54" selection-start-column="8" selection-end-line="54" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>setstate</find>
+      <find>setsta</find>
+      <find>chip</find>
+      <find>blue</find>
+      <find>cole</find>
+      <find>row</find>
+      <find>print</find>
+      <find>loading</find>
+      <find>enabled</find>
+      <find>question</find>
+      <find>questionI</find>
+      <find>fp\</find>
+      <find>_updatingCurrentUserStatus</find>
+      <find>map</find>
+      <find>is foll</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Sean &lt;dev@nyayozangu.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/lib/functions/status_code.dart" />
+        <option value="$PROJECT_DIR$/lib/values/strings.dart" />
+        <option value="$PROJECT_DIR$/lib/blocs/UsersBloc.dart" />
+        <option value="$PROJECT_DIR$/lib/views/tools_view.dart" />
+        <option value="$PROJECT_DIR$/lib/models/main_scopped_model.dart" />
+        <option value="$PROJECT_DIR$/lib/main.dart" />
+        <option value="$PROJECT_DIR$/lib/values/consts.dart" />
+        <option value="$PROJECT_DIR$/lib/models/login_model.dart" />
+        <option value="$PROJECT_DIR$/lib/models/answer_moe.dart" />
+        <option value="$PROJECT_DIR$/lib/functions/login_fun.dart" />
+        <option value="$PROJECT_DIR$/lib/models/ui_controller.dart" />
+        <option value="$PROJECT_DIR$/lib/models/answer.dart" />
+        <option value="$PROJECT_DIR$/lib/functions/functions.dart" />
+        <option value="$PROJECT_DIR$/lib/utils/colors.dart" />
+        <option value="$PROJECT_DIR$/lib/views/labeled_flat_button.dart" />
+        <option value="$PROJECT_DIR$/lib/views/my_progress_indicator.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/ask.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/login.dart" />
+        <option value="$PROJECT_DIR$/lib/models/user_model.dart" />
+        <option value="$PROJECT_DIR$/lib/views/answers_count.dart" />
+        <option value="$PROJECT_DIR$/android/.gitignore" />
+        <option value="$PROJECT_DIR$/lib/models/question.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/user_profile.dart" />
+        <option value="$PROJECT_DIR$/lib/models/account_model.dart" />
+        <option value="$PROJECT_DIR$/lib/models/main_model.dart" />
+        <option value="$PROJECT_DIR$/lib/models/tools_model.dart" />
+        <option value="$PROJECT_DIR$/lib/utils/strings.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/warning_signs.dart" />
+        <option value="$PROJECT_DIR$/lib/utils/consts.dart" />
+        <option value="$PROJECT_DIR$/lib/models/warning_sign.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/native_tool.dart" />
+        <option value="$PROJECT_DIR$/lib/views/warning_signs_page.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/tools_page.dart" />
+        <option value="$PROJECT_DIR$/lib/models/user.dart" />
+        <option value="$PROJECT_DIR$/lib/views/question_actions.dart" />
+        <option value="$PROJECT_DIR$/lib/views/question_item.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/view_question.dart" />
+        <option value="$PROJECT_DIR$/lib/views/follow_button.dart" />
+        <option value="$PROJECT_DIR$/lib/views/upvote_button.dart" />
+        <option value="$PROJECT_DIR$/lib/views/answer_item.dart" />
+        <option value="$PROJECT_DIR$/lib/views/upvote_count.dart" />
+        <option value="$PROJECT_DIR$/android/app/build.gradle" />
+        <option value="$PROJECT_DIR$/lib/models/tools.dart" />
+        <option value="$PROJECT_DIR$/android/gradle.properties" />
+        <option value="$PROJECT_DIR$/pubspec.yaml" />
+        <option value="$PROJECT_DIR$/lib/models/answer_model.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/answer_question.dart" />
+        <option value="$PROJECT_DIR$/lib/views/heading_section.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/question_search.dart" />
+        <option value="$PROJECT_DIR$/lib/models/question_model.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/home.dart" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Bundled (Maven 3)" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="width" value="911" />
+    <option name="height" value="800" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Dart</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>DartPathPackageReference</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectReloadState">
+    <option name="STATE" value="1" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="my_car" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my_car" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my_car" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my_car" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my_car" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my_car" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my_car" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my_car" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="outputs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my_car" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my_car" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="outputs" type="462c0819:PsiDirectoryNode" />
+              <item name="apk" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my_car" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my_car" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="outputs" type="462c0819:PsiDirectoryNode" />
+              <item name="apk" type="462c0819:PsiDirectoryNode" />
+              <item name="release" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my_car" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my_car" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my_car" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my_car" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my_car" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my_car" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="questionmo&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/models/question_model.dart&#10;home&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/home.dart&#10;search&#9;FILE&#9;file:///Users/Sean/Dev/sdk/flutter/flutter/packages/flutter/lib/src/material/search.dart&#10;answermo&#9;null&#9;null&#10;answer&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/answer_question.dart&#10;count&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/upvote_count.dart&#10;handleupvo&#9;null&#9;null&#10;submitanswe&#9;null&#9;null&#10;tools&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/models/tools.dart&#10;yaml&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/pubspec.yaml&#10;build&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/android/app/build.gradle&#10;button&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/upvote_button.dart&#10;item&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/answer_item.dart&#10;questionmodel&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/models/question_model.dart&#10;followbuttonview&#9;null&#9;null&#10;answe&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/answer_question.dart&#10;viewque&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/view_question.dart&#10;upvo&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/upvote_button.dart&#10;followbutt&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/follow_button.dart&#10;viewquestion&#9;null&#9;null&#10;viewques&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/view_question.dart&#10;questionpage&#9;null&#9;null&#10;qite&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/question_item.dart&#10;accou&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/models/account_model.dart&#10;User&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/models/user.dart&#10;handlefollow&#9;null&#9;null&#10;toolpa&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/tools_page.dart&#10;wa&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/warning_signs_page.dart&#10;toolspa&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/tools_page.dart&#10;consts&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/utils/consts.dart&#10;handlupvote&#9;null&#9;null&#10;answemod&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/models/answer_model.dart&#10;answermodel&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/models/answer_model.dart&#10;upvote&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/upvote_button.dart&#10;toolsp&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/tools_page.dart&#10;strings&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/utils/strings.dart&#10;string&#9;FILE&#9;file:///Users/Sean/Dev/sdk/flutter/flutter/bin/cache/pkg/sky_engine/lib/core/string.dart&#10;mainm&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/models/main_model.dart&#10;const&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/utils/consts.dart&#10;follo&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/follow_button.dart&#10;view&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/view_question.dart&#10;account&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/models/account_model.dart&#10;question&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/view_question.dart&#10;follow&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/follow_button.dart&#10;viewq&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/pages/view_question.dart&#10;queite&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/question_item.dart&#10;acou&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/answers_count.dart&#10;loginpa&#9;null&#9;null&#10;login&#9;null&#9;null&#10;upvotebutt&#9;FILE&#9;file:///Users/Sean/Dev/Projects/mycar/my_car/lib/views/upvote_button.dart" />
+    <property name="dart.analysis.tool.window.force.activate" value="false" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/android/app/src/main/res/drawable" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ios/Runner" />
+      <recent name="$PROJECT_DIR$/android/app" />
+      <recent name="$PROJECT_DIR$/lib/utils" />
+      <recent name="$PROJECT_DIR$/lib/pages" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <module name="" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNGTestDiscovery" factoryName="TestNG Test Discovery" changeList="All">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7f42a035-9344-452a-ba16-f4940ea09faa" name="Default" comment="" />
+      <created>1538501368920</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1538501368920</updated>
+    </task>
+    <task id="LOCAL-00001" summary="mycar v0.0.1 inital commit&#10;changes:&#10;- added google sign in&#10;- basic ui&#10;- added cloud firestore">
+      <created>1539217370043</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1539217370043</updated>
+    </task>
+    <task id="LOCAL-00002" summary="mycar v0.0.2 connected back&#10;changes:&#10;- finished sign in&#10;- finished cloud store">
+      <created>1540131034222</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1540131034222</updated>
+    </task>
+    <task id="LOCAL-00003" summary="mycar v0.0.3 &#10;changes:&#10;- finished sign in&#10;- finished cloud store">
+      <created>1540144056342</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1540144056342</updated>
+    </task>
+    <task id="LOCAL-00004" summary="mycar v0.0.4 user flow &#10;changes:&#10;- added user flow from page to page">
+      <created>1540147025245</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1540147025245</updated>
+    </task>
+    <task id="LOCAL-00005" summary="mycar v0.0.5 follow qn &#10;changes:&#10;- woring on folllow user">
+      <created>1540148427668</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1540148427668</updated>
+    </task>
+    <task id="LOCAL-00006" summary="mycar v0.0.6 follow and upvote &#10;changes:&#10;- added follow question&#10;- added upvote answer">
+      <created>1540185949137</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1540185949138</updated>
+    </task>
+    <task id="LOCAL-00007" summary="mycar v0.0.7 home user image &#10;changes:&#10;- added user image for when user is logged in at home&#10;- in view question switched to listView in Column">
+      <created>1540208476977</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1540208476977</updated>
+    </task>
+    <task id="LOCAL-00008" summary="mycar v0.0.8 myViews &#10;changes:&#10;- created a small progress indicator&#10;- created a labeled button">
+      <created>1540211145263</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1540211145263</updated>
+    </task>
+    <task id="LOCAL-00009" summary="mycar v0.0.9 isLoggedIn &#10;changes:&#10;- fixed issues when user is not logged in">
+      <created>1540214575647</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1540214575647</updated>
+    </task>
+    <task id="LOCAL-00010" summary="mycar v0.0.10 handling the logout button &#10;changes:&#10;- added conditions for the logout button">
+      <created>1540231420713</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1540231420713</updated>
+    </task>
+    <task id="LOCAL-00011" summary="mycar v0.0.11 bottom sheet &#10;changes:&#10;- changed login to bottom sheet&#10;- changed profile page to bottom sheet">
+      <created>1540241713104</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1540241713104</updated>
+    </task>
+    <task id="LOCAL-00012" summary="mycar v0.0.12 scoped &#10;changes:&#10;- switched from set state to scoped model on home and item&#10;- question item minimal ui adjustments">
+      <created>1540293835366</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1540293835366</updated>
+    </task>
+    <task id="LOCAL-00013" summary="mycar v0.0.13 scoped answer &#10;changes:&#10;- added scoped model descendants to answers item">
+      <created>1540317573251</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1540317573252</updated>
+    </task>
+    <task id="LOCAL-00014" summary="mycar v0.0.14 fixed login  &#10;changes:&#10;- fixed login on ios&#10;- finished login logic">
+      <created>1540332382056</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1540332382056</updated>
+    </task>
+    <task id="LOCAL-00015" summary="mycar v0.0.15 logout btn bug fix  &#10;changes:&#10;- fixed logout button on user profile page">
+      <created>1540332498919</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1540332498919</updated>
+    </task>
+    <task id="LOCAL-00016" summary="mycar v0.0.16 live state for follow n upvote  &#10;changes:&#10;- created new view for follow button and upvote button to manage state">
+      <created>1540334979213</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1540334979213</updated>
+    </task>
+    <task id="LOCAL-00017" summary="mycar v0.0.17 login n firestore on android  &#10;changes:&#10;- fixed firestore not loading on android&#10;- fixed google sign in on android">
+      <created>1540382781717</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1540382781718</updated>
+    </task>
+    <task id="LOCAL-00018" summary="mycar v0.0.18 loading buttons  &#10;changes:&#10;- added loading to upvote button&#10;- added loading to follow button">
+      <created>1540385235915</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1540385235915</updated>
+    </task>
+    <task id="LOCAL-00019" summary="mycar v0.0.19 loading colors  &#10;changes:&#10;- added synced loading indicators to follow button and upvote">
+      <created>1540385391575</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1540385391575</updated>
+    </task>
+    <task id="LOCAL-00020" summary="mycar v0.0.20 icons  &#10;changes:&#10;- added icons to app&#10;- fixed app bar user red line&#10;- added share question">
+      <created>1540461759971</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1540461759971</updated>
+    </task>
+    <task id="LOCAL-00021" summary="mycar v0.0.21 fixed upvotes  &#10;changes:&#10;- fixed upvotes issue">
+      <created>1540463404410</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1540463404411</updated>
+    </task>
+    <task id="LOCAL-00022" summary="mycar v0.0.22 counts  &#10;changes:&#10;- added answer counts&#10;- added upvote counts">
+      <created>1540466053739</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1540466053742</updated>
+    </task>
+    <task id="LOCAL-00023" summary="mycar v0.0.23 fixed users issue  &#10;changes:&#10;- changed question and answer item to stateful widget&#10;- changed setting state on question and answer item&#10;- removed scoped model in question and answer item">
+      <created>1540488783448</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1540488783448</updated>
+    </task>
+    <task id="LOCAL-00024" summary="mycar v0.0.24 fixed dispose  &#10;changes:&#10;- added check for isDisposed on answer item, to fix calling state on initState when page is disposed quickly">
+      <created>1540514162519</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1540514162521</updated>
+    </task>
+    <task id="LOCAL-00025" summary="mycar v0.1.1  tools  &#10;changes:&#10;- added the tools page">
+      <created>1541503838004</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1541503838004</updated>
+    </task>
+    <task id="LOCAL-00026" summary="mycar v0.1.2  revamp  &#10;changes:&#10;- rebuilding a lot">
+      <created>1541568282015</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1541568282015</updated>
+    </task>
+    <task id="LOCAL-00027" summary="mycar v0.1.3 complete views revamp  &#10;changes:&#10;- rebuilding a lot">
+      <created>1541574736371</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1541574736371</updated>
+    </task>
+    <task id="LOCAL-00028" summary="mycar v0.1.5 login fix  &#10;changes:&#10;- fixed login">
+      <created>1541588470325</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1541588470327</updated>
+    </task>
+    <task id="LOCAL-00029" summary="mycar v0.1.6 yeah...  &#10;changes:&#10;-">
+      <created>1541591256991</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1541591256993</updated>
+    </task>
+    <task id="LOCAL-00030" summary="mycar v0.1.7 question view with a better question  &#10;changes:&#10;- changed the question view in view question to expansion tile">
+      <created>1541612090278</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1541612090278</updated>
+    </task>
+    <task id="LOCAL-00031" summary="mycar v0.1.8 back to the states  &#10;changes:&#10;- changed the follow button to a stateful widget">
+      <created>1541617189370</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1541617189370</updated>
+    </task>
+    <task id="LOCAL-00032" summary="mycar v0.1.9 new tool  &#10;changes:&#10;- added new insurance validation tool&#10;- added caching pdf path&#10;- tools page clean up&#10;- made tools model">
+      <created>1541700961140</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1541700961140</updated>
+    </task>
+    <task id="LOCAL-00033" summary="mycar v0.1.10 stateful 2  &#10;changes:&#10;- changed the upvote button to a stateful widget&#10;- checking handle upvote and handle follow for erros">
+      <created>1541708397171</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1541708397173</updated>
+    </task>
+    <task id="LOCAL-00034" summary="mycar v0.1.11 fixes&#10;changes:&#10;- fixed follow button&#10;- fixed upvote button&#10;- changed answer question heading&#10;- added insurance tool">
+      <created>1541760985234</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1541760985234</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="911" height="800" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="bottom" id="Android Profiler" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3292011" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info id="Image Layers" order="0" />
+      <window_info id="Build Variants" order="1" sideWeight="0.5011136" side_tool="true" weight="0.24659091" />
+      <window_info anchor="right" id="Capture Analysis" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.50062424" side_tool="true" weight="0.39970502" />
+      <window_info anchor="bottom" id="Dart Analysis" order="8" weight="0.33570412" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4993758" weight="0.39829302" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32859176" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.4100295" />
+      <window_info anchor="right" id="Flutter Outline" order="5" weight="0.32954547" />
+      <window_info anchor="bottom" id="Logcat" order="11" />
+      <window_info id="Captures" order="5" sideWeight="0.4988864" weight="0.32954547" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Designer" order="7" />
+      <window_info content_ui="combo" id="Project" order="3" sideWeight="0.4988864" weight="0.22899885" />
+      <window_info anchor="bottom" id="JProfiler" order="13" />
+      <window_info id="Structure" order="4" side_tool="true" weight="0.24886364" />
+      <window_info anchor="right" id="Device File Explorer" order="8" side_tool="true" weight="0.329718" />
+      <window_info anchor="right" id="Theme Preview" order="10" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.6584022" />
+      <window_info id="Favorites" order="8" side_tool="true" weight="0.32954547" />
+      <window_info anchor="right" id="Flutter Inspector" order="11" weight="0.32954547" />
+      <window_info anchor="right" id="Flutter" order="0" weight="0.31584257" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Preview" order="10" weight="0.32994923" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32965517" />
+      <window_info anchor="right" id="Android Model" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Android Monitor" order="7" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="right" id="Commander" order="1" weight="0.4" />
+      <window_info anchor="bottom" id="Messages" order="15" weight="0.3259587" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Palette" order="12" />
+      <window_info anchor="right" id="Maven Projects" order="4" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Designer" order="7" />
+      <window_info anchor="right" id="Palette" order="12" />
+      <window_info anchor="bottom" id="Dart Analysis" order="8" weight="0.32716927" />
+      <window_info id="Build Variants" order="1" sideWeight="0.5011136" side_tool="true" weight="0.24659091" />
+      <window_info id="Image Layers" order="0" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3598862" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Event Log" order="14" side_tool="true" />
+      <window_info anchor="right" id="Flutter Inspector" order="11" />
+      <window_info anchor="bottom" id="Android Monitor" order="7" />
+      <window_info id="Favorites" order="8" side_tool="true" weight="0.32954547" />
+      <window_info id="Captures" order="5" sideWeight="0.4988864" weight="0.32954547" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info anchor="right" id="Capture Analysis" order="9" />
+      <window_info anchor="bottom" id="Android Profiler" order="9" show_stripe_button="false" />
+      <window_info anchor="right" id="Commander" order="1" weight="0.4" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="right" id="Flutter" order="0" weight="0.31584257" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="right" id="Device File Explorer" order="8" side_tool="true" weight="0.329718" />
+      <window_info anchor="right" id="Flutter Outline" order="5" />
+      <window_info anchor="bottom" id="Logcat" order="11" />
+      <window_info anchor="bottom" id="JProfiler" order="13" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="right" id="Android Model" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.3292011" />
+      <window_info content_ui="combo" id="Project" order="3" sideWeight="0.4988864" weight="0.24659091" />
+      <window_info anchor="bottom" id="Messages" order="15" weight="0.3292011" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3292011" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="10" />
+      <window_info anchor="right" id="Maven Projects" order="4" />
+      <window_info id="Structure" order="4" side_tool="true" weight="0.24886364" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+    </layout-to-restore>
+  </component>
+  <component name="UpdateCopyrightCheckinHandler">
+    <option name="UPDATE_COPYRIGHT" value="true" />
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <MESSAGE value="mycar v0.0.12 scoped &#10;changes:&#10;- switched from set state to scoped model on home and item&#10;- question item minimal ui adjustments" />
+    <MESSAGE value="mycar v0.0.13 scoped answer &#10;changes:&#10;- added scoped model descendants to answers item" />
+    <MESSAGE value="mycar v0.0.14 fixed login  &#10;changes:&#10;- fixed login on ios&#10;- finished login logic" />
+    <MESSAGE value="mycar v0.0.15 logout btn bug fix  &#10;changes:&#10;- fixed logout button on user profile page" />
+    <MESSAGE value="mycar v0.0.16 live state for follow n upvote  &#10;changes:&#10;- created new view for follow button and upvote button to manage state" />
+    <MESSAGE value="mycar v0.0.17 login n firestore on android  &#10;changes:&#10;- fixed firestore not loading on android&#10;- fixed google sign in on android" />
+    <MESSAGE value="mycar v0.0.18 loading buttons  &#10;changes:&#10;- added loading to upvote button&#10;- added loading to follow button" />
+    <MESSAGE value="mycar v0.0.19 loading colors  &#10;changes:&#10;- added synced loading indicators to follow button and upvote" />
+    <MESSAGE value="mycar v0.0.20 icons  &#10;changes:&#10;- added icons to app&#10;- fixed app bar user red line&#10;- added share question" />
+    <MESSAGE value="mycar v0.0.21 fixed upvotes  &#10;changes:&#10;- fixed upvotes issue" />
+    <MESSAGE value="mycar v0.0.22 counts  &#10;changes:&#10;- added answer counts&#10;- added upvote counts" />
+    <MESSAGE value="mycar v0.0.23 fixed users issue  &#10;changes:&#10;- changed question and answer item to stateful widget&#10;- changed setting state on question and answer item&#10;- removed scoped model in question and answer item" />
+    <MESSAGE value="mycar v0.0.24 fixed dispose  &#10;changes:&#10;- added check for isDisposed on answer item, to fix calling state on initState when page is disposed quickly" />
+    <MESSAGE value="mycar v0.1.1  tools  &#10;changes:&#10;- added the tools page" />
+    <MESSAGE value="mycar v0.1.2  revamp  &#10;changes:&#10;- rebuilding a lot" />
+    <MESSAGE value="mycar v0.1.3 complete views revamp  &#10;changes:&#10;- rebuilding a lot" />
+    <MESSAGE value="mycar v0.1.4 caching users  &#10;changes:&#10;- added caching users" />
+    <MESSAGE value="mycar v0.1.5 login fix  &#10;changes:&#10;- fixed login" />
+    <MESSAGE value="mycar v0.1.6 yeah...  &#10;changes:&#10;-" />
+    <MESSAGE value="mycar v0.1.7 question view with a better question  &#10;changes:&#10;- changed the question view in view question to expansion tile" />
+    <MESSAGE value="mycar v0.1.8 back to the states  &#10;changes:&#10;- changed the follow button to a stateful widget" />
+    <MESSAGE value="mycar v0.1.9 new tool  &#10;changes:&#10;- added new insurance validation tool&#10;- added caching pdf path" />
+    <MESSAGE value="mycar v0.1.9 new tool  &#10;changes:&#10;- added new insurance validation tool&#10;- added caching pdf path&#10;- tools page clean up&#10;- made tools model" />
+    <MESSAGE value="mycar v0.1.10 stateful 2  &#10;changes:&#10;- changed the upvote button to a stateful widget&#10;- checking handle upvote and handle follow for erros" />
+    <MESSAGE value="mycar v0.1.11 fixes&#10;changes:&#10;- fixed follow button&#10;- fixed upvote button&#10;- changed answer question heading&#10;- added insurance tool" />
+    <option name="LAST_COMMIT_MESSAGE" value="mycar v0.1.11 fixes&#10;changes:&#10;- fixed follow button&#10;- fixed upvote button&#10;- changed answer question heading&#10;- added insurance tool" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="9" />
+    </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/android/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/widget_test.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ios/Podfile.lock">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3671" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/app/google-services.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/main.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/question.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="33" lean-forward="true" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pages/login.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="17" column="53" lean-forward="true" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/scoped_model-0.3.0/lib/scoped_model.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="296" column="11" selection-start-line="296" selection-start-column="11" selection-end-line="296" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pages/user_profile.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="60" column="58" selection-start-line="60" selection-start-column="58" selection-end-line="60" selection-end-column="58" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/answers_count.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="30" lean-forward="true" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/main_model.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/bin/cache/pkg/sky_engine/lib/core/string.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="333" column="38" selection-start-line="333" selection-start-column="38" selection-end-line="333" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/tools_model.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/utils/strings.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="627">
+          <caret line="56" column="125" selection-start-line="56" selection-start-column="125" selection-end-line="56" selection-end-column="125" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/warning_sign.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="40" column="14" lean-forward="true" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pages/native_tool.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/packages/flutter/lib/src/painting/image_provider.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="446" column="34" selection-start-line="446" selection-start-column="34" selection-end-line="446" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/packages/flutter/lib/src/material/circle_avatar.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="155" column="30" lean-forward="true" selection-start-line="155" selection-start-column="30" selection-end-line="155" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/warning_signs_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/user.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/account_model.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="171" column="3" lean-forward="true" selection-start-line="171" selection-start-column="3" selection-end-line="171" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/question_item.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="131" column="38" lean-forward="true" selection-start-line="131" selection-start-column="38" selection-end-line="131" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/question_actions.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="57" column="47" selection-start-line="57" selection-start-column="47" selection-end-line="57" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pages/view_question.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/follow_button.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="71" column="27" lean-forward="true" selection-start-line="71" selection-start-column="27" selection-end-line="71" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/packages/flutter/lib/src/widgets/icon.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/packages/flutter/lib/src/material/chip.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="1009" column="8" selection-start-line="1009" selection-start-column="8" selection-end-line="1009" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/packages/flutter/lib/src/widgets/text.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="218" column="8" selection-start-line="218" selection-start-column="8" selection-end-line="218" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/packages/flutter/lib/src/widgets/scroll_view.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="662" column="2" selection-start-line="662" selection-start-column="2" selection-end-line="662" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/upvote_button.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-253">
+          <caret line="13" column="2" selection-start-line="13" selection-start-column="2" selection-end-line="13" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/app/outputs/apk/app.apk">
+      <provider selected="true" editor-type-id="apk-viewer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="89" column="44" selection-start-line="89" selection-start-column="44" selection-end-line="89" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pages/tools_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="44" column="19" lean-forward="true" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/tools.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="36" column="19" lean-forward="true" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/gradle.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/app/outputs/apk/release/app-release.apk">
+      <provider selected="true" editor-type-id="apk-viewer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pubspec.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="26" column="22" lean-forward="true" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/answer.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/upvote_count.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="27" column="64" lean-forward="true" selection-start-line="27" selection-start-column="33" selection-end-line="27" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/answer_item.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="64" column="26" lean-forward="true" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pages/answer_question.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/answer_model.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="120" column="26" selection-start-line="120" selection-start-column="26" selection-end-line="120" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/utils/consts.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1650">
+          <caret line="110" column="71" selection-start-line="110" selection-start-column="70" selection-end-line="110" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/packages/flutter/lib/src/material/scaffold.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="749" column="49" lean-forward="true" selection-start-line="749" selection-start-column="49" selection-end-line="749" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/packages/flutter/lib/src/material/search.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="905">
+          <caret line="89" column="30" lean-forward="true" selection-start-line="89" selection-start-column="30" selection-end-line="89" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#15763#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/heading_section.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="42" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/packages/flutter/lib/src/material/list_tile.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="286" column="26" selection-start-line="286" selection-start-column="8" selection-end-line="286" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../sdk/flutter/flutter/packages/flutter/lib/src/material/expansion_tile.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pages/question_search.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="50" column="28" selection-start-line="50" selection-start-column="28" selection-end-line="50" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/question_model.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pages/home.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1158">
+          <caret line="54" column="8" lean-forward="true" selection-start-line="54" selection-start-column="8" selection-end-line="54" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

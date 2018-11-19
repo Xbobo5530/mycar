@@ -159,7 +159,7 @@ abstract class AccountModel extends Model {
       _hasError = true;
     });
 
-    if (!document.exists || _hasError) {
+    if (_hasError || !document.exists) {
       _currentUser = null;
       _updatingCurrentUserStatus = StatusCode.failed;
       notifyListeners();

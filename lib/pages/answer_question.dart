@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_car/models/answer.dart';
 import 'package:my_car/models/main_model.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
@@ -28,11 +29,17 @@ class AnswerQuestionPage extends StatelessWidget {
     );
 
     _submitAnswer(BuildContext context, MainModel model) async {
-      final answer = _answerController.text.trim();
+      final answerText = _answerController.text.trim();
 
-      if (answer.isNotEmpty) {
-        StatusCode statusCode =
-            await model.submitAnswer(question, answer, model.currentUser.id);
+      if (answerText.isNotEmpty) {
+        Answer answer = Answer(
+            answer: answerText,
+            questionId: question.id,
+            votes: 0,
+            createdAt: DateTime.now().millisecondsSinceEpoch,
+            createdBy: model.currentUser.id);
+
+        StatusCode statusCode = await model.submitAnswer(answer);
         switch (statusCode) {
           //todo test if can pop main context
           case StatusCode.success:

@@ -68,12 +68,12 @@ class _FollowButtonViewState extends State<FollowButtonView> {
                 return LabeledFlatButton(
                     icon: _handlingFollowQuestionStatus == StatusCode.waiting
                         ? MyProgressIndicator(
-                      size: 15.0,
-                      color: isFollowing ? Colors.blue : Colors.grey,
-                    )
+                            size: 15.0,
+                            color: isFollowing ? Colors.blue : Colors.grey,
+                          )
                         : Icon(Icons.rss_feed,
-                        size: 18.0,
-                        color: isFollowing ? Colors.blue : Colors.grey),
+                            size: 18.0,
+                            color: isFollowing ? Colors.blue : Colors.grey),
                     label: Text(isFollowing ? followingText : followText,
                         style: TextStyle(
                             color: isFollowing ? Colors.blue : Colors.grey)),

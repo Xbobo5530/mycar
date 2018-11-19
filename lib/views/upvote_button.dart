@@ -46,7 +46,7 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
             _handlingUpvoteAnswerStatus = StatusCode.waiting;
           });
         StatusCode statusCode =
-        await model.handleUpvoteAnswer(widget.answer, model.currentUser.id);
+            await model.handleUpvoteAnswer(widget.answer, model.currentUser.id);
 
         if (statusCode == StatusCode.failed)
           Scaffold.of(context).showSnackBar(SnackBar(
@@ -83,28 +83,28 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
 //            labelPadding: const EdgeInsets.only(left: 0.0),
             avatar: _hasUpvoted
                 ? Icon(
-              Icons.done,
-              size: 20.0,
-              color: Colors.blue,
-            )
+                    Icons.done,
+                    size: 20.0,
+                    color: Colors.blue,
+                  )
                 : Icon(
-              Icons.thumb_up,
-              color: Colors.grey,
-              size: 20.0,
-            ),
+                    Icons.thumb_up,
+                    color: Colors.grey,
+                    size: 20.0,
+                  ),
             label: Row(
               children: <Widget>[
                 _hasUpvoted
                     ? Container(
-                  height: 0.0,
-                  width: 0.0,
-                )
+                        height: 0.0,
+                        width: 0.0,
+                      )
                     : Text(
-                  upvoteText,
-                  style: TextStyle(
-                    color: _hasUpvoted ? Colors.blue : Colors.grey,
-                  ),
-                ),
+                        upvoteText,
+                        style: TextStyle(
+                          color: _hasUpvoted ? Colors.blue : Colors.grey,
+                        ),
+                      ),
                 UpvoteCountView(answer: widget.answer),
               ],
             ),
@@ -114,8 +114,7 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
       );
     }
 
-    Widget _disabledUpvoteButton(MainModel model) =>
-        FutureBuilder<bool>(
+    Widget _disabledUpvoteButton(MainModel model) => FutureBuilder<bool>(
           initialData: false,
           future: model.userHasUpvoted(widget.answer, model.currentUser),
           builder: (_, snapshot) {
@@ -124,8 +123,7 @@ class _UpvoteButtonViewState extends State<UpvoteButtonView> {
           },
         );
 
-    Widget _enabledUpvoteButton(MainModel model) =>
-        Builder(
+    Widget _enabledUpvoteButton(MainModel model) => Builder(
           builder: (context) {
             return _buildEnabledUpvoteButton(context, model);
           },

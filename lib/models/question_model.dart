@@ -24,6 +24,22 @@ abstract class QuestionModel extends Model with AccountModel {
         .snapshots();
   }
 
+
+
+  Future<List<Question>> getQuestions()async{
+    QuerySnapshot snapshot = await _database
+        .collection(QUESTIONS_COLLECTION).getDocuments();
+    List documents = snapshot.documents;
+    List<Question> questions = <Question>[];
+    documents.forEach((document){
+      final question = Question.fromSnapshot(document);
+      questions.add(question);
+    });
+    return questions;
+  }
+
+
+
   Future<StatusCode> submitQuestion(
       String question, String currentUserId) async {
     print('$_tag at submitQuestion');
@@ -57,7 +73,7 @@ abstract class QuestionModel extends Model with AccountModel {
 
     if (user == null) return false;
     DocumentReference followDocRef =
-    _getFollowingDocumentRef(question, user.id);
+        _getFollowingDocumentRef(question, user.id);
     DocumentSnapshot document = await followDocRef.get().catchError((error) {
       print('$_tag error on getting document for checking following status');
       _hasError = true;
@@ -111,9 +127,7 @@ abstract class QuestionModel extends Model with AccountModel {
     Map<String, dynamic> followMap = {
       USER_ID_FIELD: userId,
       ANSWER_ID_FIELD: question.id,
-      CREATED_AT_FIELD: DateTime
-          .now()
-          .millisecondsSinceEpoch
+      CREATED_AT_FIELD: DateTime.now().millisecondsSinceEpoch
     };
     followerDocRef.setData(followMap).catchError((error) {
       print('$tag error on adding follow: $error');

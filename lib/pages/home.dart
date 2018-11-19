@@ -3,6 +3,7 @@ import 'package:my_car/models/main_model.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/login.dart';
+import 'package:my_car/pages/question_search.dart';
 import 'package:my_car/pages/tools_page.dart';
 import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/pages/view_question.dart';
@@ -62,16 +63,16 @@ class HomePage extends StatelessWidget {
                 ? () => _goToProfilePage()
                 : () => _goToLoginPage(),
             icon: model.currentUser != null &&
-                model.currentUser.imageUrl != null
+                    model.currentUser.imageUrl != null
                 ? CircleAvatar(
-                radius: 12.0,
-                backgroundColor: Colors.black12,
-                backgroundImage: NetworkImage(model.currentUser.imageUrl))
+                    radius: 12.0,
+                    backgroundColor: Colors.black12,
+                    backgroundImage: NetworkImage(model.currentUser.imageUrl))
                 : Icon(
-              Icons.account_circle,
-              size: 30.0,
-              color: Colors.grey,
-            ),
+                    Icons.account_circle,
+                    size: 30.0,
+                    color: Colors.grey,
+                  ),
           );
         },
       ),
@@ -91,8 +92,7 @@ class HomePage extends StatelessWidget {
                     final question = Question.fromSnapshot(document);
                     return QuestionItemView(
                       question: question,
-                      onTap: () =>
-                          Navigator.push(
+                      onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) =>
@@ -104,7 +104,7 @@ class HomePage extends StatelessWidget {
     );
 
     final _bodySection =
-    ScopedModelDescendant<MainModel>(builder: (_, __, model) {
+        ScopedModelDescendant<MainModel>(builder: (_, __, model) {
       switch (model.currentNavItem) {
         case NAV_ITEM_HOME:
           return _forumView;
@@ -117,39 +117,56 @@ class HomePage extends StatelessWidget {
       }
     });
 
+    final _bottomNavigationBar = ScopedModelDescendant<MainModel>(
+      builder: (context, child, model) {
+        return BottomNavigationBar(
+          onTap: (selectedItem) => model.updateSelectedNavItem(selectedItem),
+          currentIndex: model.currentNavItem,
+          fixedColor: Colors.blue,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                title: Text(homeText), icon: Icon(Icons.home)),
+            BottomNavigationBarItem(
+                title: Text(toolsText), icon: Icon(Icons.settings)),
+          ],
+        );
+      },
+    );
+
+    final _searchSection = Builder(
+      builder: (context) => ScopedModelDescendant<MainModel>(
+        builder: (_,__,model){
+
+          return IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () async {
+              List<Question> questions = await model.getQuestions();
+              final Question result = await showSearch(
+                  context: context, delegate: QuestionsSearch(questions));
+            });} ,
+      ),
+    );
+
+    _buildAppBar(_, innerBoxIsScrolled) => <Widget>[
+          SliverAppBar(
+            forceElevated: innerBoxIsScrolled,
+            snap: true,
+            floating: true,
+            leading: _currentUserProfileSection,
+            title: Text(APP_NAME),
+            actions: <Widget>[
+              _askQuestionSection,
+              _searchSection,
+            ],
+          )
+        ];
+
     return Scaffold(
       body: NestedScrollView(
           controller: _scrollViewController,
-          headerSliverBuilder: (_, innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                forceElevated: innerBoxIsScrolled,
-                snap: true,
-                floating: true,
-                leading: _askQuestionSection,
-                title: Text(APP_NAME),
-                actions: <Widget>[
-                  _currentUserProfileSection,
-                ],
-              )
-            ];
-          },
+          headerSliverBuilder: _buildAppBar,
           body: _bodySection),
-      bottomNavigationBar: ScopedModelDescendant<MainModel>(
-        builder: (context, child, model) {
-          return BottomNavigationBar(
-            onTap: (selectedItem) => model.updateSelectedNavItem(selectedItem),
-            currentIndex: model.currentNavItem,
-            fixedColor: Colors.blue,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                  title: Text(homeText), icon: Icon(Icons.home)),
-              BottomNavigationBarItem(
-                  title: Text(toolsText), icon: Icon(Icons.settings)),
-            ],
-          );
-        },
-      ),
+      bottomNavigationBar: _bottomNavigationBar,
     );
   }
 }

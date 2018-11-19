@@ -22,7 +22,7 @@ class AskPage extends StatelessWidget {
       final question = _mController.text.trim();
       if (question.isNotEmpty) {
         StatusCode statusCode =
-        await model.submitQuestion(question, model.currentUser.id);
+            await model.submitQuestion(question, model.currentUser.id);
 
         switch (statusCode) {
           case StatusCode.success:
@@ -58,14 +58,14 @@ class AskPage extends StatelessWidget {
             return RaisedButton(
               color: darkColor,
               onPressed: () =>
-              model.submittingQuestionStatus == StatusCode.waiting
-                  ? null
-                  : _submitQuestion(context, model),
+                  model.submittingQuestionStatus == StatusCode.waiting
+                      ? null
+                      : _submitQuestion(context, model),
               child: model.submittingQuestionStatus == StatusCode.waiting
                   ? MyProgressIndicator(
-                size: 15.0,
-                color: Colors.white,
-              )
+                      size: 15.0,
+                      color: Colors.white,
+                    )
                   : Text(submitText, style: TextStyle(color: Colors.white)),
             );
           },

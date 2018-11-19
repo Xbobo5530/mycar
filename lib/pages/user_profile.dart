@@ -33,13 +33,13 @@ class UserProfilePage extends StatelessWidget {
     final _basicInfoSection = ListTile(
       leading: user.imageUrl != null
           ? CircleAvatar(
-        backgroundImage: NetworkImage(user.imageUrl),
-        backgroundColor: Colors.black12,
-      )
+              backgroundImage: NetworkImage(user.imageUrl),
+              backgroundColor: Colors.black12,
+            )
           : Icon(
-        Icons.account_circle,
-        size: 18.0,
-      ),
+              Icons.account_circle,
+              size: 18.0,
+            ),
       title: Text(user.name),
       subtitle: user.bio != null ? Text(user.bio) : null,
     );

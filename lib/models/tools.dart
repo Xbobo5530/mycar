@@ -16,8 +16,7 @@ class Tool {
     @required this.icon,
     @required this.type,
     this.goToUrl,
-  })
-      : assert(title != null),
+  })  : assert(title != null),
         assert(description != null),
         assert(type != null);
 }
@@ -32,15 +31,15 @@ final List<Tool> tools = <Tool>[
       ),
       goToUrl: ticketUrl,
       type: ToolType.url),
-  Tool(
-      title: taxValuationTitle,
-      description: taxValuationDesc,
-      icon: Icon(
-        Icons.directions_car,
-        size: 50.0,
-      ),
-      goToUrl: taxUrl,
-      type: ToolType.url),
+//  Tool(
+//      title: taxValuationTitle,
+//      description: taxValuationDesc,
+//      icon: Icon(
+//        Icons.directions_car,
+//        size: 50.0,
+//      ),
+//      goToUrl: taxUrl,
+//      type: ToolType.url),
   Tool(
       title: trafficActTitle,
       description: trafficActDesc,
