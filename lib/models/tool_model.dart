@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:my_car/models/tool.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 abstract class ToolsModel extends Model {
   String _pdfPathCache;
@@ -20,5 +21,17 @@ abstract class ToolsModel extends Model {
     await file.writeAsBytes(bytes);
     _pdfPathCache = file.path;
     return _pdfPathCache;
+  }
+
+  openRemoteUrl(Tool tool) {
+    _launchURL(tool.goToUrl);
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

@@ -44,7 +44,6 @@ class ToolsPage extends StatelessWidget {
 
     _openUrl(Tool tool) {
       print('$_tag at _openUrl');
-//      flutterWebviewPlugin.launch(tool.goToUrl);
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -72,7 +71,7 @@ class ToolsPage extends StatelessWidget {
     _openToolPage(MainModel model, Tool tool) {
       print('$_tag at _openToolPage');
       switch (tool.type) {
-        case ToolType.url:
+        case ToolType.nativeUrl:
           _openUrl(tool);
           break;
         case ToolType.pdfUrl:
@@ -80,6 +79,9 @@ class ToolsPage extends StatelessWidget {
           break;
         case ToolType.native:
           _openNativeTool(tool);
+          break;
+        case ToolType.remoteUrl:
+          model.openRemoteUrl(tool);
           break;
         default:
           print('$_tag the unknown tool type is ${tool.type}');
