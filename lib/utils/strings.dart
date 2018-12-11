@@ -39,9 +39,6 @@ const emailUrl = 'mailto:dev@nyayozangu.com?subject=MyCarApp';
 
 const loadingText = 'Loading...';
 
-const homeText = 'Home';
-const toolsText = 'Tools';
-
 //tools
 const forumTitle = 'Forum';
 const forumDesc = 'Ask your questions to the community and engage in conversations about cars.\nContibute by answering questions that you have knolwedge to.';
@@ -59,3 +56,14 @@ const taxValuationDesc = 'Check the Tax Valuation for importing a vehicle';
 const dashboardWarningTitle = 'Dashboard Warning Signs';
 const dashboardWarningDesc =
     'Reference to the Dashboard Warning Signs for how they look and what they mean when they come on';
+
+
+const addQuestionText = 'Uliza swali'; //'Ask a question';
+const addAdText = 'Tengeneza tangazo'; //'Post an ad';
+
+/// tabs
+const chatText = 'Mijadala'; //'Chat';
+const adsText = 'Matangazo'; //'Ads';
+const forumText = 'Maswali & Majibu'; //'Forum';
+const toolsText = 'Vifaa'; //'Tools';
+
