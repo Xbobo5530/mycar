@@ -137,11 +137,13 @@ class QuestionItemView extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
-      child: Column(
-        children: <Widget>[
-          _questionDetailsSection,
-          QuestionActionsView(question: question),
-        ],
+      child: Card(
+              child: Column(
+          children: <Widget>[
+            _questionDetailsSection,
+            QuestionActionsView(question: question),
+          ],
+        ),
       ),
     );
   }

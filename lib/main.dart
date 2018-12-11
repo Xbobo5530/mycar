@@ -12,7 +12,7 @@ class MyCar extends StatelessWidget {
   const MyCar({Key key, @required this.model}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var primaryColor = Colors.white;
+    var primaryColor = Colors.blue;
 
     return ScopedModel<MainModel>(
       model: model,

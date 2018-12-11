@@ -51,16 +51,13 @@ class QuestionActionsView extends StatelessWidget {
                 : () => _goToLoginPage());
       },
     );
-    return Material(
-      elevation: 4.0,
-      child: ButtonBar(
-        alignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _shareButton,
-          FollowButtonView(question: question, key: Key(question.id)),
-          _answerButton,
-        ],
-      ),
+    return ButtonBar(
+      alignment: MainAxisAlignment.center,
+      children: <Widget>[
+        _shareButton,
+        FollowButtonView(question: question, key: Key(question.id)),
+        _answerButton,
+      ],
     );
   }
 }

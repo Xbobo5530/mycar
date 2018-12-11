@@ -1,4 +1,4 @@
-const APP_NAME = 'MyCar';
+const APP_NAME = 'Magari';
 
 const welcomeText = 'Karibu';
 const introductionText = '''

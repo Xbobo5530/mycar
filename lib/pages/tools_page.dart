@@ -13,25 +13,23 @@ const kAndroidUserAgent =
 class ToolsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final flutterWebviewPlugin = FlutterWebviewPlugin();
-
-    Widget _buildPdfPage(MainModel model, Tool tool) =>FutureBuilder<String>(
-                    future: model.createFileOfPdfUrl(tool),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData)
-                        return Scaffold(
-                            appBar: AppBar(
-                              title: Text(tool.title),
-                            ),
-                            body: Center(child: CircularProgressIndicator()));
-                      final pathPDF = snapshot.data;
-                      return PDFViewerScaffold(
-                          appBar: AppBar(
-                            title: Text(tool.title),
-                          ),
-                          path: pathPDF);
-                    },
-                  );
+    Widget _buildPdfPage(MainModel model, Tool tool) => FutureBuilder<String>(
+          future: model.createFileOfPdfUrl(tool),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData)
+              return Scaffold(
+                  appBar: AppBar(
+                    title: Text(tool.title),
+                  ),
+                  body: Center(child: CircularProgressIndicator()));
+            final pathPDF = snapshot.data;
+            return PDFViewerScaffold(
+                appBar: AppBar(
+                  title: Text(tool.title),
+                ),
+                path: pathPDF);
+          },
+        );
 
     _handlePdf(MainModel model, Tool tool) {
       print('$_tag at _handlePdf');
