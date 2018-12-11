@@ -22,7 +22,7 @@ class InputSectionView extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
-                          // fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w700,
                           fontSize: 20),
                     )),
         ),

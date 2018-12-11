@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/models/main_model.dart';
 import 'package:my_car/models/question.dart';
-import 'package:my_car/models/tools.dart';
+import 'package:my_car/models/tool.dart';
 import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/question_search.dart';
@@ -23,7 +23,7 @@ class NativeToolPage extends StatelessWidget {
     Widget _buildNativeToolView() {
       switch (tool.id) {
         case NATIVE_TOOL_FORUM:
-        return ForumPageView();
+          return ForumPageView();
         case NATIVE_TOOL_WARNING_SIGNS:
           return WarningSignsPageView();
           break;
@@ -34,19 +34,19 @@ class NativeToolPage extends StatelessWidget {
           );
       }
     }
-     _goToAskQuestionPage() {
+
+    _goToAskQuestionPage() {
       Navigator.push(context,
           MaterialPageRoute(builder: (_) => AskPage(), fullscreenDialog: true));
     }
-     _goToLoginPage() {
+
+    _goToLoginPage() {
       showModalBottomSheet(
           context: context,
           builder: (context) {
             return LoginPage();
           });
     }
-
-   
 
     final _askQuestionSection = ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
@@ -57,31 +57,17 @@ class NativeToolPage extends StatelessWidget {
                 : () => _goToLoginPage());
       },
     );
-    // final _searchSection = Builder(
-    //   builder: (context) => ScopedModelDescendant<MainModel>(
-    //     builder: (_,__,model){
-
-    //       return IconButton(
-    //         icon: Icon(Icons.search),
-    //         onPressed: () async {
-    //           List<Question> questions = await model.getQuestions();
-    //            await showSearch(
-    //               context: context, delegate: QuestionsSearch(questions));
-    //         });} ,
-    //   ),
-    // );
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
-        title: Text(tool.title),
-        actions: tool.id == NATIVE_TOOL_FORUM
-        ? <Widget>[
-              _askQuestionSection,
-              // _searchSection,
-            ]
-            : [Container()]
-      ),
+          elevation: 0.0,
+          title: Text(tool.title),
+          actions: tool.id == NATIVE_TOOL_FORUM
+              ? <Widget>[
+                  _askQuestionSection,
+                  // _searchSection,
+                ]
+              : [Container()]),
       body: _buildNativeToolView(),
     );
   }
