@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_car/models/account_model.dart';
 import 'package:my_car/models/answer.dart';
 import 'package:my_car/models/question.dart';
 import 'package:my_car/models/user.dart';
 import 'package:my_car/utils/consts.dart';
 import 'package:my_car/utils/status_code.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 const _tag = 'AnswerModel:';
 
-abstract class AnswerModel with AccountModel {
+abstract class AnswerModel extends Model{
   final _database = Firestore.instance;
 
   StatusCode _submittingAnswerStatus;

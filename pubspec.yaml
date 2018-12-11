@@ -27,7 +27,7 @@ dependencies:
   url_launcher: ^4.0.1
   flutter_launcher_icons: ^0.6.1
   share: ^0.5.3
-#  rxdart: ^0.19.0
+  # rxdart: ^0.19.0
   flutter_webview_plugin: ^0.2.1+2
   flutter_full_pdf_viewer: ^1.0.2
   path_provider: ^0.4.1

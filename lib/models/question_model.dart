@@ -8,7 +8,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 const _tag = 'QuestionModel:';
 
-abstract class QuestionModel extends Model with AccountModel {
+abstract class QuestionModel extends Model {
   final Firestore _database = Firestore.instance;
 
   StatusCode _submittingQuestionStatus;
