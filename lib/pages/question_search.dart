@@ -5,7 +5,7 @@ import 'package:my_car/views/heading_section.dart';
 
 class QuestionsSearch extends SearchDelegate<Question> {
   final List<Question> questionsList;
-  QuestionsSearch(this.questionsList);
+  QuestionsSearch({this.questionsList});
   @override
   List<Widget> buildActions(BuildContext context) {
     return [

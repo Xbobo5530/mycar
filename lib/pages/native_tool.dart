@@ -57,19 +57,19 @@ class NativeToolPage extends StatelessWidget {
                 : () => _goToLoginPage());
       },
     );
-    final _searchSection = Builder(
-      builder: (context) => ScopedModelDescendant<MainModel>(
-        builder: (_,__,model){
+    // final _searchSection = Builder(
+    //   builder: (context) => ScopedModelDescendant<MainModel>(
+    //     builder: (_,__,model){
 
-          return IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () async {
-              List<Question> questions = await model.getQuestions();
-               await showSearch(
-                  context: context, delegate: QuestionsSearch(questions));
-            });} ,
-      ),
-    );
+    //       return IconButton(
+    //         icon: Icon(Icons.search),
+    //         onPressed: () async {
+    //           List<Question> questions = await model.getQuestions();
+    //            await showSearch(
+    //               context: context, delegate: QuestionsSearch(questions));
+    //         });} ,
+    //   ),
+    // );
 
     return Scaffold(
       appBar: AppBar(
@@ -78,7 +78,7 @@ class NativeToolPage extends StatelessWidget {
         actions: tool.id == NATIVE_TOOL_FORUM
         ? <Widget>[
               _askQuestionSection,
-              _searchSection,
+              // _searchSection,
             ]
             : [Container()]
       ),

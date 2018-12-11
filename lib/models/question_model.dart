@@ -10,6 +10,8 @@ const _tag = 'QuestionModel:';
 
 abstract class QuestionModel extends Model {
   final Firestore _database = Firestore.instance;
+   List<Question> _questions;
+    List<Question>  get questions => _questions;
 
   StatusCode _submittingQuestionStatus;
   StatusCode get submittingQuestionStatus => _submittingQuestionStatus;
@@ -24,21 +26,19 @@ abstract class QuestionModel extends Model {
         .snapshots();
   }
 
-
-
-  Future<List<Question>> getQuestions()async{
-    QuerySnapshot snapshot = await _database
-        .collection(QUESTIONS_COLLECTION).getDocuments();
+  Future<List<Question>> getQuestions() async {
+    QuerySnapshot snapshot =
+        await _database.collection(QUESTIONS_COLLECTION).getDocuments();
     List documents = snapshot.documents;
     List<Question> questions = <Question>[];
-    documents.forEach((document){
+    documents.forEach((document) {
       final question = Question.fromSnapshot(document);
       questions.add(question);
     });
+    _questions = questions;
+    notifyListeners();
     return questions;
   }
-
-
 
   Future<StatusCode> submitQuestion(
       String question, String currentUserId) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/models/main_model.dart';
 import 'package:my_car/pages/login.dart';
+import 'package:my_car/pages/question_search.dart';
 import 'package:my_car/pages/tools_page.dart';
 import 'package:my_car/pages/user_profile.dart';
 import 'package:my_car/utils/strings.dart';
@@ -72,6 +73,15 @@ class HomePage extends StatelessWidget {
         ToolsPage()
       ],
     );
+    final _search = <Widget>[
+      ScopedModelDescendant<MainModel>(
+          builder: (context, child, model) => IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () => showSearch(
+                    delegate: QuestionsSearch(questionsList: model.questions),
+                    context: context),
+              ))
+    ];
 
     return DefaultTabController(
       length: 4,
@@ -81,6 +91,7 @@ class HomePage extends StatelessWidget {
             title: Text(APP_NAME),
             centerTitle: true,
             bottom: _bottom,
+            actions: _search,
           ),
           body: _body //ToolsPage(),
           ),

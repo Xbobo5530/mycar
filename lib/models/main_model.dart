@@ -19,5 +19,6 @@ class MainModel extends Model
   MainModel() {
     print('$_tag at MainModel()');
     updateLoginStatus();
+  getQuestions();
   }
 }
