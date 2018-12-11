@@ -24,7 +24,9 @@ class InputSectionView extends StatelessWidget {
       if (message.isEmpty) return null;
       StatusCode status = await model.sendMessage(message, model.currentUser);
       if (status == StatusCode.failed) _showErrorMessage();
+      
       _controller.text = '';
+      model.updateListViewPosition();
     }
 
     _handleAdd(MainModel model, AddFileItem item) {
@@ -60,17 +62,13 @@ class InputSectionView extends StatelessWidget {
     _buildField(MainModel model) => TextField(
           controller: _controller,
           maxLines: null,
-        
           cursorColor: Colors.white,
           style: TextStyle(
             color: Colors.white,
           ),
           decoration: InputDecoration(
-            hintText: sendMessageHint,
-            hintStyle: TextStyle(
-              color: Colors.white70
-            ),
-            
+              hintText: sendMessageHint,
+              hintStyle: TextStyle(color: Colors.white70),
               border: InputBorder.none,
               suffixIcon: _buildSendButton(model),
               prefixIcon: _buildAddIcon(model)),

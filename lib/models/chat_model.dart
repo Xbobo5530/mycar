@@ -7,8 +7,10 @@ import 'package:scoped_model/scoped_model.dart';
 
 abstract class ChatModel extends Model {
   final Firestore _database = Firestore.instance;
-  Stream<QuerySnapshot> liveChatStream() =>
-      _database.collection(COLLECTIONS_CHATS).snapshots();
+  Stream<QuerySnapshot> liveChatStream() => _database
+      .collection(COLLECTIONS_CHATS)
+      .orderBy(FIELD_CREATED_AT, descending: true)
+      .snapshots();
 
   Future<StatusCode> sendMessage(String message, User user) async {
     Chat chat = _makeChat(message, user);
@@ -34,4 +36,26 @@ abstract class ChatModel extends Model {
       message: message,
       createdBy: user.id,
       createdAt: DateTime.now().millisecondsSinceEpoch);
+
+  Future<Chat> refinedChat(Chat chat) async {
+    User user = await _userFromId(chat.createdBy);
+    if (user == null) return null;
+    chat.username = user.name;
+    chat.userImageUrl = user.imageUrl;
+    return chat;
+  }
+
+  Future<User> _userFromId(String id) async {
+    bool _hasError = false;
+    DocumentSnapshot document = await _database
+        .collection(COLLECTION_USERS)
+        .document(id)
+        .get()
+        .catchError((error) {
+      print('error on getting user from id');
+      _hasError = true;
+    });
+    if (_hasError || !document.exists) return null;
+    return User.fromSnapshot(document);
+  }
 }

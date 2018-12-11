@@ -8,7 +8,21 @@ class ChatItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
+      child: ListTile(
+        title: Text(
+          chat.message,
+          textAlign: TextAlign.center,
+        ),
+        subtitle: Chip(
+          label: Text(chat.username),
+          avatar: chat.userImageUrl != null
+              ? CircleAvatar(
+                  backgroundImage: NetworkImage(chat.userImageUrl),
+                  backgroundColor: Colors.black12,
+                )
+              : null,
+        ),
+      ),
     );
   }
 }

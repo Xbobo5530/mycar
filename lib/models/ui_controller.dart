@@ -13,10 +13,20 @@ abstract class NavModel extends Model {
   }
 
   goToLoginPage(BuildContext context) {
-      showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return LoginPage();
-          });
-    }
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return LoginPage();
+        });
+  }
+
+  final _scrollController = ScrollController();
+  ScrollController get scrollController => _scrollController;
+  updateListViewPosition() {
+    _scrollController.animateTo(
+      _scrollController.position.minScrollExtent,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOut,
+    );
+  }
 }
