@@ -14,34 +14,34 @@ const followingText = 'Unafuatilia'; //'Following';
 const replyLabelText ='Andika jibu lako' ;// 'Enter your response';
 const loginText = 'Ingia';//'Login';
 const signInWithGoogleText = 'Ingia kwa kutumia akaunti ya Google';//'Sign in with Google';
-const askText = 'Ask new question';
-const submitText = 'Submit';
-const askHint = 'Ask your question here';
+const askText = 'Uliza swali';// 'Ask new question';
+const submitText = 'Rejesha';// 'Submit';
+const askHint = 'Uliza swali lako hapa';// 'Ask your question here';
 
-const myProfileText = 'My profile';
-const profileText = 'profile';
+const myProfileText = 'Ukurasa wangu';// 'My profile';
+const profileText =  'profile';
 
-const upvoteText = 'Upvote';
-const upvotedText = 'Upvoted';
-const answerText = 'Answer';
+const upvoteText ='Unga mkono'; // 'Upvote';
+const upvotedText = 'Umeunga mkono';// 'Upvoted';
+const answerText = 'Toa jibu';// 'Answer';
 
 //view question page
-const questionText = 'Question';
+const questionText = 'Swali';// 'Question';
 
 //answer page
-const answerHint = 'Write your answer here';
+const answerHint = 'Andika jawabu lako hapa';// 'Write your answer here';
 
-const errorMessage = 'Something went wrong';
-const logoutText = 'Logout';
+const errorMessage = 'Samahani, kuna hitilafu imetokea';// 'Something went wrong';
+const logoutText = 'Ondoka';// 'Logout';
 
-const devByText = 'Developed by NyayoZangu Labs';
+const devByText = 'Imetengenezwa na NyayoZangu Labs';// 'Developed by NyayoZangu Labs';
 const emailUrl = 'mailto:dev@nyayozangu.com?subject=MyCarApp';
 
-const loadingText = 'Loading...';
+const loadingText = 'Tafadhali subiri'; // 'Loading...';
 
 //tools
-const forumTitle = 'Forum';
-const forumDesc = 'Ask your questions to the community and engage in conversations about cars.\nContibute by answering questions that you have knolwedge to.';
+// const forumTitle =  'Forum';
+// const forumDesc = 'Ask your questions to the community and engage in conversations about cars.\nContibute by answering questions that you have knolwedge to.';
 
 const ticketCheckTitle = 'Ticket Check';
 const ticketCheckDesc = 'Check whether your Licence or Vehicle has a ticket';
@@ -67,3 +67,9 @@ const adsText = 'Matangazo'; //'Ads';
 const forumText = 'Maswali & Majibu'; //'Forum';
 const toolsText = 'Vifaa'; //'Tools';
 
+
+/// add file menu
+const cameraText = 'Piga picha'; //'Take a photo';
+const imageText = 'Chagua picha'; // 'Pick a photo';
+
+const sendMessageHint = 'Andika ujumbe wako hapa'; // 'Say something';

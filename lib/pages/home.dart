@@ -93,7 +93,7 @@ class HomePage extends StatelessWidget {
     final _add = ScopedModelDescendant<MainModel>(
       builder: (context, child, model) => PopupMenuButton<AddMenuItem>(
             onSelected: (selectedItem) => _handleAdd(model, selectedItem),
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add_circle),
             itemBuilder: (context) => <PopupMenuEntry<AddMenuItem>>[
                   PopupMenuItem(
                     value: AddMenuItem.question,

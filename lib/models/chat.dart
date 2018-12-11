@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:meta/meta.dart';
 import 'package:my_car/utils/consts.dart';
 
 class Chat {
@@ -22,12 +23,12 @@ class Chat {
       this.message,
       this.fileUrl,
       this.filePath,
-      this.createdBy,
+      @required this.createdBy,
       this.username,
       this.userImageUrl,
       this.replyingTo,
       this.fileType = FILE_TYPE_NO_FILE,
-      this.createdAt});
+      @required this.createdAt});
 
   Chat.fromSnapshot(DocumentSnapshot doc)
       : this.id = doc.documentID,
