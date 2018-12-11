@@ -10,3 +10,4 @@ build/
 android/app/google-services.json
 android/key.properties
 ios/Runner/Info.plist
+ios/Runner/GoogleService-Info.plist
