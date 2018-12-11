@@ -12,7 +12,7 @@ abstract class UserModel extends Model {
     if (_cachedUsers.containsKey(userId)) return _cachedUsers[userId];
     bool _hasError = false;
     final userDocument = await _database
-        .collection(USERS_COLLECTION)
+        .collection(COLLECTION_USERS)
         .document(userId)
         .get()
         .catchError((error) {

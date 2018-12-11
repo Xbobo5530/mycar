@@ -19,10 +19,10 @@ class Answer {
 
   Answer.fromSnapshot(DocumentSnapshot document)
       : this.id = document.documentID,
-        this.answer = document[ANSWER_FIELD],
-        this.userId = document[USER_ID_FIELD],
-        this.createdBy = document[CREATED_BY_FIELD],
-        this.questionId = document[QUESTION_ID_FIELD],
-        this.createdAt = document[CREATED_AT_FIELD],
-        this.votes = document[VOTES_FIELD];
+        this.answer = document[FIELD_ANSWER],
+        this.userId = document[FIELD_USER_ID],
+        this.createdBy = document[FIELD_CREATED_BY],
+        this.questionId = document[FIELD_QUESTION_ID],
+        this.createdAt = document[FIELD_CREATED_AT],
+        this.votes = document[FIELD_VOTES];
 }

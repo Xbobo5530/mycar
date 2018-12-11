@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/scheduler/ticker.dart';
 import 'package:my_car/models/main_model.dart';
 import 'package:my_car/pages/ask.dart';
+import 'package:my_car/pages/live_chat.dart';
 import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/question_search.dart';
 import 'package:my_car/pages/tools_page.dart';
@@ -28,13 +29,7 @@ class HomePage extends StatelessWidget {
           });
     }
 
-    _goToLoginPage() {
-      showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return LoginPage();
-          });
-    }
+   
 
     _goToAddQuestionPage() =>
         Navigator.push(context, MaterialPageRoute(builder: (_) => AskPage()));
@@ -47,10 +42,10 @@ class HomePage extends StatelessWidget {
     _handleAdd(MainModel model, AddMenuItem item) {
       switch (item) {
         case AddMenuItem.question:
-          model.isLoggedIn ? _goToAddQuestionPage() : _goToLoginPage();
+          model.isLoggedIn ? _goToAddQuestionPage() : model.goToLoginPage(context);
           break;
         case AddMenuItem.ad:
-          model.isLoggedIn ? _goToAddAdPage() : _goToLoginPage();
+          model.isLoggedIn ? _goToAddAdPage() : model.goToLoginPage(context);
           break;
       }
     }
@@ -62,7 +57,7 @@ class HomePage extends StatelessWidget {
           return IconButton(
             onPressed: model.isLoggedIn
                 ? () => _goToProfilePage()
-                : () => _goToLoginPage(),
+                : () => model.goToLoginPage(context),
             icon: model.currentUser != null &&
                     model.currentUser.imageUrl != null
                 ? CircleAvatar(
@@ -89,7 +84,7 @@ class HomePage extends StatelessWidget {
 
     final _body = TabBarView(
       children: <Widget>[
-        Icon(Icons.directions_transit),
+        LiveChatPage(),
         ForumPageView(),
         Icon(Icons.theaters),
         ToolsPage()

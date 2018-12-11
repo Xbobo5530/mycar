@@ -15,8 +15,8 @@ class Question {
 
   Question.fromSnapshot(DocumentSnapshot document)
       : this.id = document.documentID,
-        this.question = document[QUESTION_FIELD],
-        this.userId = document[USER_ID_FIELD],
-        this.createdBy = document[CREATED_BY_FIELD],
-        this.createdAt = document[CREATED_AT_FIELD];
+        this.question = document[FIELD_QUESTION],
+        this.userId = document[FIELD_USER_ID],
+        this.createdBy = document[FIELD_CREATED_BY],
+        this.createdAt = document[FIELD_CREATED_AT];
 }

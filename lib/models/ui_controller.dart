@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:my_car/pages/login.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 abstract class NavModel extends Model {
@@ -9,4 +11,12 @@ abstract class NavModel extends Model {
     _currentNavItem = selectedItem;
     notifyListeners();
   }
+
+  goToLoginPage(BuildContext context) {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return LoginPage();
+          });
+    }
 }

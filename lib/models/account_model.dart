@@ -82,7 +82,7 @@ abstract class AccountModel extends Model {
 
     final userId = user.uid;
     final userDoc = await _database
-        .collection(USERS_COLLECTION)
+        .collection(COLLECTION_USERS)
         .document(userId)
         .get()
         .catchError((error) {
@@ -104,13 +104,13 @@ abstract class AccountModel extends Model {
     final createdAt = DateTime.now().millisecondsSinceEpoch;
     //create user doc map
     Map<String, dynamic> userDocMap = {
-      NAME_FIELD: username,
-      ID_FIELD: userId,
-      IMAGE_URL_FIELD: userImageUrl,
-      CREATED_AT_FIELD: createdAt,
+      FIELD_NAME: username,
+      FIELD_ID: userId,
+      FIELD_IMAGE_URL: userImageUrl,
+      FIELD_CREATED_AT: createdAt,
     };
     await _database
-        .collection(USERS_COLLECTION)
+        .collection(COLLECTION_USERS)
         .document(userId)
         .setData(userDocMap)
         .catchError((error) {
@@ -151,7 +151,7 @@ abstract class AccountModel extends Model {
     }
     final userId = user.uid;
     final DocumentSnapshot document = await _database
-        .collection(USERS_COLLECTION)
+        .collection(COLLECTION_USERS)
         .document(userId)
         .get()
         .catchError((error) {

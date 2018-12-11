@@ -1,4 +1,4 @@
-import 'package:my_car/utils/consts.dart';
+import 'package:my_car/models/dashboardData.dart';
 
 class WarningSign {
   String title, description, imageUrl;

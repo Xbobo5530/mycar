@@ -37,7 +37,7 @@ final List<Tool> tools = <Tool>[
         Icons.network_check,
         size: 50.0,
       ),
-      goToUrl: ticketUrl,
+      goToUrl: URL_TICKET,
       type: ToolType.url),
 //  Tool(
 //      title: taxValuationTitle,
@@ -51,7 +51,7 @@ final List<Tool> tools = <Tool>[
   Tool(
       title: trafficActTitle,
       description: trafficActDesc,
-      goToUrl: trafficActPdfUrl,
+      goToUrl: PDF_URL_TRAFFIC_ACT,
       icon: Icon(
         Icons.local_library,
         size: 50.0,
@@ -60,7 +60,7 @@ final List<Tool> tools = <Tool>[
   Tool(
     title: insuranceInfoTitle,
     description: insuranceInfoDesc,
-    goToUrl: tiraUrl,
+    goToUrl: URL_TIRA,
     icon: Icon(
       Icons.assignment,
       size: 50.0,

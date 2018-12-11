@@ -20,8 +20,8 @@ class User {
   /// a [DocumentSnapshot] [document]
   User.fromSnapshot(DocumentSnapshot document)
       : this.id = document.documentID,
-        this.name = document[NAME_FIELD],
-        this.bio = document[BIO_FIELD],
-        this.createdAt = document[CREATED_AT_FIELD],
-        this.imageUrl = document[IMAGE_URL_FIELD];
+        this.name = document[FIELD_NAME],
+        this.bio = document[FIELD_BIO],
+        this.createdAt = document[FIELD_CREATED_AT],
+        this.imageUrl = document[FIELD_IMAGE_URL];
 }

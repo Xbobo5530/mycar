@@ -21,14 +21,14 @@ abstract class QuestionModel extends Model {
 
   Stream<QuerySnapshot> questionsStream() {
     return _database
-        .collection(QUESTIONS_COLLECTION)
-        .orderBy(CREATED_AT_FIELD, descending: true)
+        .collection(COLLECTION_QUESTIONS)
+        .orderBy(FIELD_CREATED_AT, descending: true)
         .snapshots();
   }
 
   Future<List<Question>> getQuestions() async {
     QuerySnapshot snapshot =
-        await _database.collection(QUESTIONS_COLLECTION).getDocuments();
+        await _database.collection(COLLECTION_QUESTIONS).getDocuments();
     List documents = snapshot.documents;
     List<Question> questions = <Question>[];
     documents.forEach((document) {
@@ -49,14 +49,14 @@ abstract class QuestionModel extends Model {
 
     /// create question map
     Map<String, dynamic> questionMap = {
-      CREATED_BY_FIELD: currentUserId,
-      QUESTION_FIELD: question,
-      CREATED_AT_FIELD: DateTime.now().millisecondsSinceEpoch
+      FIELD_CREATED_BY: currentUserId,
+      FIELD_QUESTION: question,
+      FIELD_CREATED_AT: DateTime.now().millisecondsSinceEpoch
     };
 
     /// add question to database
     await _database
-        .collection(QUESTIONS_COLLECTION)
+        .collection(COLLECTION_QUESTIONS)
         .add(questionMap)
         .catchError((error) {
       print('$_tag error on submitting question $error');
@@ -86,9 +86,9 @@ abstract class QuestionModel extends Model {
 
   DocumentReference _getFollowingDocumentRef(Question question, String userId) {
     return _database
-        .collection(QUESTIONS_COLLECTION)
+        .collection(COLLECTION_QUESTIONS)
         .document(question.id)
-        .collection(FOLLOWERS_COLLECTION)
+        .collection(COLLECTION_FOLLOWERS)
         .document(userId);
   }
 
@@ -125,9 +125,9 @@ abstract class QuestionModel extends Model {
     }
 
     Map<String, dynamic> followMap = {
-      USER_ID_FIELD: userId,
-      ANSWER_ID_FIELD: question.id,
-      CREATED_AT_FIELD: DateTime.now().millisecondsSinceEpoch
+      FIELD_USER_ID: userId,
+      FIELD_ANSWER_ID: question.id,
+      FIELD_CREATED_AT: DateTime.now().millisecondsSinceEpoch
     };
     followerDocRef.setData(followMap).catchError((error) {
       print('$tag error on adding follow: $error');

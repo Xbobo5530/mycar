@@ -19,20 +19,20 @@ abstract class AnswerModel extends Model{
 
   Stream<QuerySnapshot> answersStreamFor(Question question) {
     return _database
-        .collection(QUESTIONS_COLLECTION)
+        .collection(COLLECTION_QUESTIONS)
         .document(question.id)
-        .collection(ANSWERS_COLLECTION)
-        .orderBy(VOTES_FIELD, descending: true)
+        .collection(COLLECTION_ANSWERS)
+        .orderBy(FIELD_VOTES, descending: true)
         .snapshots();
   }
 
   Stream<QuerySnapshot> upvotesStreamFor(Answer answer) {
     return _database
-        .collection(QUESTIONS_COLLECTION)
+        .collection(COLLECTION_QUESTIONS)
         .document(answer.questionId)
-        .collection(ANSWERS_COLLECTION)
+        .collection(COLLECTION_ANSWERS)
         .document(answer.id)
-        .collection(UPVOTES_COLLECTION)
+        .collection(COLLECTION_UPVOTES)
         .snapshots();
   }
 
@@ -43,17 +43,17 @@ abstract class AnswerModel extends Model{
     bool _hasError = false;
 
     Map<String, dynamic> answerMap = {
-      CREATED_BY_FIELD: answer.createdBy,
-      ANSWER_FIELD: answer.answer,
-      VOTES_FIELD: answer.votes,
-      QUESTION_ID: answer.questionId,
-      CREATED_AT_FIELD: answer.createdAt
+      FIELD_CREATED_BY: answer.createdBy,
+      FIELD_ANSWER: answer.answer,
+      FIELD_VOTES: answer.votes,
+      FIELD_QUESTION_ID: answer.questionId,
+      FIELD_CREATED_AT: answer.createdAt
     };
 
     await _database
-        .collection(QUESTIONS_COLLECTION)
+        .collection(COLLECTION_QUESTIONS)
         .document(answer.questionId)
-        .collection(ANSWERS_COLLECTION)
+        .collection(COLLECTION_ANSWERS)
         .add(answerMap)
         .catchError((error) {
       print('$_tag error on submitting question $error');
@@ -94,10 +94,10 @@ abstract class AnswerModel extends Model{
       });
     else {
       Map<String, dynamic> upvoteMap = {
-        CREATED_BY_FIELD: userId,
-        ANSWER_ID_FIELD: answer.id,
-        QUESTION_ID_FIELD: answer.questionId,
-        CREATED_AT_FIELD: DateTime.now().millisecondsSinceEpoch
+        FIELD_CREATED_BY: userId,
+        FIELD_ANSWER_ID: answer.id,
+        FIELD_QUESTION_ID: answer.questionId,
+        FIELD_CREATED_AT: DateTime.now().millisecondsSinceEpoch
       };
       upvoteDocRef.setData(upvoteMap).catchError((error) {
         print('$_tag error on adding upvote: $error');
@@ -118,7 +118,7 @@ abstract class AnswerModel extends Model{
     bool _hasError = false;
     int newVoteCount = await _getUpvoteCount(answer);
     await _getAnswerDocumentRefFor(answer)
-        .updateData({VOTES_FIELD: newVoteCount}).catchError((error) {
+        .updateData({FIELD_VOTES: newVoteCount}).catchError((error) {
       print('$_tag error on updating votes count');
       _hasError = true;
     });
@@ -128,19 +128,19 @@ abstract class AnswerModel extends Model{
 
   DocumentReference _getAnswerDocumentRefFor(Answer answer) {
     return _database
-        .collection(QUESTIONS_COLLECTION)
+        .collection(COLLECTION_QUESTIONS)
         .document(answer.questionId)
-        .collection(ANSWERS_COLLECTION)
+        .collection(COLLECTION_ANSWERS)
         .document(answer.id);
   }
 
   CollectionReference _getUpvoteCollectionRefFor(Answer answer) {
     return _database
-        .collection(QUESTIONS_COLLECTION)
+        .collection(COLLECTION_QUESTIONS)
         .document(answer.questionId)
-        .collection(ANSWERS_COLLECTION)
+        .collection(COLLECTION_ANSWERS)
         .document(answer.id)
-        .collection(UPVOTES_COLLECTION);
+        .collection(COLLECTION_UPVOTES);
   }
 
   Future<int> _getUpvoteCount(Answer answer) async {
@@ -173,11 +173,11 @@ abstract class AnswerModel extends Model{
 
   DocumentReference _getUpvoteDocumentRef(Answer answer, String userId) {
     return _database
-        .collection(QUESTIONS_COLLECTION)
+        .collection(COLLECTION_QUESTIONS)
         .document(answer.questionId)
-        .collection(ANSWERS_COLLECTION)
+        .collection(COLLECTION_ANSWERS)
         .document(answer.id)
-        .collection(UPVOTES_COLLECTION)
+        .collection(COLLECTION_UPVOTES)
         .document(userId);
   }
 }

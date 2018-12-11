@@ -7,13 +7,13 @@ Tunashirikishana taarifa mbali mbali kuhusiana na magari yetu \n
 ili kuboresha hali ya usalama barabarani ya kuweza kuweka magari yetu kwenye hali ya ubora.
 ''';
 
-const commentsText = 'Comments';
-const shareText = 'Share';
-const followText = 'Follow';
-const followingText = 'Following';
-const replyLabelText = 'Enter your response';
-const loginText = 'Login';
-const signInWithGoogleText = 'Sign in with Google';
+const commentsText = 'Toa maoni';//'Comments';
+const shareText = 'Shirikisha';//'Share';
+const followText = 'Fuatilia';//'Follow';
+const followingText = 'Unafuatilia'; //'Following';
+const replyLabelText ='Andika jibu lako' ;// 'Enter your response';
+const loginText = 'Ingia';//'Login';
+const signInWithGoogleText = 'Ingia kwa kutumia akaunti ya Google';//'Sign in with Google';
 const askText = 'Ask new question';
 const submitText = 'Submit';
 const askHint = 'Ask your question here';
