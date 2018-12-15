@@ -8,11 +8,24 @@ import 'package:scoped_model/scoped_model.dart';
 
 const _tag = 'AskPage';
 
-class AskPage extends StatelessWidget {
+class AskPage extends StatefulWidget {
+  @override
+  AskPageState createState() {
+    return AskPageState();
+  }
+}
+
+class AskPageState extends State<AskPage> {
+  final _mController = TextEditingController();
+
+  @override
+  void dispose() {
+    _mController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _mController = TextEditingController();
-
     final snackBar = SnackBar(
       content: Text(errorMessage),
     );

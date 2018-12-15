@@ -12,17 +12,30 @@ import 'package:scoped_model/scoped_model.dart';
 
 const _tag = 'AnswerQuestionPage:';
 
-class AnswerQuestionPage extends StatelessWidget {
+class AnswerQuestionPage extends StatefulWidget {
   final Question question;
 
   AnswerQuestionPage({@required this.question});
 
   @override
-  Widget build(BuildContext mainContext) {
-    final createdBy =
-        question.createdBy != null ? question.createdBy : question.userId;
+  AnswerQuestionPageState createState() {
+    return AnswerQuestionPageState();
+  }
+}
 
-    final _answerController = TextEditingController();
+class AnswerQuestionPageState extends State<AnswerQuestionPage> {
+  final _answerController = TextEditingController();
+  @override
+  void dispose() {
+    _answerController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext mainContext) {
+    final createdBy = widget.question.createdBy != null
+        ? widget.question.createdBy
+        : widget.question.userId;
 
     final snackBar = SnackBar(
       content: Text(errorMessage),
@@ -34,7 +47,7 @@ class AnswerQuestionPage extends StatelessWidget {
       if (answerText.isNotEmpty) {
         Answer answer = Answer(
             answer: answerText,
-            questionId: question.id,
+            questionId: widget.question.id,
             votes: 0,
             createdAt: DateTime.now().millisecondsSinceEpoch,
             createdBy: model.currentUser.id);
@@ -67,7 +80,7 @@ class AnswerQuestionPage extends StatelessWidget {
             User questionUser = snapshot.data;
             return HeadingSectionView(
               imageUrl: questionUser.imageUrl,
-              heading: question.question,
+              heading: widget.question.question,
             );
           },
         );

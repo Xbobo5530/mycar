@@ -40,7 +40,7 @@ abstract class NavModel extends Model {
       case KEY_CONTACT_PHONE:
         return callText;
       case KEY_CONTACT_EMAIL:
-        return emailText;
+        return emailAcionText;
       case KEY_CONTACT_WEB:
         return visitSiteText;
       default:

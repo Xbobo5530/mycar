@@ -32,6 +32,9 @@ dependencies:
   flutter_full_pdf_viewer: ^1.0.2
   path_provider: ^0.4.1
   flutter_linkify: ^1.0.3
+  firebase_storage: ^1.0.4
+  uuid: ^1.0.0
+  image_picker: ^0.4.10
 
 flutter_icons:
     android: true

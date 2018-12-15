@@ -37,6 +37,7 @@ const FIELD_MESSAGE = 'message';
 const FIELD_FILE_URL = 'file_url';
 const FIELD_FILE_PATH = 'file_path';
 const FIELD_FILE_TYPE = 'file_type';
+const FIELD_FILE_STATUS = 'file_status';
 const FIELD_CONTACT = 'contact';
 const KEY_CONTACT_EMAIL = 'email';
 const KEY_CONTACT_PHONE = 'phone';
@@ -55,5 +56,18 @@ const FILE_TYPE_AUDIO = 3;
 const FILE_TYPE_DOCUMENT = 4;
 const FILE_TYPE_OTHER = 5;
 
+ /// upload file status
+const FILE_STATUS_NO_FILE = 0;
+const FILE_STATUS_UPLOADING = 1;
+const FILE_STATUS_UPLOAD_SUCCESS = 2;
+const FILE_STATUS_UPLOAD_FAILED = 3;
+
 /// assets
 const ASSETS_APP_ICON = 'assets/mycar_foreground.png';
+
+/// buckets
+const BUCKET_USER_IMAGE = 'user_images';
+const BUCKET_CHAT_IMAGE = 'chat_images';
+const BUCKET_FORUM_IMAGE = 'forum_images';
+const BUCKET_AD_IMAGE = 'ad_images';
+const BUCKET_OTHER = 'other';

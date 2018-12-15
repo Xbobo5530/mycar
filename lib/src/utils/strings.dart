@@ -77,6 +77,19 @@ const sendMessageHint = 'Andika ujumbe wako hapa'; // 'Say something';
 
 /// contact
 const callText = 'Piga simu'; //'Call';
-const emailText = 'Tuma barua pepe'; //'Email';
+const emailAcionText = 'Tuma barua pepe'; //'Email';
 const visitSiteText = 'Tovuti'; //'Visit site';
 
+const phoneText = 'Namba ya simu'; //'Phone number';
+const emailText = 'Barua pepe'; //'Email';
+const webText = 'Tovuti'; //'Phone number';
+const phoneHint = 'Andika namba ya simu'; //'Enter phone number';
+const emailHint = 'Andika barua pepe'; //'Enter emial';
+const webHint = 'Tovuti / Instagram / Facebook / Twitter ...'; //'Phone number';
+
+
+const createAdText = 'Tengeneza tangazo'; //'Create ad';
+const enterDescHintText = 'Maelezo kuhusiana na tangazo'; //'Ad description';
+
+
+const emptyDescMessage = 'Andika maelezo ya tangazo'; //'Enter a description for the ad;

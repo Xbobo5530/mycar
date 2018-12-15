@@ -4,13 +4,23 @@ import 'package:my_car/src/utils/status_code.dart';
 import 'package:my_car/src/utils/strings.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class InputSectionView extends StatelessWidget {
+class InputSectionView extends StatefulWidget {
+  @override
+  InputSectionViewState createState() {
+    return InputSectionViewState();
+  }
+}
+
+class InputSectionViewState extends State<InputSectionView> {
+  final _controller = TextEditingController();
+  @override
+  void dispose() {
+    _controller.dispose();  
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _controller = TextEditingController();
-    // _showErrorMessage() => Scaffold.of(context).showSnackBar(SnackBar(
-    //       content: Text(errorMessage),
-    //     ));
     _buildLoginView(MainModel model) => ListTile(
         onTap: () => model.goToLoginPage(context),
         title: Text(
@@ -25,7 +35,7 @@ class InputSectionView extends StatelessWidget {
       // StatusCode status = await model.sendMessage(message, model.currentUser);
       model.sendMessage(message, model.currentUser);
       // if (status == StatusCode.failed) _showErrorMessage();
-      
+
       _controller.text = '';
       model.updateListViewPosition();
     }

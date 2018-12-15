@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_car/src/models/main_model.dart';
 import 'package:my_car/src/pages/ad_page.dart';
 import 'package:my_car/src/pages/ask.dart';
+import 'package:my_car/src/pages/create_ad_page.dart';
 import 'package:my_car/src/pages/live_chat.dart';
 import 'package:my_car/src/pages/question_search.dart';
 import 'package:my_car/src/pages/tools_page.dart';
@@ -28,23 +29,21 @@ class HomePage extends StatelessWidget {
           });
     }
 
-   
+    _goToAddQuestionPage(MainModel model) => model.isLoggedIn
+        ? Navigator.push(context, MaterialPageRoute(builder: (_) => AskPage()))
+        : model.goToLoginPage(context);
 
-    _goToAddQuestionPage() =>
-        Navigator.push(context, MaterialPageRoute(builder: (_) => AskPage()));
-
-    _goToAddAdPage(){
-
-      //TODO: handle create ad
-    }
-
+    _goToAddAdPage(MainModel model) =>
+        model.isLoggedIn ? Navigator.push(context, MaterialPageRoute(builder: (_)=>CreateAdPage(),fullscreenDialog: true )) : model.goToLoginPage(context);
     _handleAdd(MainModel model, AddMenuItem item) {
       switch (item) {
         case AddMenuItem.question:
-          model.isLoggedIn ? _goToAddQuestionPage() : model.goToLoginPage(context);
+          model.isLoggedIn
+              ? _goToAddQuestionPage(model)
+              : model.goToLoginPage(context);
           break;
         case AddMenuItem.ad:
-          model.isLoggedIn ? _goToAddAdPage() : model.goToLoginPage(context);
+          model.isLoggedIn ? _goToAddAdPage(model) : model.goToLoginPage(context);
           break;
       }
     }
@@ -82,12 +81,7 @@ class HomePage extends StatelessWidget {
     );
 
     final _body = TabBarView(
-      children: <Widget>[
-        LiveChatPage(),
-        ForumPage(),
-        AdPage(),
-        ToolsPage()
-      ],
+      children: <Widget>[LiveChatPage(), ForumPage(), AdPage(), ToolsPage()],
     );
     final _add = ScopedModelDescendant<MainModel>(
       builder: (context, child, model) => PopupMenuButton<AddMenuItem>(
