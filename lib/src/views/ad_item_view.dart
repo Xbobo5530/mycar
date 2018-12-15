@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_car/src/models/ad.dart';
 import 'package:my_car/src/models/main_model.dart';
 import 'package:my_car/src/utils/consts.dart';
+import 'package:my_car/src/utils/status_code.dart';
+import 'package:my_car/src/utils/strings.dart';
 import 'package:my_car/src/views/labeled_flat_button.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -31,10 +33,18 @@ class AdItemView extends StatelessWidget {
             ),
           )
         : Container();
+    _handleTap(MainModel model, String key) async {
+      final status = await model.onTapDecoder(key, ad);
+      if (status == StatusCode.failed)
+        Scaffold.of(context)
+            .showSnackBar(SnackBar(content: Text(errorMessage)));
+    }
+
     _buildContactAction(String key) => ScopedModelDescendant<MainModel>(
         builder: (context, child, model) => LabeledFlatButton(
               label: Text(model.keyDecoder(key)),
               icon: model.iconDecoder(key),
+              onTap: () => _handleTap(model, key),
             ));
     final _actions = ad.contact != null
         ? ButtonBar(
