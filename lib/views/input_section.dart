@@ -8,9 +8,9 @@ class InputSectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _controller = TextEditingController();
-    _showErrorMessage() => Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(errorMessage),
-        ));
+    // _showErrorMessage() => Scaffold.of(context).showSnackBar(SnackBar(
+    //       content: Text(errorMessage),
+    //     ));
     _buildLoginView(MainModel model) => ListTile(
         onTap: () => model.goToLoginPage(context),
         title: Text(
@@ -22,8 +22,9 @@ class InputSectionView extends StatelessWidget {
     _handleSendMessage(MainModel model) async {
       final message = _controller.text.trim();
       if (message.isEmpty) return null;
-      StatusCode status = await model.sendMessage(message, model.currentUser);
-      if (status == StatusCode.failed) _showErrorMessage();
+      // StatusCode status = await model.sendMessage(message, model.currentUser);
+      model.sendMessage(message, model.currentUser);
+      // if (status == StatusCode.failed) _showErrorMessage();
       
       _controller.text = '';
       model.updateListViewPosition();

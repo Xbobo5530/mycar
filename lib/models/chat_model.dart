@@ -58,4 +58,9 @@ abstract class ChatModel extends Model {
     if (_hasError || !document.exists) return null;
     return User.fromSnapshot(document);
   }
+
+  String chatMetaData(Chat chat) {
+    final DateTime time = DateTime.fromMillisecondsSinceEpoch(chat.createdAt);
+    return '${time.hour}:${time.minute}';
+  }
 }

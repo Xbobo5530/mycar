@@ -29,7 +29,10 @@ class ChatHistorySectionView extends StatelessWidget {
                       Chat refinedChat =
                           snapshot.data == null ? chat : snapshot.data;
                       return ChatItemView(
-                          chat: refinedChat, key: Key(refinedChat.id));
+                          isMe: model.isLoggedIn &&
+                              (refinedChat.createdBy == model.currentUser.id),
+                          chat: refinedChat,
+                          key: Key(refinedChat.id));
                     },
                   );
                 },
