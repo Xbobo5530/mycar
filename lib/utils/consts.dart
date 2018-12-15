@@ -15,6 +15,7 @@ const COLLECTION_ANSWERS = 'Answers';
 const COLLECTION_UPVOTES = 'Upvotes';
 const COLLECTION_FOLLOWERS = 'Followers';
 const COLLECTIONS_CHATS = 'Chats';
+const COLLECTION_ADS = 'Ads';
 
 // field values
 const FIELD_ID = 'id';
@@ -25,6 +26,7 @@ const FIELD_ANSWER = 'answer';
 const FIELD_QUESTION = 'question';
 const FIELD_IMAGE = 'image';
 const FIELD_IMAGE_URL = 'image_url';
+const FIELD_IMAGE_PATH = 'image_path';
 const FIELD_QUESTION_ID = 'question_id';
 const FIELD_NAME = 'name';
 const FIELD_BIO = 'bio';
@@ -35,7 +37,11 @@ const FIELD_MESSAGE = 'message';
 const FIELD_FILE_URL = 'file_url';
 const FIELD_FILE_PATH = 'file_path';
 const FIELD_FILE_TYPE = 'file_type';
-
+const FIELD_CONTACT = 'contact';
+const KEY_CONTACT_EMAIL = 'email';
+const KEY_CONTACT_PHONE = 'phone';
+const KEY_CONTACT_WEB = 'web';
+const FIELD_DESCRIPTION = 'description';
 
 //native tools ids
 const NATIVE_TOOL_WARNING_SIGNS = 1;
@@ -48,3 +54,6 @@ const FILE_TYPE_VIDEO = 2;
 const FILE_TYPE_AUDIO = 3;
 const FILE_TYPE_DOCUMENT = 4;
 const FILE_TYPE_OTHER = 5;
+
+/// assets
+const ASSETS_APP_ICON = 'assets/mycar_foreground.png';

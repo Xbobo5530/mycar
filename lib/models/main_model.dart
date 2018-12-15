@@ -1,4 +1,5 @@
 import 'package:my_car/models/account_model.dart';
+import 'package:my_car/models/ad_model.dart';
 import 'package:my_car/models/answer_model.dart';
 import 'package:my_car/models/chat_model.dart';
 import 'package:my_car/models/question_model.dart';
@@ -17,7 +18,8 @@ class MainModel extends Model
         AnswerModel,
         NavModel,
         ToolsModel,
-        ChatModel {
+        ChatModel,
+        AdModel {
   MainModel() {
     print('$_tag at MainModel()');
     updateLoginStatus();

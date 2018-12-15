@@ -23,7 +23,7 @@ class NativeToolPage extends StatelessWidget {
     Widget _buildNativeToolView() {
       switch (tool.id) {
         case NATIVE_TOOL_FORUM:
-          return ForumPageView();
+          return ForumPage();
         case NATIVE_TOOL_WARNING_SIGNS:
           return WarningSignsPageView();
           break;

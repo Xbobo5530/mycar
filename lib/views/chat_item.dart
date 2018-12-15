@@ -3,6 +3,8 @@ import 'package:my_car/models/chat.dart';
 import 'package:my_car/models/main_model.dart';
 import 'package:my_car/utils/consts.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatItemView extends StatelessWidget {
   final Chat chat;
@@ -66,8 +68,18 @@ class ChatItemView extends StatelessWidget {
     final _messageSection = chat.message != null
         ? Padding(
             padding: EdgeInsets.only(right: 48.0),
-            child: Text(chat.message),
-          )
+            child: Linkify(
+              onOpen: (url) async {
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+              text: chat.message,
+              // style: TextStyle(color: Colors.yellow),  
+              linkStyle: TextStyle(color: Colors.red),
+            ))
         : Container();
 
     final _metaSection = Positioned(

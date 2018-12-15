@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/scheduler/ticker.dart';
 import 'package:my_car/models/main_model.dart';
+import 'package:my_car/pages/ad_page.dart';
 import 'package:my_car/pages/ask.dart';
 import 'package:my_car/pages/live_chat.dart';
-import 'package:my_car/pages/login.dart';
 import 'package:my_car/pages/question_search.dart';
 import 'package:my_car/pages/tools_page.dart';
 import 'package:my_car/pages/user_profile.dart';
@@ -85,8 +84,8 @@ class HomePage extends StatelessWidget {
     final _body = TabBarView(
       children: <Widget>[
         LiveChatPage(),
-        ForumPageView(),
-        Icon(Icons.theaters),
+        ForumPage(),
+        AdPage(),
         ToolsPage()
       ],
     );

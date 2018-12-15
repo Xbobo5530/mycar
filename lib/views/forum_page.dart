@@ -5,7 +5,7 @@ import 'package:my_car/pages/view_question.dart';
 import 'package:my_car/views/question_item.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class ForumPageView extends StatelessWidget {
+class ForumPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
