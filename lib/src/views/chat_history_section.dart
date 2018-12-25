@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_car/src/models/chat.dart';
-import 'package:my_car/src/models/main_model.dart';
+import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/views/chat_item.dart';
 import 'package:scoped_model/scoped_model.dart';
 

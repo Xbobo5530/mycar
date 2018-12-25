@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/src/models/ad.dart';
-import 'package:my_car/src/models/main_model.dart';
+import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/utils/consts.dart';
 import 'package:my_car/src/utils/status_code.dart';
 import 'package:my_car/src/utils/strings.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/src/models/answer.dart';
-import 'package:my_car/src/models/main_model.dart';
 import 'package:my_car/src/models/question.dart';
+import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/models/user.dart';
 import 'package:my_car/src/utils/colors.dart';
 import 'package:my_car/src/utils/status_code.dart';

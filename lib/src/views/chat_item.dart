@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/src/models/chat.dart';
-import 'package:my_car/src/models/main_model.dart';
+import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/utils/consts.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';

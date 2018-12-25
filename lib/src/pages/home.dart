@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_car/src/models/main_model.dart';
+import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/pages/ad_page.dart';
 import 'package:my_car/src/pages/ask.dart';
 import 'package:my_car/src/pages/create_ad_page.dart';

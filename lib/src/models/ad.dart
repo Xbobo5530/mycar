@@ -33,4 +33,17 @@ class Ad {
         imagePath = doc[FIELD_IMAGE_PATH],
         imageStatus = doc[FIELD_FILE_STATUS],
         contact = doc[FIELD_CONTACT];
+
+  @override
+  String toString() => '''
+  id: ${this.id}
+  description: ${this.description}
+  imagePth: ${this.imagePath}
+  imageUrl: ${this.imageUrl}
+  iamgeStatus: ${this.imageStatus}
+  contact: ${this.contact}
+  username: ${this.username}
+  userImageUrl: ${this.userImageUrl}
+  
+  ''';
 }

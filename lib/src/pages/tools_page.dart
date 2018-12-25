@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:my_car/src/models/main_model.dart';
+import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/models/tool.dart';
 import 'package:my_car/src/models/tools_data.dart';
 import 'package:my_car/src/pages/native_tool.dart';
