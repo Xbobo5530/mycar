@@ -11,7 +11,7 @@ import 'package:scoped_model/scoped_model.dart';
 class CreateAdPage extends StatefulWidget {
   @override
   CreateAdPageState createState() {
-    return new CreateAdPageState();
+    return CreateAdPageState();
   }
 }
 
@@ -36,23 +36,23 @@ class CreateAdPageState extends State<CreateAdPage> {
     final _appBar = AppBar(
       title: Text(createAdText),
     );
-    final _imageSection =ScopedModelDescendant<MainModel>(builder:(_,__,model)=> Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-      width: _width,
-      height: 200,
-      child: InkWell(
-        onTap: ()=>model.getFile(AddFileItem.image),
-        child: Icon(
-          Icons.add_photo_alternate,
-          size: 100,
-          color: Colors.black12,
-        ),
-      )
-      
-      
-      
-     
-    ));
+
+    final _imageSection = ScopedModelDescendant<MainModel>(
+        builder: (_, __, model) => Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            width: _width,
+            height: 200,
+            child: InkWell(
+              onTap: () => model.getFile(AddFileItem.image),
+              child: model.imageFile != null
+                  ? Image.file(model.imageFile)
+                  : Icon(
+                      Icons.add_photo_alternate,
+                      size: 100,
+                      color: Colors.black12,
+                    ),
+            )));
+
     final _descriptionSection = Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Container(
@@ -66,6 +66,7 @@ class CreateAdPageState extends State<CreateAdPage> {
                 hintText: enterDescHintText, border: InputBorder.none),
           ),
         ));
+
     _buildContactItem(String label, String hint,
             TextEditingController controller, TextInputType inputType) =>
         Container(
@@ -96,6 +97,21 @@ class CreateAdPageState extends State<CreateAdPage> {
       ],
     );
 
+    _setAdDetails(String description, String phone, String email, String web,
+            MainModel model) =>
+        Ad(
+            description: description,
+            contact: {
+              KEY_CONTACT_PHONE: phone.isNotEmpty ? phone : null,
+              KEY_CONTACT_EMAIL: email.isNotEmpty ? email : null,
+              KEY_CONTACT_WEB: web.isNotEmpty ? web : null
+            },
+            imageStatus: model.imageFile != null
+                ? FILE_STATUS_UPLOADING
+                : FILE_STATUS_NO_FILE,
+            createdAt: DateTime.now().millisecondsSinceEpoch,
+            createdBy: model.currentUser.id);
+
     _submitAd(BuildContext context, MainModel model) async {
       final description = _descriptionController.text.trim();
       final phone = _cotactPhoneController.text.trim();
@@ -107,26 +123,17 @@ class CreateAdPageState extends State<CreateAdPage> {
         ));
         return null;
       }
-      final Ad ad = Ad(
-          description: description,
-          contact: {
-            KEY_CONTACT_PHONE: phone.isNotEmpty ? phone : null,
-            KEY_CONTACT_EMAIL: email.isNotEmpty ? email : null,
-            KEY_CONTACT_WEB: web.isNotEmpty ? web : null
+      final Ad ad = _setAdDetails(description, phone, email, web, model);
 
-          },
-          imageStatus: model.imageFile != null ? FILE_STATUS_UPLOADING : FILE_STATUS_NO_FILE,
-          createdAt: DateTime.now().millisecondsSinceEpoch,
-          createdBy: model.currentUser.id);
-
-      final status = await model.submitAd(ad);
-      if (status == StatusCode.failed) {
+      final Map<String, dynamic> submitResult = await model.submitAd(ad);
+      if (submitResult[STATUS_CODE] == StatusCode.failed) {
         Scaffold.of(context).showSnackBar(SnackBar(
           content: Text(errorMessage),
         ));
         return null;
       }
       if (model.imageFile != null) {
+        ad.id = submitResult[FIELD_ID];
         model.uploadFile(FileUploadFor.ad, ad);
       }
       Navigator.pop(context);

@@ -3,4 +3,4 @@ enum AddMenuItem { question, ad }
 enum ToolType {native, nativeUrl, pdfUrl, remoteUrl }
 enum AddFileItem {image, camera, voice, video }
 enum FileUploadFor {chat, forum, user, ad}
-enum FileType{adImage, chatImage, forumImage, userImages}
+enum FileType{adImage, chatIm age, forumImage, userImages}

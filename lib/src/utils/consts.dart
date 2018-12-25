@@ -56,7 +56,7 @@ const FILE_TYPE_AUDIO = 3;
 const FILE_TYPE_DOCUMENT = 4;
 const FILE_TYPE_OTHER = 5;
 
- /// upload file status
+/// upload file status
 const FILE_STATUS_NO_FILE = 0;
 const FILE_STATUS_UPLOADING = 1;
 const FILE_STATUS_UPLOAD_SUCCESS = 2;
@@ -71,3 +71,5 @@ const BUCKET_CHAT_IMAGE = 'chat_images';
 const BUCKET_FORUM_IMAGE = 'forum_images';
 const BUCKET_AD_IMAGE = 'ad_images';
 const BUCKET_OTHER = 'other';
+
+const STATUS_CODE = 'staus_code';

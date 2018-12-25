@@ -16,16 +16,31 @@ abstract class AdModel extends Model {
   Stream<QuerySnapshot> adStream() =>
       _database.collection(COLLECTION_ADS).snapshots();
 
-  Future<StatusCode> submitAd(Ad ad) async {
+  /// submits an Ad to the database
+  /// takes an [Ad] object [ad]
+  /// returns a [Map<String, dynamic>] 
+  /// the [Map] returned contains the [STATUS_CODE] of type [StatusCode] 
+  /// and a [FIELD_ID] which is the id of the ad tha was added to the nelwy created ad 
+  /// the [FIELD_ID] is null when the [STATUS_CODE] has is [StatusCode.failed]
+  Future<Map<String, dynamic>> submitAd(Ad ad) async {
     bool _hasError = false;
     Map<String, dynamic> adMap = {
       FIELD_DESCRIPTION: ad.description,
-      FIELD_CREATED_BY : ad.createdBy,
-      FIELD_CREATED_AT : ad.createdAt,
-      FIELD_CONTACT : ad.contact,
-      FIELD_FILE_STATUS : ad.imageStatus
-      
+      FIELD_CREATED_BY: ad.createdBy,
+      FIELD_CREATED_AT: ad.createdAt,
+      FIELD_CONTACT: ad.contact,
+      FIELD_FILE_STATUS: ad.imageStatus
     };
+
+    DocumentReference ref = await _database
+        .collection(COLLECTION_ADS)
+        .add(adMap)
+        .catchError((errpr) {
+      print('$_tag error on creating ad map');
+      _hasError = true;
+    });
+    if (_hasError) return {STATUS_CODE: StatusCode.failed};
+    return {STATUS_CODE: StatusCode.success, FIELD_ID: ref.documentID};
   }
 
   Future<User> _userFromId(String id) async {
