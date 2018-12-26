@@ -53,11 +53,14 @@ class AdItemView extends StatelessWidget {
     }
 
     _buildContactAction(String key) => ScopedModelDescendant<MainModel>(
-        builder: (context, child, model) => LabeledFlatButton(
+        builder: (context, child, model) => 
+        ad.contact[key] != null 
+?        LabeledFlatButton(
               label: Text(model.keyDecoder(key)),
               icon: model.iconDecoder(key),
               onTap: () => _handleTap(model, key),
-            ));
+            ): 
+            Container());
     final _actions = ad.contact != null
         ? ButtonBar(
           alignment: MainAxisAlignment.center,
