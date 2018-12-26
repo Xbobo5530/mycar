@@ -13,16 +13,24 @@ class AdItemView extends StatelessWidget {
   const AdItemView({Key key, this.ad}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final _userDetails = Row(
+    final _userDetails = 
+    ad.username != null 
+    ?
+    Row(
       children: <Widget>[
         CircleAvatar(
           backgroundColor: Colors.blue,
           backgroundImage: ad.userImageUrl != null
               ? NetworkImage(ad.userImageUrl)
               : AssetImage(ASSETS_APP_ICON),
+        ), Expanded(
+                  child: ListTile(title: Text(
+            ad.username
+          ),),
         )
       ],
-    );
+    )
+    : Container();
     final _imageSection =
         ad.imageUrl != null ? Image.network(ad.imageUrl) : Container();
     final _description = ad.description != null
@@ -48,6 +56,7 @@ class AdItemView extends StatelessWidget {
             ));
     final _actions = ad.contact != null
         ? ButtonBar(
+          alignment: MainAxisAlignment.center,
             children: ad.contact.keys
                 .map((contactKey) => _buildContactAction(contactKey))
                 .toList(),

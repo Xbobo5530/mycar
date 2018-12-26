@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/src/models/scope_models/main_model.dart';
+import 'package:my_car/src/pages/preview_file_page.dart';
 import 'package:my_car/src/utils/status_code.dart';
 import 'package:my_car/src/utils/strings.dart';
 import 'package:scoped_model/scoped_model.dart';
+
+const _tag = 'InputSectionView:';
 
 class InputSectionView extends StatefulWidget {
   @override
@@ -15,7 +18,7 @@ class InputSectionViewState extends State<InputSectionView> {
   final _controller = TextEditingController();
   @override
   void dispose() {
-    _controller.dispose();  
+    _controller.dispose();
     super.dispose();
   }
 
@@ -40,8 +43,22 @@ class InputSectionViewState extends State<InputSectionView> {
       model.updateListViewPosition();
     }
 
-    _handleAdd(MainModel model, AddFileItem item) {
-      //TODO: handle adding a file
+    _showErrorMessage() => Scaffold.of(context).showSnackBar(SnackBar(content: Text(errorMessage),));
+    _goToPreviewPage(AddFileItem item)=> Navigator.push(context, MaterialPageRoute(
+      builder: (context)=> PreviewFilePage(contentType: item),fullscreenDialog: true
+    ), );
+    _handleAdd(MainModel model, AddFileItem item) async {
+      StatusCode status = await model.getFile(item);
+      switch (status) {
+        case StatusCode.failed:
+          _showErrorMessage();
+          break;
+        case StatusCode.success:
+          _goToPreviewPage(item);
+          break;
+        default:
+          print('$_tag the status code is $status');
+      }
     }
 
     _buildSendButton(MainModel model) => IconButton(

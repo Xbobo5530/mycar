@@ -10,7 +10,7 @@ class Ad {
       imagePath,
       username,
       userImageUrl;
-  Map<String, String> contact;
+  Map<dynamic, dynamic> contact;
   int createdAt, imageStatus;
 
   Ad(

@@ -12,15 +12,16 @@ abstract class AdModel extends Model {
   StatusCode _submittingAdStatus;
   StatusCode get submittingAdStatus => _submittingAdStatus;
   Ad _latestAd;
+  Map<String, User> _cachedUsers = Map();
   Ad get latestAd => _latestAd;
   Stream<QuerySnapshot> adStream() =>
       _database.collection(COLLECTION_ADS).snapshots();
 
   /// submits an Ad to the database
   /// takes an [Ad] object [ad]
-  /// returns a [Map<String, dynamic>] 
-  /// the [Map] returned contains the [STATUS_CODE] of type [StatusCode] 
-  /// and a [FIELD_ID] which is the id of the ad tha was added to the nelwy created ad 
+  /// returns a [Map<String, dynamic>]
+  /// the [Map] returned contains the [STATUS_CODE] of type [StatusCode]
+  /// and a [FIELD_ID] which is the id of the ad tha was added to the nelwy created ad
   /// the [FIELD_ID] is null when the [STATUS_CODE] has is [StatusCode.failed]
   Future<Map<String, dynamic>> submitAd(Ad ad) async {
     bool _hasError = false;
@@ -44,6 +45,7 @@ abstract class AdModel extends Model {
   }
 
   Future<User> _userFromId(String id) async {
+    if (_cachedUsers.containsKey(id)) return _cachedUsers[id];
     bool _hasError = false;
     DocumentSnapshot doc = await _database
         .collection(COLLECTION_USERS)
@@ -54,7 +56,9 @@ abstract class AdModel extends Model {
       _hasError = true;
     });
     if (_hasError || !doc.exists) return null;
-    return User.fromSnapshot(doc);
+    final User user = User.fromSnapshot(doc);
+    _cachedUsers.putIfAbsent(id, () => user);
+    return user;
   }
 
   Future<Ad> refineAd(Ad ad) async {
