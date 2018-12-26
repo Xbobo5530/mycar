@@ -15,7 +15,7 @@ abstract class AdModel extends Model {
   Map<String, User> _cachedUsers = Map();
   Ad get latestAd => _latestAd;
   Stream<QuerySnapshot> adStream() =>
-      _database.collection(COLLECTION_ADS).snapshots();
+      _database.collection(COLLECTION_ADS).orderBy(FIELD_CREATED_AT, descending: true).snapshots();
 
   /// submits an Ad to the database
   /// takes an [Ad] object [ad]
@@ -24,6 +24,7 @@ abstract class AdModel extends Model {
   /// and a [FIELD_ID] which is the id of the ad tha was added to the nelwy created ad
   /// the [FIELD_ID] is null when the [STATUS_CODE] has is [StatusCode.failed]
   Future<Map<String, dynamic>> submitAd(Ad ad) async {
+    _submittingAdStatus = StatusCode.waiting;
     bool _hasError = false;
     Map<String, dynamic> adMap = {
       FIELD_DESCRIPTION: ad.description,
@@ -39,9 +40,12 @@ abstract class AdModel extends Model {
         .catchError((errpr) {
       print('$_tag error on creating ad map');
       _hasError = true;
+      _submittingAdStatus = StatusCode.failed;
+      notifyListeners();
     });
-    if (_hasError) return {STATUS_CODE: StatusCode.failed};
-    return {STATUS_CODE: StatusCode.success, FIELD_ID: ref.documentID};
+    if (_hasError) return {STATUS_CODE: _submittingAdStatus};
+    _submittingAdStatus = StatusCode.success;
+    return {STATUS_CODE: _submittingAdStatus, FIELD_ID: ref.documentID};
   }
 
   Future<User> _userFromId(String id) async {

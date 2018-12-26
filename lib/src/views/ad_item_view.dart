@@ -18,14 +18,18 @@ class AdItemView extends StatelessWidget {
     ?
     Row(
       children: <Widget>[
-        CircleAvatar(
-          backgroundColor: Colors.blue,
-          backgroundImage: ad.userImageUrl != null
-              ? NetworkImage(ad.userImageUrl)
-              : AssetImage(ASSETS_APP_ICON),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            radius: 12,
+            backgroundColor: Colors.blue,
+            backgroundImage: ad.userImageUrl != null
+                ? NetworkImage(ad.userImageUrl)
+                : AssetImage(ASSETS_APP_ICON),
+          ),
         ), Expanded(
                   child: ListTile(title: Text(
-            ad.username
+            ad.username, style: TextStyle(color: Colors.black54),
           ),),
         )
       ],
