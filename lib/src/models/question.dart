@@ -7,7 +7,7 @@ class Question {
   int createdAt;
 
   Question(
-      {@required this.id,
+      {this.id,
       @required this.question,
       this.userId,
       this.createdBy,

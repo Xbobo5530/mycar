@@ -51,12 +51,32 @@ class QuestionActionsView extends StatelessWidget {
                 : () => _goToLoginPage());
       },
     );
-    return ButtonBar(
-      alignment: MainAxisAlignment.center,
+
+    final _deleteButton = ScopedModelDescendant<MainModel>(
+      builder: (context, child, model) =>
+          model.isLoggedIn && question.createdBy == model.currentUser.id
+              ? ButtonBar(
+                alignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  LabeledFlatButton(
+                    icon: Icon(Icons.delete, size: 18.0, color: Colors.grey),
+                    label: Text(deleteText),
+                    onTap: () => model.deleteQuestion(question),
+                  ),
+                ])
+              : Container(),
+    );
+    return Column(
       children: <Widget>[
-        _shareButton,
-        FollowButtonView(question: question, key: Key(question.id)),
-        _answerButton,
+        ButtonBar(
+          alignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _shareButton,
+            FollowButtonView(question: question, key: Key(question.id)),
+            _answerButton,
+          ],
+        ),
+        _deleteButton,
       ],
     );
   }

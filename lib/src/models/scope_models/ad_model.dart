@@ -50,7 +50,8 @@ abstract class AdModel extends Model {
     });
     if (_hasError) return {STATUS_CODE: _submittingAdStatus};
     _submittingAdStatus = StatusCode.success;
-    _createUserAdRef(ad,ref);
+    ad.id = ref.documentID;
+    _createUserAdRef(ad);
     return {STATUS_CODE: _submittingAdStatus, FIELD_ID: ref.documentID};
   }
 
@@ -71,19 +72,18 @@ abstract class AdModel extends Model {
     return user;
   }
 
-  Future<void> _createUserAdRef(Ad ad, DocumentReference ref) async {
+  Future<void> _createUserAdRef(Ad ad) async {
     // bool _hasError = false;
     Map<String, dynamic> adRefMap = {
-      FIELD_ID: ref.documentID,
+      FIELD_ID: ad.id,
       FIELD_CREATED_AT: ad.createdAt,
       FIELD_CREATED_BY: ad.createdBy,
-
     };
     await _database
         .collection(COLLECTION_USERS)
         .document(ad.createdBy)
         .collection(COLLECTION_ADS)
-        .document(ref.documentID)
+        .document(ad.id)
         .setData(adRefMap)
         .catchError((error) {
       print('$_tag error on creating a user red');

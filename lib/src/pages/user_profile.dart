@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/models/user.dart';
+import 'package:my_car/src/pages/user_question_page.dart';
 import 'package:my_car/src/utils/consts.dart';
 import 'package:my_car/src/utils/status_code.dart';
 import 'package:my_car/src/utils/strings.dart';
@@ -77,26 +78,42 @@ class UserProfilePage extends StatelessWidget {
     _buildAppInfoSection() {
       return FutureBuilder<PackageInfo>(
         future: PackageInfo.fromPlatform(),
-        builder: (context, snapshot) => 
-        !snapshot.hasData 
-        ? Center(child:CircularProgressIndicator()):
-        ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage(ASSETS_APP_ICON),
-                backgroundColor: Colors.blue,
+        builder: (context, snapshot) => !snapshot.hasData
+            ? Center(child: CircularProgressIndicator())
+            : ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage(ASSETS_APP_ICON),
+                  backgroundColor: Colors.blue,
+                ),
+                title:
+                    Text('${snapshot.data.appName} v${snapshot.data.version}'),
+                subtitle: Text(devByText),
+                trailing: Icon(Icons.email),
+                onTap: () => _sendEmail(),
               ),
-              title: Text('${snapshot.data.appName} v${snapshot.data.version}'),
-              subtitle: Text(devByText),
-              trailing: Icon(Icons.email),
-              onTap: () => _sendEmail(),
-            ),
       );
     }
+
+    _buildQuestionSection() => ScopedModelDescendant<MainModel>(
+        builder: (context, child, model) => ListTile(
+              title: Text(questionsText),
+              subtitle: Text(
+                  model.isLoggedIn && (model.currentUser.id == user.id)
+                      ? myQuestionsText
+                      : userQuestionText),
+              onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => UserQuestinsPage(user: user),
+                        fullscreenDialog: true),
+                  ),
+            ));
 
     return Scaffold(
       body: ListView(
         children: <Widget>[
           _basicInfoSection,
+          _buildQuestionSection(),
           Divider(),
           _logoutSection,
           _buildAppInfoSection(),

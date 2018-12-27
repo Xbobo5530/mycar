@@ -62,7 +62,6 @@ class _FollowButtonViewState extends State<FollowButtonView> {
           builder: (context, snapshot) {
             var isFollowing = snapshot.data;
             _getIsFollowing(model);
-//            print('$_tag isFollowing is : $isFollowing');
             return Builder(
               builder: (context) {
                 return LabeledFlatButton(

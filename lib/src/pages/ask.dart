@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_car/src/models/question.dart';
 import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/utils/colors.dart';
 import 'package:my_car/src/utils/status_code.dart';
@@ -31,11 +32,15 @@ class AskPageState extends State<AskPage> {
     );
 
     _submitQuestion(BuildContext context, MainModel model) async {
-      //todo receive the error message then status code is 'failed'
-      final question = _mController.text.trim();
-      if (question.isNotEmpty) {
+      final questionText = _mController.text.trim();
+      if (questionText.isNotEmpty) {
+        final Question question = Question(
+          question: questionText,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          createdBy: model.currentUser.id
+        );
         StatusCode statusCode =
-            await model.submitQuestion(question, model.currentUser.id);
+            await model.submitQuestion(question);
 
         switch (statusCode) {
           case StatusCode.success:

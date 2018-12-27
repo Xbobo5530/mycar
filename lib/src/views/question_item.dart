@@ -2,24 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/models/question.dart';
 import 'package:my_car/src/models/user.dart';
-import 'package:my_car/src/pages/answer_question.dart';
-import 'package:my_car/src/pages/login.dart';
 import 'package:my_car/src/pages/user_profile.dart';
-import 'package:my_car/src/utils/strings.dart';
 import 'package:my_car/src/views/answers_count.dart';
-import 'package:my_car/src/views/follow_button.dart';
-import 'package:my_car/src/views/labeled_flat_button.dart';
 import 'package:my_car/src/views/my_progress_indicator.dart';
 import 'package:my_car/src/views/question_actions.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:share/share.dart';
 
 class QuestionItemView extends StatelessWidget {
   final Question question;
-  final String source;
   final GestureTapCallback onTap;
 
-  QuestionItemView({Key key, @required this.question, this.source, this.onTap})
+  QuestionItemView({Key key, @required this.question,  this.onTap})
       : super(key: key);
 
   @override

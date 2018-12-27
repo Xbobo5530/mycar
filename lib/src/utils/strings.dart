@@ -25,9 +25,14 @@ const profileText = 'profile';
 const upvoteText = 'Unga mkono'; // 'Upvote';
 const upvotedText = 'Umeunga mkono'; // 'Upvoted';
 const answerText = 'Toa jibu'; // 'Answer';
+const deleteText = 'Futa'; // 'Delete';
 
 //view question page
 const questionText = 'Swali'; // 'Question';
+const questionsText = 'Maswali'; // 'Question';
+const myQuestionsText = 'Maswali nilio uliza'; // 'Question';
+const userQuestionText = 'Maswali alio uliza'; // 'Question';
+const noQuestionsText = 'Hakuna maswali yalio ulizwa'; // 'There are no questions';
 
 //answer page
 const answerHint = 'Andika jawabu lako hapa'; // 'Write your answer here';

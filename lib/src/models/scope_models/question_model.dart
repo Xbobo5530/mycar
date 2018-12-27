@@ -12,19 +12,16 @@ abstract class QuestionModel extends Model {
   final Firestore _database = Firestore.instance;
   List<Question> _questions;
   List<Question> get questions => _questions;
-
   StatusCode _submittingQuestionStatus;
   StatusCode get submittingQuestionStatus => _submittingQuestionStatus;
-
+  StatusCode _deletingQuestonStatus;
+  StatusCode get deletingQurstonStatus => _deletingQuestonStatus;
   StatusCode _handlingFollowQuestionStatus;
   StatusCode get handlingFollowQuestionStatus => _handlingFollowQuestionStatus;
-
-  Stream<QuerySnapshot> questionsStream() {
-    return _database
-        .collection(COLLECTION_QUESTIONS)
-        .orderBy(FIELD_CREATED_AT, descending: true)
-        .snapshots();
-  }
+  Stream<QuerySnapshot> questionsStream() => _database
+      .collection(COLLECTION_QUESTIONS)
+      .orderBy(FIELD_CREATED_AT, descending: true)
+      .snapshots();
 
   Future<List<Question>> getQuestions() async {
     QuerySnapshot snapshot =
@@ -40,22 +37,23 @@ abstract class QuestionModel extends Model {
     return questions;
   }
 
-  Future<StatusCode> submitQuestion(
-      String question, String currentUserId) async {
+  Stream<QuerySnapshot> userQuestionsStream(User user) => _database
+      .collection(COLLECTION_USERS)
+      .document(user.id)
+      .collection(COLLECTION_QUESTIONS)
+      .snapshots();
+
+  Future<StatusCode> submitQuestion(Question question) async {
     print('$_tag at submitQuestion');
     _submittingQuestionStatus = StatusCode.waiting;
     notifyListeners();
-    var _hasError = false;
-
-    /// create question map
+    bool _hasError = false;
     Map<String, dynamic> questionMap = {
-      FIELD_CREATED_BY: currentUserId,
-      FIELD_QUESTION: question,
-      FIELD_CREATED_AT: DateTime.now().millisecondsSinceEpoch
+      FIELD_CREATED_BY: question.createdBy,
+      FIELD_QUESTION: question.question,
+      FIELD_CREATED_AT: question.createdAt
     };
-
-    /// add question to database
-    await _database
+    DocumentReference ref = await _database
         .collection(COLLECTION_QUESTIONS)
         .add(questionMap)
         .catchError((error) {
@@ -63,8 +61,14 @@ abstract class QuestionModel extends Model {
       _hasError = true;
     });
 
-    if (_hasError) return StatusCode.failed;
-    return StatusCode.success;
+    if (_hasError) {
+      _submittingQuestionStatus = StatusCode.failed;
+      return _submittingQuestionStatus;
+    }
+    question.id = ref.documentID;
+    _submittingQuestionStatus = await _createUserRef(question);
+
+    return _submittingQuestionStatus;
   }
 
   Future<bool> isUserFollowing(Question question, User user) async {
@@ -79,9 +83,28 @@ abstract class QuestionModel extends Model {
       _hasError = true;
     });
     if (_hasError || !document.exists) return false;
-//    print('$_tag ${user.name} is following ${question.question}');
-
     return true;
+  }
+
+  Future<StatusCode> _createUserRef(Question question) async {
+    bool _hasError = false;
+    Map<String, dynamic> userRefMap = {
+      FIELD_ID: question.id,
+      FIELD_CREATED_AT: question.createdAt,
+      FIELD_CREATED_BY: question.createdBy
+    };
+    await _database
+        .collection(COLLECTION_USERS)
+        .document(question.createdBy)
+        .collection(COLLECTION_QUESTIONS)
+        .document(question.id)
+        .setData(userRefMap)
+        .catchError((error) {
+      print('$_tag error on creating user ref');
+      _hasError = true;
+    });
+    if (_hasError) return StatusCode.failed;
+    return StatusCode.success;
   }
 
   DocumentReference _getFollowingDocumentRef(Question question, String userId) {
@@ -164,5 +187,39 @@ abstract class QuestionModel extends Model {
     question.username = user.name;
     if (user.imageUrl != null) question.userImageUrl = user.imageUrl;
     return question;
+  }
+
+  Future<StatusCode> deleteQuestion(Question question) async {
+    _deletingQuestonStatus = StatusCode.waiting;
+    notifyListeners();
+    bool _hasError = false;
+    await _database
+        .collection(COLLECTION_QUESTIONS)
+        .document(question.id)
+        .delete()
+        .catchError((error) {
+      print('$_tag error on deleting question');
+      _hasError = true;
+      _deletingQuestonStatus = StatusCode.failed;
+      notifyListeners();
+    });
+    if (_hasError) return _deletingQuestonStatus;
+    return await _deleteUserRef(question);
+  }
+
+  Future<StatusCode> _deleteUserRef(Question question) async {
+    bool _hasError = false;
+    await _database
+        .collection(COLLECTION_USERS)
+        .document(question.createdBy)
+        .collection(COLLECTION_QUESTIONS)
+        .document(question.id)
+        .delete()
+        .catchError((error) {
+      print('$_tag error on deleting user referernce for question');
+      _hasError = true;
+    });
+    if (_hasError) return StatusCode.failed;
+    return StatusCode.success;
   }
 }
