@@ -33,8 +33,12 @@ class HomePage extends StatelessWidget {
         ? Navigator.push(context, MaterialPageRoute(builder: (_) => AskPage()))
         : model.goToLoginPage(context);
 
-    _goToAddAdPage(MainModel model) =>
-        model.isLoggedIn ? Navigator.push(context, MaterialPageRoute(builder: (_)=>CreateAdPage(),fullscreenDialog: true )) : model.goToLoginPage(context);
+    _goToAddAdPage(MainModel model) => model.isLoggedIn
+        ? Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => CreateAdPage(), fullscreenDialog: true))
+        : model.goToLoginPage(context);
     _handleAdd(MainModel model, AddMenuItem item) {
       switch (item) {
         case AddMenuItem.question:
@@ -43,7 +47,9 @@ class HomePage extends StatelessWidget {
               : model.goToLoginPage(context);
           break;
         case AddMenuItem.ad:
-          model.isLoggedIn ? _goToAddAdPage(model) : model.goToLoginPage(context);
+          model.isLoggedIn
+              ? _goToAddAdPage(model)
+              : model.goToLoginPage(context);
           break;
       }
     }
@@ -103,7 +109,8 @@ class HomePage extends StatelessWidget {
         builder: (context, child, model) => IconButton(
               icon: Icon(Icons.search),
               onPressed: () => showSearch(
-                  delegate: QuestionsSearch(questionsList: model.questions),
+                  delegate: QuestionsSearch(
+                      questionsList: model.questions, adsList: model.ads),
                   context: context),
             ));
     final _actions = <Widget>[_search, _add];

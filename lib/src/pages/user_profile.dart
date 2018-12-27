@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/models/user.dart';
+import 'package:my_car/src/utils/consts.dart';
 import 'package:my_car/src/utils/status_code.dart';
 import 'package:my_car/src/utils/strings.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info/package_info.dart';
 
 const _tag = 'UserProfilePage:';
 
 class UserProfilePage extends StatelessWidget {
   final User user;
 
-  UserProfilePage({this.user});
+  const UserProfilePage({Key key, @required this.user})
+      : assert(user != null),
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
     _logout(MainModel model) async {
@@ -69,13 +74,24 @@ class UserProfilePage extends StatelessWidget {
       },
     );
 
-    final _appInfoSection = ListTile(
-      leading: Icon(Icons.info),
-      title: Text(APP_NAME),
-      subtitle: Text(devByText),
-      trailing: Icon(Icons.email),
-      onTap: () => _sendEmail(),
-    );
+    _buildAppInfoSection() {
+      return FutureBuilder<PackageInfo>(
+        future: PackageInfo.fromPlatform(),
+        builder: (context, snapshot) => 
+        !snapshot.hasData 
+        ? Center(child:CircularProgressIndicator()):
+        ListTile(
+              leading: CircleAvatar(
+                backgroundImage: AssetImage(ASSETS_APP_ICON),
+                backgroundColor: Colors.blue,
+              ),
+              title: Text('${snapshot.data.appName} v${snapshot.data.version}'),
+              subtitle: Text(devByText),
+              trailing: Icon(Icons.email),
+              onTap: () => _sendEmail(),
+            ),
+      );
+    }
 
     return Scaffold(
       body: ListView(
@@ -83,7 +99,7 @@ class UserProfilePage extends StatelessWidget {
           _basicInfoSection,
           Divider(),
           _logoutSection,
-          _appInfoSection,
+          _buildAppInfoSection(),
         ],
       ),
     );

@@ -20,15 +20,28 @@ class ForumPage extends StatelessWidget {
                   itemBuilder: (_, index) {
                     final document = snapshot.data.documents[index];
                     final question = Question.fromSnapshot(document);
-                    return QuestionItemView(
-                      key: Key(question.id),
-                      question: question,
-                      onTap: () => Navigator.push(
+                    return FutureBuilder<Question>(
+                      initialData: question,
+                      future: model.refineQuestion(question),
+                      builder: (context, snapshot)=>QuestionItemView(
+                        key: Key(question.id),
+                        question: snapshot.data,
+                        onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) =>
-                                  ViewQuestionPage(question: question))),
+                                  ViewQuestionPage(question: snapshot.data)))
+                      ),
                     );
+                    // return QuestionItemView(
+                    //   key: Key(question.id),
+                    //   question: question,
+                    //   onTap: () => Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //           builder: (_) =>
+                    //               ViewQuestionPage(question: question))),
+                    // );
                   });
             });
       },

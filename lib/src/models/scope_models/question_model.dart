@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_car/src/models/question.dart';
 import 'package:my_car/src/models/user.dart';
+import 'package:my_car/src/utils/cached_users.dart';
 import 'package:my_car/src/utils/consts.dart';
 import 'package:my_car/src/utils/status_code.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -9,8 +10,8 @@ const _tag = 'QuestionModel:';
 
 abstract class QuestionModel extends Model {
   final Firestore _database = Firestore.instance;
-   List<Question> _questions;
-    List<Question>  get questions => _questions;
+  List<Question> _questions;
+  List<Question> get questions => _questions;
 
   StatusCode _submittingQuestionStatus;
   StatusCode get submittingQuestionStatus => _submittingQuestionStatus;
@@ -139,5 +140,29 @@ abstract class QuestionModel extends Model {
     _handlingFollowQuestionStatus = StatusCode.success;
     notifyListeners();
     return _handlingFollowQuestionStatus;
+  }
+
+  Future<User> _userFromId(String id) async {
+    if (cachedUsers.containsKey(id)) return cachedUsers[id];
+    bool _hasError = false;
+    DocumentSnapshot document = await _database
+        .collection(COLLECTION_USERS)
+        .document(id)
+        .get()
+        .catchError((error) {
+      print('$_tag error on getting user');
+      _hasError = true;
+    });
+    if (_hasError || !document.exists) return null;
+    User user = User.fromSnapshot(document);
+    cachedUsers.putIfAbsent(id, () => user);
+    return user;
+  }
+
+  Future<Question> refineQuestion(Question question) async {
+    final user = await _userFromId(question.createdBy);
+    question.username = user.name;
+    if (user.imageUrl != null) question.userImageUrl = user.imageUrl;
+    return question;
   }
 }
