@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                     model.currentUser.imageUrl != null
                 ? CircleAvatar(
                     radius: 12.0,
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.white70,
                     backgroundImage: NetworkImage(model.currentUser.imageUrl))
                 : Icon(
                     Icons.account_circle,

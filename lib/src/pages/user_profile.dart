@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_car/src/models/ad.dart';
 import 'package:my_car/src/models/scope_models/main_model.dart';
 import 'package:my_car/src/models/user.dart';
+import 'package:my_car/src/pages/user_ads_page.dart';
 import 'package:my_car/src/pages/user_question_page.dart';
 import 'package:my_car/src/utils/consts.dart';
 import 'package:my_car/src/utils/status_code.dart';
@@ -109,11 +111,27 @@ class UserProfilePage extends StatelessWidget {
                   ),
             ));
 
+    _buildAdsSection() => ScopedModelDescendant<MainModel>(
+      builder: (context, child, model)=>
+      FutureBuilder<List<Ad>>(
+        initialData: [],
+        future: model.getUserAds(user),
+        builder: (context, snapshot)=> snapshot.data.length > 0 
+        ? ListTile(title: Text(adsText),onTap: ()=> Navigator.push(context, MaterialPageRoute(
+          builder: (context)=>UserAdsPage(adsList: snapshot.data)
+        )),): Container(),
+      )
+      ,
+
+      
+    );
+
     return Scaffold(
       body: ListView(
         children: <Widget>[
           _basicInfoSection,
           _buildQuestionSection(),
+          _buildAdsSection(),
           Divider(),
           _logoutSection,
           _buildAppInfoSection(),

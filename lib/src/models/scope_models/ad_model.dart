@@ -12,6 +12,8 @@ abstract class AdModel extends Model {
   Firestore _database = Firestore.instance;
   StatusCode _submittingAdStatus;
   StatusCode get submittingAdStatus => _submittingAdStatus;
+  StatusCode _deletingAdStatus;
+  StatusCode get deletingAdStatus => _deletingAdStatus;
   Ad _latestAd;
   List<Ad> _ads = [];
   List<Ad> get ads => _ads;
@@ -113,5 +115,61 @@ abstract class AdModel extends Model {
       tempList.add(Ad.fromSnapshot(document));
     });
     _ads = tempList;
+  }
+
+  Future<StatusCode> deleteAd(Ad ad) async {
+    _deletingAdStatus = StatusCode.waiting;
+    notifyListeners();
+    bool _hasError = false;
+    await _database
+        .collection(COLLECTION_ADS)
+        .document(ad.id)
+        .delete()
+        .catchError((error) {
+      print('$_tag error on deleting ad: $error');
+      _hasError = true;
+      _deletingAdStatus = StatusCode.failed;
+      notifyListeners();
+    });
+    if (_hasError) return _deletingAdStatus;
+    _deletingAdStatus = await _deleteAdUserRef(ad);
+    notifyListeners();
+    return _deletingAdStatus;
+  }
+
+  Future<StatusCode> _deleteAdUserRef(Ad ad) async {
+    bool _hasError = false;
+    await _database
+        .collection(COLLECTION_USERS)
+        .document(ad.createdBy)
+        .collection(COLLECTION_ADS)
+        .document(ad.id)
+        .delete()
+        .catchError((error) {
+      print('$_tag error on deleting user ref for ad: $error');
+      _hasError = true;
+    });
+    if (_hasError) return StatusCode.failed;
+    return StatusCode.success;
+  }
+
+  Future<List<Ad>> getUserAds(User user) async {
+    bool _hasError = false;
+    QuerySnapshot snapshot = await _database
+        .collection(COLLECTION_USERS)
+        .document(user.id)
+        .collection(COLLECTION_ADS)
+        .getDocuments()
+        .catchError((error) {
+      print('$_tag error on getting user ads $error');
+      _hasError = false;
+    });
+    if (_hasError) return [];
+    List<Ad> tempList = [];
+    snapshot.documents.forEach((document) {
+      final ad = Ad.fromSnapshot(document);
+      tempList.add(ad);
+    });
+    return tempList;
   }
 }
