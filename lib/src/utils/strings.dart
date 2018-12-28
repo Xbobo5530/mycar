@@ -32,7 +32,10 @@ const questionText = 'Swali'; // 'Question';
 const questionsText = 'Maswali'; // 'Question';
 const myQuestionsText = 'Maswali nilio uliza'; // 'Question';
 const userQuestionText = 'Maswali alio uliza'; // 'Question';
-const noQuestionsText = 'Hakuna maswali yalio ulizwa'; // 'There are no questions';
+const noQuestionsText =
+    'Hakuna maswali yalio ulizwa'; // 'There are no questions';
+
+const noAdsText = 'Hakuna matangazo yalio rejeshwa'; // 'No ads submited';
 
 //answer page
 const answerHint = 'Andika jawabu lako hapa'; // 'Write your answer here';
@@ -92,9 +95,8 @@ const phoneHint = 'Andika namba ya simu'; //'Enter phone number';
 const emailHint = 'Andika barua pepe'; //'Enter emial';
 const webHint = 'Tovuti / Instagram / Facebook / Twitter ...'; //'Phone number';
 
-
 const createAdText = 'Tengeneza tangazo'; //'Create ad';
 const enterDescHintText = 'Maelezo kuhusiana na tangazo'; //'Ad description';
 
-
-const emptyDescMessage = 'Andika maelezo ya tangazo'; //'Enter a description for the ad;
+const emptyDescMessage =
+    'Andika maelezo ya tangazo'; //'Enter a description for the ad;

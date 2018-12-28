@@ -24,6 +24,12 @@ abstract class AdModel extends Model {
       .orderBy(FIELD_CREATED_AT, descending: true)
       .snapshots();
 
+  Stream<QuerySnapshot> userAdStream(User user) => _database
+      .collection(COLLECTION_USERS)
+      .document(user.id)
+      .collection(COLLECTION_ADS)
+      .snapshots();
+
   /// submits an Ad to the database
   /// takes an [Ad] object [ad]
   /// returns a [Map<String, dynamic>]
@@ -98,6 +104,21 @@ abstract class AdModel extends Model {
     ad.username = user.name;
     ad.userImageUrl = user.imageUrl;
     return ad;
+  }
+
+  Future<Ad> refineUserAds(String adId) async {
+    bool _hasError = false;
+    DocumentSnapshot document = await _database
+        .collection(COLLECTION_ADS)
+        .document(adId)
+        .get()
+        .catchError((error) {
+      print('$_tag error on getting ad document: $error');
+      _hasError = true;
+    });
+    if (_hasError) return null;
+    Ad ad = Ad.fromSnapshot(document);
+    return await refineAd(ad);  
   }
 
   Future<void> getAds() async {

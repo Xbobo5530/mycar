@@ -118,7 +118,7 @@ class UserProfilePage extends StatelessWidget {
         future: model.getUserAds(user),
         builder: (context, snapshot)=> snapshot.data.length > 0 
         ? ListTile(title: Text(adsText),onTap: ()=> Navigator.push(context, MaterialPageRoute(
-          builder: (context)=>UserAdsPage(adsList: snapshot.data)
+          builder: (context)=>UserAdsPage(user: user)
         )),): Container(),
       )
       ,
